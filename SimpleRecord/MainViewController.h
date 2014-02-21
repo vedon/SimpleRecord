@@ -11,4 +11,5 @@
 @interface MainViewController : UIViewController
 
 - (IBAction)gotoRecordViewController:(id)sender;
+- (IBAction)gotoLocalMusicViewController:(id)sender;
 @end

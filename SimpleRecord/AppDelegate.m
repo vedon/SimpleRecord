@@ -13,6 +13,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     MainViewController * mainController = [[MainViewController alloc]initWithNibName:@"MainViewController" bundle:nil];
     
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:mainController];

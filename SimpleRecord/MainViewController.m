@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "RecordViewController.h"
+#import "LocalFileBroserViewController.h"
 @interface MainViewController ()
 
 @end
@@ -43,6 +44,12 @@
 
 - (IBAction)gotoRecordViewController:(id)sender {
     RecordViewController * viewController = [[RecordViewController alloc]initWithNibName:@"RecordViewController" bundle:nil];
+    [self.navigationController pushViewController:viewController animated:YES];
+    viewController = nil;
+}
+
+- (IBAction)gotoLocalMusicViewController:(id)sender {
+    LocalFileBroserViewController * viewController = [[LocalFileBroserViewController alloc]initWithNibName:@"LocalFileBroserViewController" bundle:nil];
     [self.navigationController pushViewController:viewController animated:YES];
     viewController = nil;
 }

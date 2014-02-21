@@ -39,10 +39,10 @@
 		4EACB6F618B78AE9001545AC /* RecordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EACB6F418B78AE9001545AC /* RecordViewController.xib */; };
 		4EACB6FA18B78AF5001545AC /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB6F818B78AF5001545AC /* MainViewController.m */; };
 		4EACB6FB18B78AF5001545AC /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EACB6F918B78AF5001545AC /* MainViewController.xib */; };
-		4EACB6FF18B78FDA001545AC /* AudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB6FE18B78FDA001545AC /* AudioRecorder.m */; };
-		4EACB70418B7941D001545AC /* LocalFileBroserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB70218B7941D001545AC /* LocalFileBroserViewController.m */; };
+		4EACB6FF18B78FDA001545AC /* AudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB6FE18B78FDA001545AC /* AudioRecorder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4EACB70418B7941D001545AC /* LocalFileBroserViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB70218B7941D001545AC /* LocalFileBroserViewController.mm */; };
 		4EACB70518B7941D001545AC /* LocalFileBroserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EACB70318B7941D001545AC /* LocalFileBroserViewController.xib */; };
-		4EACB70818B79660001545AC /* TSLibraryImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB70718B79660001545AC /* TSLibraryImport.m */; };
+		4EACB70818B79660001545AC /* TSLibraryImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB70718B79660001545AC /* TSLibraryImport.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4EACB72318B79762001545AC /* CommonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB70B18B79762001545AC /* CommonViewController.m */; };
 		4EACB72418B79762001545AC /* HWConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB70D18B79762001545AC /* HWConnect.m */; };
 		4EACB72518B79762001545AC /* IO.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB71218B79762001545AC /* IO.m */; };
@@ -54,12 +54,17 @@
 		4EACB72B18B79762001545AC /* UIImage+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB71E18B79762001545AC /* UIImage+Util.m */; };
 		4EACB72C18B79762001545AC /* UIViewController+BarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB72018B79762001545AC /* UIViewController+BarItem.m */; };
 		4EACB72D18B79762001545AC /* VersionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB72218B79762001545AC /* VersionManager.m */; };
-		4EACB73918B79821001545AC /* AudioReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB72F18B79821001545AC /* AudioReader.mm */; };
-		4EACB73A18B79821001545AC /* AudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB73118B79821001545AC /* AudioManager.m */; };
-		4EACB73B18B79821001545AC /* PersistentStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB73318B79821001545AC /* PersistentStore.m */; };
+		4EACB73918B79821001545AC /* AudioReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB72F18B79821001545AC /* AudioReader.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4EACB73A18B79821001545AC /* AudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB73118B79821001545AC /* AudioManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4EACB73C18B79821001545AC /* RingBuffer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB73518B79821001545AC /* RingBuffer.mm */; };
-		4EACB73D18B79821001545AC /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB73818B79821001545AC /* libmp3lame.a */; };
 		4EACB73F18B79867001545AC /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB73E18B79867001545AC /* CoreData.framework */; };
+		4EACB74318B79A09001545AC /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB74218B79A09001545AC /* MBProgressHUD.m */; };
+		4EACB74718B79B2E001545AC /* MusicInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB74618B79B2E001545AC /* MusicInfoCell.m */; };
+		4EACB74918B79B39001545AC /* MusicInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EACB74818B79B39001545AC /* MusicInfoCell.xib */; };
+		4EACB74A18B79F67001545AC /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB73818B79821001545AC /* libmp3lame.a */; };
+		4EACB74C18B79FC8001545AC /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB74B18B79FC8001545AC /* Accelerate.framework */; };
+		4EACB74E18B7A44C001545AC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB74D18B7A44C001545AC /* CoreMedia.framework */; };
+		4EACB75018B7A466001545AC /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB74F18B7A466001545AC /* MediaPlayer.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,7 +130,7 @@
 		4EACB6FD18B78FDA001545AC /* AudioRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioRecorder.h; sourceTree = "<group>"; };
 		4EACB6FE18B78FDA001545AC /* AudioRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioRecorder.m; sourceTree = "<group>"; };
 		4EACB70118B7941D001545AC /* LocalFileBroserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalFileBroserViewController.h; sourceTree = "<group>"; };
-		4EACB70218B7941D001545AC /* LocalFileBroserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalFileBroserViewController.m; sourceTree = "<group>"; };
+		4EACB70218B7941D001545AC /* LocalFileBroserViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LocalFileBroserViewController.mm; sourceTree = "<group>"; };
 		4EACB70318B7941D001545AC /* LocalFileBroserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocalFileBroserViewController.xib; sourceTree = "<group>"; };
 		4EACB70618B79660001545AC /* TSLibraryImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSLibraryImport.h; sourceTree = "<group>"; };
 		4EACB70718B79660001545AC /* TSLibraryImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSLibraryImport.m; sourceTree = "<group>"; };
@@ -158,13 +163,19 @@
 		4EACB72F18B79821001545AC /* AudioReader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioReader.mm; sourceTree = "<group>"; };
 		4EACB73018B79821001545AC /* AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioManager.h; sourceTree = "<group>"; };
 		4EACB73118B79821001545AC /* AudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioManager.m; sourceTree = "<group>"; };
-		4EACB73218B79821001545AC /* PersistentStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersistentStore.h; sourceTree = "<group>"; };
-		4EACB73318B79821001545AC /* PersistentStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersistentStore.m; sourceTree = "<group>"; };
 		4EACB73418B79821001545AC /* RingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RingBuffer.h; sourceTree = "<group>"; };
 		4EACB73518B79821001545AC /* RingBuffer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RingBuffer.mm; sourceTree = "<group>"; };
 		4EACB73718B79821001545AC /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
 		4EACB73818B79821001545AC /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
 		4EACB73E18B79867001545AC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		4EACB74118B79A09001545AC /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		4EACB74218B79A09001545AC /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		4EACB74518B79B2E001545AC /* MusicInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicInfoCell.h; sourceTree = "<group>"; };
+		4EACB74618B79B2E001545AC /* MusicInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicInfoCell.m; sourceTree = "<group>"; };
+		4EACB74818B79B39001545AC /* MusicInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicInfoCell.xib; sourceTree = "<group>"; };
+		4EACB74B18B79FC8001545AC /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		4EACB74D18B7A44C001545AC /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		4EACB74F18B7A466001545AC /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +183,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EACB75018B7A466001545AC /* MediaPlayer.framework in Frameworks */,
+				4EACB74E18B7A44C001545AC /* CoreMedia.framework in Frameworks */,
+				4EACB74C18B79FC8001545AC /* Accelerate.framework in Frameworks */,
+				4EACB74A18B79F67001545AC /* libmp3lame.a in Frameworks */,
 				4EACB73F18B79867001545AC /* CoreData.framework in Frameworks */,
 				4EACB6C218B7886A001545AC /* AVFoundation.framework in Frameworks */,
 				4EACB6C018B7885F001545AC /* GLKit.framework in Frameworks */,
@@ -179,7 +194,6 @@
 				4EACB68B18B7877D001545AC /* CoreGraphics.framework in Frameworks */,
 				4EACB68D18B7877D001545AC /* UIKit.framework in Frameworks */,
 				4EACB68918B7877D001545AC /* Foundation.framework in Frameworks */,
-				4EACB73D18B79821001545AC /* libmp3lame.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +232,9 @@
 		4EACB68718B7877D001545AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4EACB74F18B7A466001545AC /* MediaPlayer.framework */,
+				4EACB74D18B7A44C001545AC /* CoreMedia.framework */,
+				4EACB74B18B79FC8001545AC /* Accelerate.framework */,
 				4EACB73E18B79867001545AC /* CoreData.framework */,
 				4EACB6C118B7886A001545AC /* AVFoundation.framework */,
 				4EACB6BF18B7885F001545AC /* GLKit.framework */,
@@ -233,6 +250,7 @@
 		4EACB68E18B7877D001545AC /* SimpleRecord */ = {
 			isa = PBXGroup;
 			children = (
+				4EACB74418B79B1C001545AC /* Views */,
 				4EACB6FC18B78FDA001545AC /* Classes */,
 				4EACB6EB18B789EF001545AC /* Controllers */,
 				4EACB6C318B78898001545AC /* Libs */,
@@ -279,6 +297,7 @@
 		4EACB6C318B78898001545AC /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				4EACB74018B79A09001545AC /* MBProgressHUD */,
 				4EACB70918B79762001545AC /* HWSDK */,
 				4EACB6C418B78898001545AC /* EZAudio */,
 			);
@@ -350,8 +369,6 @@
 				4EACB72F18B79821001545AC /* AudioReader.mm */,
 				4EACB73018B79821001545AC /* AudioManager.h */,
 				4EACB73118B79821001545AC /* AudioManager.m */,
-				4EACB73218B79821001545AC /* PersistentStore.h */,
-				4EACB73318B79821001545AC /* PersistentStore.m */,
 				4EACB73418B79821001545AC /* RingBuffer.h */,
 				4EACB73518B79821001545AC /* RingBuffer.mm */,
 				4EACB73618B79821001545AC /* lame */,
@@ -367,7 +384,7 @@
 			isa = PBXGroup;
 			children = (
 				4EACB70118B7941D001545AC /* LocalFileBroserViewController.h */,
-				4EACB70218B7941D001545AC /* LocalFileBroserViewController.m */,
+				4EACB70218B7941D001545AC /* LocalFileBroserViewController.mm */,
 				4EACB70318B7941D001545AC /* LocalFileBroserViewController.xib */,
 			);
 			path = LocalFileBrowser;
@@ -412,6 +429,25 @@
 				4EACB73818B79821001545AC /* libmp3lame.a */,
 			);
 			path = lame;
+			sourceTree = "<group>";
+		};
+		4EACB74018B79A09001545AC /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				4EACB74118B79A09001545AC /* MBProgressHUD.h */,
+				4EACB74218B79A09001545AC /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		4EACB74418B79B1C001545AC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4EACB74518B79B2E001545AC /* MusicInfoCell.h */,
+				4EACB74618B79B2E001545AC /* MusicInfoCell.m */,
+				4EACB74818B79B39001545AC /* MusicInfoCell.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -497,6 +533,7 @@
 				4EACB6E918B78898001545AC /* CHANGELOG in Resources */,
 				4EACB69318B7877D001545AC /* InfoPlist.strings in Resources */,
 				4EACB6EA18B78898001545AC /* VERSION in Resources */,
+				4EACB74918B79B39001545AC /* MusicInfoCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -522,11 +559,11 @@
 				4EACB6FF18B78FDA001545AC /* AudioRecorder.m in Sources */,
 				4EACB72418B79762001545AC /* HWConnect.m in Sources */,
 				4EACB6E318B78898001545AC /* EZAudioPlotGLKViewController.m in Sources */,
+				4EACB74318B79A09001545AC /* MBProgressHUD.m in Sources */,
 				4EACB72818B79762001545AC /* NSString+Utils.m in Sources */,
 				4EACB6DE18B78898001545AC /* AEFloatConverter.m in Sources */,
 				4EACB73C18B79821001545AC /* RingBuffer.mm in Sources */,
-				4EACB70418B7941D001545AC /* LocalFileBroserViewController.m in Sources */,
-				4EACB73B18B79821001545AC /* PersistentStore.m in Sources */,
+				4EACB70418B7941D001545AC /* LocalFileBroserViewController.mm in Sources */,
 				4EACB72618B79762001545AC /* NSDate+Utils.m in Sources */,
 				4EACB69918B7877D001545AC /* AppDelegate.m in Sources */,
 				4EACB6F518B78AE9001545AC /* RecordViewController.m in Sources */,
@@ -538,6 +575,7 @@
 				4EACB72C18B79762001545AC /* UIViewController+BarItem.m in Sources */,
 				4EACB6E018B78898001545AC /* EZAudioFile.m in Sources */,
 				4EACB6E218B78898001545AC /* EZAudioPlotGL.m in Sources */,
+				4EACB74718B79B2E001545AC /* MusicInfoCell.m in Sources */,
 				4EACB69518B7877D001545AC /* main.m in Sources */,
 				4EACB72D18B79762001545AC /* VersionManager.m in Sources */,
 				4EACB72B18B79762001545AC /* UIImage+Util.m in Sources */,
@@ -664,8 +702,12 @@
 		4EACB6B818B7877E001545AC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_C_LANGUAGE_STANDARD = gnu89;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SimpleRecord/SimpleRecord-Prefix.pch";
 				INFOPLIST_FILE = "SimpleRecord/SimpleRecord-Info.plist";
@@ -674,6 +716,7 @@
 					"/Users/vedon/Documents/IOS\\ Develop/SimpleRecord/SimpleRecord/Classes/lame",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -681,8 +724,12 @@
 		4EACB6B918B7877E001545AC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				GCC_C_LANGUAGE_STANDARD = gnu89;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SimpleRecord/SimpleRecord-Prefix.pch";
 				INFOPLIST_FILE = "SimpleRecord/SimpleRecord-Info.plist";
@@ -691,6 +738,7 @@
 					"/Users/vedon/Documents/IOS\\ Develop/SimpleRecord/SimpleRecord/Classes/lame",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
