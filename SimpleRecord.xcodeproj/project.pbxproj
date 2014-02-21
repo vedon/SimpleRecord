@@ -12,7 +12,7 @@
 		4EACB68D18B7877D001545AC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB68C18B7877D001545AC /* UIKit.framework */; };
 		4EACB69318B7877D001545AC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4EACB69118B7877D001545AC /* InfoPlist.strings */; };
 		4EACB69518B7877D001545AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB69418B7877D001545AC /* main.m */; };
-		4EACB69918B7877D001545AC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB69818B7877D001545AC /* AppDelegate.m */; };
+		4EACB69918B7877D001545AC /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB69818B7877D001545AC /* AppDelegate.mm */; };
 		4EACB6A118B7877D001545AC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EACB6A018B7877D001545AC /* Images.xcassets */; };
 		4EACB6A818B7877E001545AC /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB6A718B7877E001545AC /* XCTest.framework */; };
 		4EACB6A918B7877E001545AC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB68818B7877D001545AC /* Foundation.framework */; };
@@ -37,7 +37,7 @@
 		4EACB6EA18B78898001545AC /* VERSION in Resources */ = {isa = PBXBuildFile; fileRef = 4EACB6DD18B78898001545AC /* VERSION */; };
 		4EACB6F518B78AE9001545AC /* RecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB6F318B78AE9001545AC /* RecordViewController.m */; };
 		4EACB6F618B78AE9001545AC /* RecordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EACB6F418B78AE9001545AC /* RecordViewController.xib */; };
-		4EACB6FA18B78AF5001545AC /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB6F818B78AF5001545AC /* MainViewController.m */; };
+		4EACB6FA18B78AF5001545AC /* MainViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB6F818B78AF5001545AC /* MainViewController.mm */; };
 		4EACB6FB18B78AF5001545AC /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EACB6F918B78AF5001545AC /* MainViewController.xib */; };
 		4EACB6FF18B78FDA001545AC /* AudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB6FE18B78FDA001545AC /* AudioRecorder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4EACB70418B7941D001545AC /* LocalFileBroserViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB70218B7941D001545AC /* LocalFileBroserViewController.mm */; };
@@ -87,7 +87,7 @@
 		4EACB69418B7877D001545AC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4EACB69618B7877D001545AC /* SimpleRecord-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimpleRecord-Prefix.pch"; sourceTree = "<group>"; };
 		4EACB69718B7877D001545AC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		4EACB69818B7877D001545AC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4EACB69818B7877D001545AC /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		4EACB6A018B7877D001545AC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4EACB6A618B7877E001545AC /* SimpleRecordTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleRecordTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EACB6A718B7877E001545AC /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -125,7 +125,7 @@
 		4EACB6F318B78AE9001545AC /* RecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordViewController.m; sourceTree = "<group>"; };
 		4EACB6F418B78AE9001545AC /* RecordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordViewController.xib; sourceTree = "<group>"; };
 		4EACB6F718B78AF5001545AC /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		4EACB6F818B78AF5001545AC /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		4EACB6F818B78AF5001545AC /* MainViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MainViewController.mm; sourceTree = "<group>"; };
 		4EACB6F918B78AF5001545AC /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		4EACB6FD18B78FDA001545AC /* AudioRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioRecorder.h; sourceTree = "<group>"; };
 		4EACB6FE18B78FDA001545AC /* AudioRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioRecorder.m; sourceTree = "<group>"; };
@@ -255,9 +255,9 @@
 				4EACB6EB18B789EF001545AC /* Controllers */,
 				4EACB6C318B78898001545AC /* Libs */,
 				4EACB69718B7877D001545AC /* AppDelegate.h */,
-				4EACB69818B7877D001545AC /* AppDelegate.m */,
+				4EACB69818B7877D001545AC /* AppDelegate.mm */,
 				4EACB6F718B78AF5001545AC /* MainViewController.h */,
-				4EACB6F818B78AF5001545AC /* MainViewController.m */,
+				4EACB6F818B78AF5001545AC /* MainViewController.mm */,
 				4EACB6F918B78AF5001545AC /* MainViewController.xib */,
 				4EACB6A018B7877D001545AC /* Images.xcassets */,
 				4EACB68F18B7877D001545AC /* Supporting Files */,
@@ -565,7 +565,7 @@
 				4EACB73C18B79821001545AC /* RingBuffer.mm in Sources */,
 				4EACB70418B7941D001545AC /* LocalFileBroserViewController.mm in Sources */,
 				4EACB72618B79762001545AC /* NSDate+Utils.m in Sources */,
-				4EACB69918B7877D001545AC /* AppDelegate.m in Sources */,
+				4EACB69918B7877D001545AC /* AppDelegate.mm in Sources */,
 				4EACB6F518B78AE9001545AC /* RecordViewController.m in Sources */,
 				4EACB72318B79762001545AC /* CommonViewController.m in Sources */,
 				4EACB6E118B78898001545AC /* EZAudioPlot.m in Sources */,
@@ -583,7 +583,7 @@
 				4EACB73A18B79821001545AC /* AudioManager.m in Sources */,
 				4EACB6E418B78898001545AC /* EZMicrophone.m in Sources */,
 				4EACB6E718B78898001545AC /* EZRecorder.m in Sources */,
-				4EACB6FA18B78AF5001545AC /* MainViewController.m in Sources */,
+				4EACB6FA18B78AF5001545AC /* MainViewController.mm in Sources */,
 				4EACB6DF18B78898001545AC /* EZAudio.m in Sources */,
 				4EACB70818B79660001545AC /* TSLibraryImport.m in Sources */,
 			);

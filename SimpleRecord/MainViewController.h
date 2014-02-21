@@ -12,4 +12,10 @@
 
 - (IBAction)gotoRecordViewController:(id)sender;
 - (IBAction)gotoLocalMusicViewController:(id)sender;
+
+
+@property (weak, nonatomic) IBOutlet UIButton *controllBtn;
+@property (weak, nonatomic) IBOutlet UISlider *progressSlider;
+@property (weak, nonatomic) IBOutlet UILabel *progressingMusicLength;
+
 @end

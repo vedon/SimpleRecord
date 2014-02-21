@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class AudioReader;
+@class AudioManager;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) AudioReader * reader;
+@property (strong, nonatomic) AudioManager * audioMng;
 
+-(void)palyItemWithURL:(NSURL *)inputFileURL;
 @end

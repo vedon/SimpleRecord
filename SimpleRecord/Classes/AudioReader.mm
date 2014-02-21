@@ -77,6 +77,53 @@
     return self;
 }
 
++(id)shareAudioReader
+{
+    static AudioReader * shareReader = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        shareReader = [[AudioReader alloc]init];
+    });
+    return shareReader;
+}
+
+-(void)setAudioFileURL:(NSURL *)urlToAudioFile samplingRate:(float)thisSamplingRate numChannels:(UInt32)thisNumChannels
+{
+    self.callbackTimer = nil;
+    
+    // Open a reference to the audio file
+    self.audioFileURL = urlToAudioFile;
+    CFURLRef audioFileRef = (__bridge CFURLRef)self.audioFileURL;
+    CheckError(ExtAudioFileOpenURL(audioFileRef, &_inputFile), "Opening file URL (ExtAudioFileOpenURL)");
+    
+    
+    // Set a few defaults and presets
+    self.samplingRate = thisSamplingRate;
+    self.numChannels = thisNumChannels;
+    self.latency = .011609977; // 512 samples / ( 44100 samples / sec ) default
+    
+    _outputFormat.mSampleRate = self.samplingRate;
+    _outputFormat.mFormatID = kAudioFormatLinearPCM;
+    _outputFormat.mFormatFlags = kAudioFormatFlagIsFloat;
+    _outputFormat.mBytesPerPacket = 4*self.numChannels;
+    _outputFormat.mFramesPerPacket = 1;
+    _outputFormat.mBytesPerFrame = 4*self.numChannels;
+    _outputFormat.mChannelsPerFrame = self.numChannels;
+    _outputFormat.mBitsPerChannel = 32;
+    ExtAudioFileSetProperty(_inputFile, kExtAudioFileProperty_ClientDataFormat, sizeof(AudioStreamBasicDescription), &_outputFormat);
+    self.outputBufferSize = 65536;
+    self.numSamplesReadPerPacket = 8192;
+    self.desiredPrebufferedSamples = self.numSamplesReadPerPacket*2;
+    self.outputBuffer = (float *)calloc(2*self.samplingRate, sizeof(float));
+    self.holdingBuffer = (float *)calloc(2*self.samplingRate, sizeof(float));
+    
+    ringBuffer = new RingBuffer(self.outputBufferSize, self.numChannels);
+    
+    
+    // Fill up the buffers, so we're ready to play immediately
+    [self bufferNewAudio];
+}
+
 - (void)clearBuffer
 {
     ringBuffer->Clear();

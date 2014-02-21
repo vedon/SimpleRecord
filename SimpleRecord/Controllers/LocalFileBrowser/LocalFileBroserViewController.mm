@@ -17,6 +17,7 @@
 #import <Foundation/NSObjCRuntime.h>
 #import "AudioReader.h"
 #import "AudioManager.h"
+#import "AppDelegate.h"
 
 //#import "PersistentStore.h"
 static NSString * cellIdentifier = @"Identifier";
@@ -28,8 +29,6 @@ static NSString * cellIdentifier = @"Identifier";
     NSString * currentLocationPath;
     CGFloat currentPlayFileLength;
 }
-@property (strong ,nonatomic) AudioReader * reader;
-@property (strong ,nonatomic) AudioManager * audioMng;
 @property (strong ,nonatomic) NSOperationQueue *autoCompleteQueue;
 @end
 
@@ -215,31 +214,8 @@ static NSString * cellIdentifier = @"Identifier";
 
 -(void)playItemWithPath:(NSString *)localFilePath
 {
-    self.audioMng = [AudioManager shareAudioManager];
-    [self.audioMng pause];
-    if ([self.reader playing]) {
-        [self.reader stop];
-    }
-    
-    NSURL *inputFileURL = [NSURL fileURLWithPath:localFilePath];
-    currentPlayFileLength = [self getMusicLength:inputFileURL];
-    if (self.reader) {
-        self.reader = nil;
-    }
-    self.reader = [[AudioReader alloc]
-                   initWithAudioFileURL:inputFileURL
-                   samplingRate:self.audioMng.samplingRate
-                   numChannels:self.audioMng.numOutputChannels];
-    
-    //太累了，要记住一定要设置currentime = 0.0,表示开始时间   :]
-    self.reader.currentTime = 0.0;
-    __weak LocalFileBroserViewController * weakSelf =self;
-    
-    [self.audioMng setOutputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels)
-     {
-         [weakSelf.reader retrieveFreshAudio:data numFrames:numFrames numChannels:numChannels];
-     }];
-    [self.audioMng play];
+    AppDelegate * myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    [myDelegate palyItemWithURL:[NSURL fileURLWithPath:localFilePath]];
 }
 
 -(CGFloat)getMusicLength:(NSURL *)url
@@ -277,20 +253,4 @@ static NSString * cellIdentifier = @"Identifier";
     [self configureLibraryMusicWithSelector:@selector(playItemWithPath:) withInfo:musicInfo];
 }
 
-#pragma mark - AudioReader Delegate
--(void)currentFileLocation:(CGFloat)location
-{
-    if (location == currentPlayFileLength) {
-        [self.audioMng pause];
-//        [currentPlayItemControlBtn setSelected:NO];
-//        currentSelectedItemSlider.value = 0.0f;
-    }else
-    {
-        NSLog(@"%f",location);
-        dispatch_async(dispatch_get_main_queue(), ^{
-//            currentSelectedItemSlider.value = ceil(location);
-        });
-    }
-    
-}
 @end
