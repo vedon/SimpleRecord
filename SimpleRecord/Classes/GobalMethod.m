@@ -195,7 +195,7 @@
     }
 }
 
-+(void)audio_PCMtoMP3WithSourceFile:(NSString *)sourceFile destinationFile:(NSString *)desFile withSampleRate:(NSInteger)sampleRate
++(void)audio_PCMtoMP3WithSourceFile:(NSString *)sourceFile destinationFile:(NSString *)desFile withSampleRate:(NSInteger)sampleRate completedHandler:(void(^)(NSError *error))block
 {
     NSString *cafFilePath = sourceFile;
     
@@ -238,12 +238,13 @@
         lame_close(lame);
         fclose(mp3);
         fclose(pcm);
+         block(nil);
     }
     @catch (NSException *exception) {
         NSLog(@"%@",[exception description]);
     }
     @finally {
-        
+       
     }
 }
 @end

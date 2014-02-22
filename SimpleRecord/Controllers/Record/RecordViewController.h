@@ -18,6 +18,7 @@
 - (IBAction)mp3FormatAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *mp3Btn;
 @property (weak, nonatomic) IBOutlet UIButton *wavBtn;
+@property (weak, nonatomic) IBOutlet UIButton *recordControlBtn;
 
 
 @end

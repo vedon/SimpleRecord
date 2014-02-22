@@ -30,7 +30,7 @@
 /*                 Audio                  */
 +(CGFloat)getMusicLength:(NSURL *)url;
 +(CGFloat)getAudioFileLength:(NSURL *)fileURL;
-+(void)audio_PCMtoMP3WithSourceFile:(NSString *)sourceFile destinationFile:(NSString *)desFile withSampleRate:(NSInteger)sampleRate;
++(void)audio_PCMtoMP3WithSourceFile:(NSString *)sourceFile destinationFile:(NSString *)desFile withSampleRate:(NSInteger)sampleRate completedHandler:(void(^)(NSError *error))block;
 
 
 /**

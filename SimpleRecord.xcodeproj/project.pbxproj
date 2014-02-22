@@ -105,6 +105,7 @@
 		4EACE96A18B88171004383AD /* Home_Icon_Nte@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EACE96918B88171004383AD /* Home_Icon_Nte@2x.png */; };
 		4EACE96D18B89071004383AD /* FormatView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACE96C18B89071004383AD /* FormatView.m */; };
 		4EACE96F18B8907E004383AD /* FormatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EACE96E18B8907E004383AD /* FormatView.xib */; };
+		4EACE97318B8AA8C004383AD /* NSTimer+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACE97218B8AA8C004383AD /* NSTimer+Addition.m */; };
 		999BAC5DD096431E8456B8E7 /* libPods-SimpleRecord.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAC9D0F882D4445974C7140 /* libPods-SimpleRecord.a */; };
 /* End PBXBuildFile section */
 
@@ -264,6 +265,8 @@
 		4EACE96B18B89071004383AD /* FormatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormatView.h; sourceTree = "<group>"; };
 		4EACE96C18B89071004383AD /* FormatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormatView.m; sourceTree = "<group>"; };
 		4EACE96E18B8907E004383AD /* FormatView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FormatView.xib; sourceTree = "<group>"; };
+		4EACE97118B8AA8C004383AD /* NSTimer+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Addition.h"; sourceTree = "<group>"; };
+		4EACE97218B8AA8C004383AD /* NSTimer+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Addition.m"; sourceTree = "<group>"; };
 		DBAC9D0F882D4445974C7140 /* libPods-SimpleRecord.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SimpleRecord.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6DD35B9BF6C4F0A87DA89AE /* Pods-SimpleRecord.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleRecord.xcconfig"; path = "Pods/Pods-SimpleRecord.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -343,6 +346,7 @@
 		4EACB68E18B7877D001545AC /* SimpleRecord */ = {
 			isa = PBXGroup;
 			children = (
+				4EACE97018B8AA8C004383AD /* Category */,
 				4EACE91518B83911004383AD /* Models */,
 				4EACB74418B79B1C001545AC /* Views */,
 				4EACB6EB18B789EF001545AC /* Controllers */,
@@ -622,6 +626,15 @@
 			path = Img;
 			sourceTree = "<group>";
 		};
+		4EACE97018B8AA8C004383AD /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				4EACE97118B8AA8C004383AD /* NSTimer+Addition.h */,
+				4EACE97218B8AA8C004383AD /* NSTimer+Addition.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -831,6 +844,7 @@
 				4EACB6E718B78898001545AC /* EZRecorder.m in Sources */,
 				4EACB6FA18B78AF5001545AC /* MainViewController.mm in Sources */,
 				4EACB6DF18B78898001545AC /* EZAudio.m in Sources */,
+				4EACE97318B8AA8C004383AD /* NSTimer+Addition.m in Sources */,
 				4EACB70818B79660001545AC /* TSLibraryImport.m in Sources */,
 				4EACE96D18B89071004383AD /* FormatView.m in Sources */,
 			);

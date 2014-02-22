@@ -14,6 +14,7 @@
 #import "GobalMethod.h"
 #import "AppDelegate.h"
 #import "AudioManager.h"
+#import "NSTimer+Addition.h"
 
 @interface RecordViewController ()<UIAlertViewDelegate>
 {
@@ -51,14 +52,33 @@
 {
     [super viewDidLoad];
     [self initializationInterface];
-    formatType = @"mp3";
-    [self.mp3Btn setSelected:YES];
         // Do any additional setup after loading the view from its nib.
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:YES];
     [self.navigationController.navigationBar setHidden:NO];
+    formatType = [[NSUserDefaults standardUserDefaults]valueForKey:@"musicFormat"];
+    if (formatType == nil) {
+        formatType = @"mp3";
+    }
+    if ([formatType isEqualToString:@"wav"]) {
+        [self.wavBtn setSelected:YES];
+    }else
+    {
+        [self.mp3Btn setSelected:YES];
+    }
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    if ([counter isValid])  {
+        [counter invalidate];
+        counter = nil;
+    }
+    [self cleanRecordStuff];
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,15 +94,12 @@
     recorder = [AudioRecorder shareAudioRecord];
     myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     isRecording = NO;
-
+    
 }
 
 -(void)timerStop
 {
-    if (counter !=nil) {
-        [counter invalidate];
-        counter = nil;
-    }
+    [counter pauseTimer];
 }
 
 -(void)timerStart
@@ -92,7 +109,16 @@
         [[NSRunLoop currentRunLoop]addTimer:counter forMode:NSRunLoopCommonModes];
         [counter fire];
         
+    }else
+    {
+        [counter resumeTimer];
     }
+}
+
+-(void)cleanRecordStuff
+{
+    [recorder stopRecord];
+    [[NSFileManager defaultManager]removeItemAtPath:recordFilePath error:nil];
 }
 -(NSString *)getDefaultFileName
 {
@@ -162,18 +188,21 @@
     if (btn.selected) {
         
         if (!isRecording) {
+            
+            //stop the music that is playing
             [myDelegate pause];
             
+            //Reset the recording mark
             isRecording = YES;
             recordMakeTime  = [self getMakeTime];
             defaultFileName = [self getDefaultFileName];
-            //录音的格式为caf 格式
+            
+            //The default record format is .caf
             NSString * localRecordFileFullName = [defaultFileName stringByAppendingPathExtension:@"caf"];
             
             recordFilePath = [[self getDocumentDirectory] stringByAppendingPathComponent:localRecordFileFullName];
             recordFileURL = [NSURL fileURLWithPath:recordFilePath];
-            
-            
+        
             [recorder initRecordWithPath:recordFilePath];
             [recorder startRecord];
             
@@ -194,30 +223,23 @@
     
 }
 
-- (IBAction)pauseBtnAction:(id)sender {
-    UIButton * btn = (UIButton *)sender;
-    [btn setSelected:!btn.selected];
-    if (btn.selected) {
-        [self timerStop];
-        [recorder pauseRecord];
-    }else
-    {
-        [self timerStart];
-        [recorder startRecord];
-    }
-}
 
 - (IBAction)stopRecordAction:(id)sender {
+    isRecording = NO;
+    [self.recordControlBtn setSelected:NO];
+    
     [recorder stopRecord];
     [self timerStop];
     self.clocker.text = @"00:00:00";
     isRecording = NO;
     //1）转换格式
-    NSString * destinationFileName = [[self getDocumentDirectory] stringByAppendingPathComponent:[defaultFileName stringByAppendingPathExtension:@"mp3"]];
+    NSString * destinationFileName = [[self getDocumentDirectory] stringByAppendingPathComponent:[defaultFileName stringByAppendingPathExtension:formatType]];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [GobalMethod audio_PCMtoMP3WithSourceFile:recordFilePath destinationFile:destinationFileName withSampleRate:44100];
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    [GobalMethod audio_PCMtoMP3WithSourceFile:recordFilePath destinationFile:destinationFileName withSampleRate:44100 completedHandler:^(NSError *error) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    } ];
     
+
     //2）保存录音文件信息
     RecordMusicInfo * recordFile = [RecordMusicInfo MR_createEntity];
     recordFile.title    = defaultFileName;
@@ -246,14 +268,20 @@
     UIButton * btn = (UIButton *)sender;
     [btn setSelected:!btn.selected];
     [self.mp3Btn setSelected:NO];
-    formatType = @"mp3";
+    formatType = @"wav";
+    [[NSUserDefaults standardUserDefaults]setObject:formatType forKey:@"musicFormat"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
 }
 
 - (IBAction)mp3FormatAction:(id)sender {
     UIButton * btn = (UIButton *)sender;
     [btn setSelected:!btn.selected];
     [self.wavBtn setSelected:NO];
-    formatType = @"wav";
+    
+    formatType = @"mp3";
+    [[NSUserDefaults standardUserDefaults]setObject:formatType forKey:@"musicFormat"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -265,8 +293,7 @@
             break;
         case 1:
             //确定
-            [recorder stopRecord];
-            [[NSFileManager defaultManager]removeItemAtPath:recordFilePath error:nil];
+            [self cleanRecordStuff];
             break;
         default:
             break;

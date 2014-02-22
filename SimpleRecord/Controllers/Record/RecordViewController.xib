@@ -8,6 +8,7 @@
             <connections>
                 <outlet property="clocker" destination="Vum-aZ-Z5d" id="0TF-dR-9Br"/>
                 <outlet property="mp3Btn" destination="gPk-o4-Ou0" id="YH0-O9-kG6"/>
+                <outlet property="recordControlBtn" destination="Gpp-W1-Lyb" id="bBJ-Qb-IRf"/>
                 <outlet property="view" destination="1" id="3"/>
                 <outlet property="wavBtn" destination="sg4-8e-yAd" id="Fq3-zl-Jjq"/>
             </connections>
