@@ -44,7 +44,16 @@
         // Open a reference to the audio file
         self.audioFileURL = urlToAudioFile;
         CFURLRef audioFileRef = (__bridge CFURLRef)self.audioFileURL;
-        CheckError(ExtAudioFileOpenURL(audioFileRef, &_inputFile), "Opening file URL (ExtAudioFileOpenURL)");
+        @try {
+             CheckError(ExtAudioFileOpenURL(audioFileRef, &_inputFile), "Opening file URL (ExtAudioFileOpenURL)");
+        }
+        @catch (NSException *exception) {
+            NSLog(@"%@",[exception description]);
+        }
+        @finally {
+            ;
+        }
+       
         
         
         // Set a few defaults and presets
@@ -87,14 +96,24 @@
     return shareReader;
 }
 
--(void)setAudioFileURL:(NSURL *)urlToAudioFile samplingRate:(float)thisSamplingRate numChannels:(UInt32)thisNumChannels
+-(void)setAudioFileURL:(NSURL *)urlToAudioFile samplingRate:(float)thisSamplingRate numChannels:(UInt32)thisNumChannels completedHandler:(void (^)(NSError * error))handler
 {
     self.callbackTimer = nil;
     
     // Open a reference to the audio file
     self.audioFileURL = urlToAudioFile;
     CFURLRef audioFileRef = (__bridge CFURLRef)self.audioFileURL;
-    CheckError(ExtAudioFileOpenURL(audioFileRef, &_inputFile), "Opening file URL (ExtAudioFileOpenURL)");
+    @try {
+        CheckError(ExtAudioFileOpenURL(audioFileRef, &_inputFile), "Opening file URL (ExtAudioFileOpenURL)");
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@",[exception description]);
+        NSError * error = [NSError errorWithDomain:@"Open file Error" code:100 userInfo:@{@"fileName": [[urlToAudioFile absoluteString] lastPathComponent]}];
+        handler(error);
+    }
+    @finally {
+        return;
+    }
     
     
     // Set a few defaults and presets

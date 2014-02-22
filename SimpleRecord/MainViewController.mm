@@ -72,11 +72,14 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
 #pragma mark - Private Method
 -(void)updateProcessingLocation:(NSNotification *)noti
 {
     CGFloat location = [noti.object floatValue];
-    NSLog(@"%f",location);
     __weak MainViewController * weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
         weakSelf.progressSlider.value = ceil(location);

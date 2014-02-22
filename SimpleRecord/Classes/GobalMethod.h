@@ -32,13 +32,6 @@
  @desc Get the file path with the fileName ,The file prefix is the Documents/ .
  */
 +(NSString *)getExportPath:(NSString *)fileName;
-
-+(NSString *)getTempPath:(NSString *)fileName;
-
-
-
-/*                 Audio                  */
-
 /**
  @desc Get the length of the music file in second
  */
@@ -51,14 +44,20 @@
  @desc PCM convert to MP3
  */
 +(void)audio_PCMtoMP3WithSourceFile:(NSString *)sourceFile destinationFile:(NSString *)desFile withSampleRate:(NSInteger)sampleRate completedHandler:(void(^)(NSError *error))block;
-
+/**
+ @desc Export the Ipod_library songs to local folder name.
+ */
++(void)exportLibrarySongsToLocalFolder:(NSString *)folderName CompletedHandler:(void (^)(NSDictionary * info,NSError * error))handler;
 
 /**
  @desc: Register a local notification
  */
 +(void)localNotificationBody:(NSString *)body;
 
-
+/**
+ @desc: Show a Alerview With Message
+ */
++(void)showAlertViewWithMsg:(NSString *)msg title:(NSString *)msgTitle;
 
 @end
 

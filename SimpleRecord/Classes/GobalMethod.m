@@ -9,6 +9,9 @@
 #import "GobalMethod.h"
 #import <AVFoundation/AVFoundation.h>
 #import "lame.h"
+#import "TSLibraryImport.h"
+#import <MediaPlayer/MediaPlayer.h>
+
 @implementation GobalMethod
 
 //我的下载
@@ -125,17 +128,6 @@
     return exportPath;
 }
 
-+(NSString *)getTempPath:(NSString *)fileName
-{
-    NSArray *dirs = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
-    NSString *documentsDirectoryPath = [dirs objectAtIndex:0];
-    
-    NSString *exportPath = [documentsDirectoryPath stringByAppendingPathComponent:fileName];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:exportPath]) {
-        [[NSFileManager defaultManager] removeItemAtPath:exportPath error:nil];
-    }
-    return exportPath;
-}
 #pragma mark - OSStatus Utility
 +(void)checkResult:(OSStatus)result
          operation:(const char *)operation {
@@ -246,5 +238,97 @@
     @finally {
        
     }
+}
+
++(void)exportLibrarySongsToLocalFolder:(NSString *)folderName CompletedHandler:(void (^)(NSDictionary * info,NSError * error))handler
+{
+    TSLibraryImport* importTool = [[TSLibraryImport alloc]init];
+    
+    MPMediaQuery *listQuery = [MPMediaQuery playlistsQuery];
+    NSNumber *musicType = [NSNumber numberWithInteger:MPMediaTypeMusic];
+    
+    MPMediaPropertyPredicate *musicPredicate = [MPMediaPropertyPredicate predicateWithValue:musicType forProperty:MPMediaItemPropertyMediaType];
+    [listQuery addFilterPredicate: musicPredicate];
+    //播放列表
+    NSArray *playlist = [listQuery items];
+    for (MPMediaItem * item in playlist) {
+        NSString * exportPath =nil;
+        if (folderName) {
+            exportPath = [GobalMethod getExportPath:[folderName stringByAppendingString:[item valueForProperty:MPMediaItemPropertyTitle]]];
+        }else
+        {
+            exportPath = [GobalMethod getExportPath:[item valueForProperty:MPMediaItemPropertyTitle]];
+        }
+
+        
+        NSURL * exportURL = [NSURL URLWithString:exportPath];
+        NSURL * exportFileURL = [item valueForProperty:MPMediaItemPropertyAssetURL];
+        [importTool importAsset:exportFileURL toURL:exportURL completionBlock:^(TSLibraryImport* import) {
+            if (import.status != AVAssetExportSessionStatusCompleted) {
+                // something went wrong with the import
+                NSLog(@"Error importing: %@", import.error);
+                import = nil;
+                return;
+            }
+        }];
+    }
+    
+}
+
+-(void)findArtistList
+{
+    MPMediaQuery *listQuery = [MPMediaQuery playlistsQuery];
+    NSNumber *musicType = [NSNumber numberWithInteger:MPMediaTypeMusic];
+    
+    MPMediaPropertyPredicate *musicPredicate = [MPMediaPropertyPredicate predicateWithValue:musicType forProperty:MPMediaItemPropertyMediaType];
+    [listQuery addFilterPredicate: musicPredicate];
+    //播放列表
+    NSArray *playlist = [listQuery items];
+    for (MPMediaItem * item in playlist) {
+        NSDictionary * dic = [self getMPMediaItemInfo:item];
+        
+    }
+}
+
+- (NSDictionary *)getMPMediaItemInfo:(MPMediaItem *)item{
+    NSString *title     = [item valueForProperty:MPMediaItemPropertyTitle];;
+    NSString *artist    = [item valueForProperty:MPMediaItemPropertyArtist];
+    NSString *albumName = [item valueForProperty:MPMediaItemPropertyAlbumTitle];
+    NSString *strTime   = [item valueForProperty:MPMediaItemPropertyPlaybackDuration];
+    NSURL *musicURL     = [item valueForProperty:MPMediaItemPropertyAssetURL];
+    NSLog(@"%@",musicURL.absoluteString);
+    //计算音乐文件所需要的时间
+    
+    int seconds = (int)[strTime integerValue];
+    int minute = 0;
+    if (seconds >= 60) {
+        int index = seconds / 60;
+        minute = index;
+        seconds = seconds - index * 60;
+    }
+    NSString *musicTime = [NSString stringWithFormat:@"%02d:%02d", minute, seconds];
+    //这里依次是 音乐名，艺术家，专辑名，音乐时间，音乐播放路径
+    if (!albumName) {
+        albumName = @"";
+    }
+    if (!artist) {
+        artist = @"";
+    }
+    
+    NSDictionary * musicInfo = @{@"Title":title,@"Artist":artist,@"Album":albumName,@"musicTime":musicTime,@"musicURL":musicURL};
+    return musicInfo;
+}
+
++(void)showAlertViewWithMsg:(NSString *)msg title:(NSString *)msgTitle
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString * title = @"提示";
+        if (msgTitle == nil) {
+            title = msgTitle;
+        }
+        UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:title message:msg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+        alertView = nil;
+    });
 }
 @end

@@ -88,7 +88,13 @@
     
     
     reader = [AudioReader shareAudioReader];
-    [reader setAudioFileURL:inputFileURL samplingRate:self.audioMng.samplingRate numChannels:self.audioMng.numOutputChannels];
+    [reader setAudioFileURL:inputFileURL samplingRate:self.audioMng.samplingRate numChannels:self.audioMng.numOutputChannels completedHandler:^(NSError *error) {
+        if (error) {
+            NSLog(@"%@",[error description]);
+            NSDictionary * dic = [error userInfo];
+            [GobalMethod showAlertViewWithMsg:[NSString stringWithFormat:@"打开%@ 文件出错",dic[@"fileName"]] title:nil];
+        }
+    }];
     reader.currentTime = 0.0;
     reader.delegate = self;
     __weak AppDelegate * weakSelf =self;
