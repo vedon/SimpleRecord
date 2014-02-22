@@ -13,9 +13,10 @@
 #import "AppDelegate.h"
 
 static NSString * cellIdentifier = @"cellIdentifier";
-@interface MyRecordViewController ()
+@interface MyRecordViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
     NSArray * dataSource;
+    NSArray * cells;
 }
 @end
 
@@ -71,6 +72,19 @@ static NSString * cellIdentifier = @"cellIdentifier";
     [myDelegate palyItemWithURL:[NSURL fileURLWithPath:localFilePath]withMusicInfo:dic];
 }
 
+-(void)resetTheCellAlphaWhenScrolling
+{
+    @autoreleasepool {
+        CGFloat count = (CGFloat)[cells count];
+        
+        for (int i =0 ;i < [cells count];i++) {
+            RecordItemInfo * cell = [cells objectAtIndex:i];
+            [cell resetContentAlpha:((count -i)/count)];
+        }
+    }
+    
+}
+
 #pragma mark - UITableView Stuff
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -100,5 +114,11 @@ static NSString * cellIdentifier = @"cellIdentifier";
 {
     RecordMusicInfo * info = [dataSource objectAtIndex:indexPath.row];
     [self playItemWithPath:info.localPath musicInfo:@{@"Title": info.title,@"Length":info.length}];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    cells = [tableView visibleCells];
+    [self resetTheCellAlphaWhenScrolling];
 }
 @end

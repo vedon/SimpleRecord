@@ -6,6 +6,9 @@
 //  Copyright (c) 2014 com.vedon. All rights reserved.
 //
 
+#define SaveRecordTag 1001
+#define CancelRecordTag 1002
+
 #import "RecordViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "AudioRecorder.h"
@@ -89,11 +92,23 @@
 #pragma mark - Private Method
 -(void)initializationInterface
 {
-    [self setLeftCustomBarItem:@"Record_Btn_Back.png" action:nil];
-    //    [self setRightCustomBarItem:@"Record_Btn_Choose.png" action:@selector(showFormatTable:)];
+    [self setLeftCustomBarItem:@"Record_Btn_Back.png" action:@selector(backAction)];
     recorder = [AudioRecorder shareAudioRecord];
     myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     isRecording = NO;
+    
+}
+-(void)backAction
+{
+    if (isRecording) {
+        UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"是否保存录音" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alertView.tag = SaveRecordTag;
+        [alertView show];
+        alertView = nil;
+    }else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
     
 }
 
@@ -181,6 +196,40 @@
     }
 }
 
+
+-(void)stopRecord
+{
+    isRecording = NO;
+    self.mp3Btn.userInteractionEnabled = !isRecording;
+    self.wavBtn.userInteractionEnabled = !isRecording;
+    
+    [self.recordControlBtn setSelected:NO];
+    [recorder stopRecord];
+    [self timerStop];
+    self.clocker.text = @"00:00:00";
+    isRecording = NO;
+    //1）转换格式
+    NSString * destinationFileName = [[self getDocumentDirectory] stringByAppendingPathComponent:[defaultFileName stringByAppendingPathExtension:formatType]];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [GobalMethod audio_PCMtoMP3WithSourceFile:recordFilePath destinationFile:destinationFileName withSampleRate:44100 completedHandler:^(NSError *error) {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+    } ];
+    
+    
+    //2）保存录音文件信息
+    RecordMusicInfo * recordFile = [RecordMusicInfo MR_createEntity];
+    recordFile.title    = defaultFileName;
+    recordFile.length   = [NSString stringWithFormat:@"%0.2f",[GobalMethod getMusicLength:recordFileURL]];
+    recordFile.makeTime = recordMakeTime;
+    recordFile.localPath= destinationFileName;
+    [[NSManagedObjectContext MR_defaultContext]MR_saveOnlySelfAndWait];
+    
+    //3）删除录音文件
+    [[NSFileManager defaultManager]removeItemAtPath:recordFilePath error:nil];
+    
+    
+    
+}
 #pragma mark - Outlet Action
 - (IBAction)startRecordAction:(id)sender {
     UIButton * btn = (UIButton *)sender;
@@ -194,6 +243,8 @@
             
             //Reset the recording mark
             isRecording = YES;
+            self.mp3Btn.userInteractionEnabled = !isRecording;
+            self.wavBtn.userInteractionEnabled = !isRecording;
             recordMakeTime  = [self getMakeTime];
             defaultFileName = [self getDefaultFileName];
             
@@ -225,41 +276,18 @@
 
 
 - (IBAction)stopRecordAction:(id)sender {
-    isRecording = NO;
-    [self.recordControlBtn setSelected:NO];
-    
-    [recorder stopRecord];
-    [self timerStop];
-    self.clocker.text = @"00:00:00";
-    isRecording = NO;
-    //1）转换格式
-    NSString * destinationFileName = [[self getDocumentDirectory] stringByAppendingPathComponent:[defaultFileName stringByAppendingPathExtension:formatType]];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [GobalMethod audio_PCMtoMP3WithSourceFile:recordFilePath destinationFile:destinationFileName withSampleRate:44100 completedHandler:^(NSError *error) {
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-    } ];
-    
-
-    //2）保存录音文件信息
-    RecordMusicInfo * recordFile = [RecordMusicInfo MR_createEntity];
-    recordFile.title    = defaultFileName;
-    recordFile.length   = [NSString stringWithFormat:@"%0.2f",[GobalMethod getMusicLength:recordFileURL]];
-    recordFile.makeTime = recordMakeTime;
-    recordFile.localPath= destinationFileName;
-    [[NSManagedObjectContext MR_defaultContext]MR_saveOnlySelfAndWait];
-    
-    //3）删除录音文件
-    [[NSFileManager defaultManager]removeItemAtPath:recordFilePath error:nil];
-    
-    
+    [self stopRecord];
     UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"保存成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alertView show];
     alertView = nil;
 }
 
+
+
 - (IBAction)cancelRecordAction:(id)sender {
     [self timerStop];
     UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"删除录音" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alertView.tag = CancelRecordTag;
     [alertView show];
     alertView = nil;
 }
@@ -290,10 +318,18 @@
     switch (buttonIndex) {
         case 0:
             //取消
+            
             break;
         case 1:
             //确定
-            [self cleanRecordStuff];
+            if (alertView.tag == CancelRecordTag) {
+                [self cleanRecordStuff];
+            }else
+            {
+                [self stopRecord];
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+            
             break;
         default:
             break;

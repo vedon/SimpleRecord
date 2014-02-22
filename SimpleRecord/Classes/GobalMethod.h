@@ -9,18 +9,28 @@
 #import <Foundation/Foundation.h>
 
 @interface GobalMethod : NSObject
+/**
+ @desc The fileName you typed in is exist white isDownload is true,otherwise ,the file is't exist.
+ */
 +(void)getExportPath:(NSString *)fileName completedBlock:(void (^)(BOOL isDownloaded,NSString * exportFilePath))block;
-
-/*                 Public                  */
-
+/**
+ @desc Get the current time as string returned
+ */
 +(NSString *)getMakeTime;
-
+/**
+ @desc Get the current time as string returned
+ */
 +(NSString *)userCurrentTimeAsFileName;
 
 +(NSString *)customiseTimeFormat:(NSString *)date;
-
+/**
+ @desc Remove the item at Path
+ */
 +(BOOL)removeItemAtPath:(NSString *)path;
 
+/**
+ @desc Get the file path with the fileName ,The file prefix is the Documents/ .
+ */
 +(NSString *)getExportPath:(NSString *)fileName;
 
 +(NSString *)getTempPath:(NSString *)fileName;
@@ -28,13 +38,23 @@
 
 
 /*                 Audio                  */
+
+/**
+ @desc Get the length of the music file in second
+ */
 +(CGFloat)getMusicLength:(NSURL *)url;
+/**
+ @desc Get the length of the music file in second
+ */
 +(CGFloat)getAudioFileLength:(NSURL *)fileURL;
+/**
+ @desc PCM convert to MP3
+ */
 +(void)audio_PCMtoMP3WithSourceFile:(NSString *)sourceFile destinationFile:(NSString *)desFile withSampleRate:(NSInteger)sampleRate completedHandler:(void(^)(NSError *error))block;
 
 
 /**
- @desc: 本地通知
+ @desc: Register a local notification
  */
 +(void)localNotificationBody:(NSString *)body;
 
