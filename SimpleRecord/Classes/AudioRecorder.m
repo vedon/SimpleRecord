@@ -10,13 +10,13 @@
 @interface AudioRecorder()
 {
     AVAudioRecorder * recorder;
-    NSTimer         * meterTimer;
     CGFloat          currentMeter;
     BOOL            isTimeStop;
 }
+@property (strong ,nonatomic)    NSTimer   * meterTimer;
 @end
 @implementation AudioRecorder
-
+@synthesize meterTimer;
 +(AudioRecorder *)shareAudioRecord
 {
     static AudioRecorder * shareInstance = nil;
@@ -56,8 +56,8 @@
     [recorder prepareToRecord];
     
 
-    meterTimer = [NSTimer timerWithTimeInterval:0.2 target:self selector:@selector(updateMeterLevel) userInfo:nil repeats:YES];
-    [meterTimer fire];
+//    meterTimer = [NSTimer timerWithTimeInterval:0.2 target:self selector:@selector(updateMeterLevel) userInfo:nil repeats:YES];
+//    [meterTimer fire];
     isTimeStop = NO;
 }
 
@@ -76,10 +76,6 @@
 -(void)stopRecord
 {
     isTimeStop = YES;
-    if (meterTimer) {
-        [meterTimer invalidate];
-        meterTimer = nil;
-    }
     if (recorder) {
         recorder = nil;
     }

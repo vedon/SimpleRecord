@@ -18,6 +18,8 @@
 #import "AudioReader.h"
 #import "AudioManager.h"
 #import "AppDelegate.h"
+#import "MusicInfo.h"
+#import "PersistentStore.h"
 
 //#import "PersistentStore.h"
 static NSString * cellIdentifier = @"Identifier";
@@ -84,23 +86,23 @@ static NSString * cellIdentifier = @"Identifier";
             [self getLocationFilePath:assetURL title:musicTitle];
             
             
-//            //判断是否已经在本地有音乐库的文件
-//            NSArray * array =[PersistentStore getAllObjectWithType:[MusicInfo class]];
-//            if ([array count]) {
-//                for (MusicInfo * object in array) {
-//                    if ([object.title isEqualToString:musicTitle]) {
-//                        objc_msgSend(self, action,object.localFilePath);
-//                        return;
-//                    }
-//                }
-//            }
-//            //在数据库中没有找到已经读取的文件，执行一下操作：从ipd library 中复制音乐文件到用户document 目录下
-//            //1) 保存数据到数据库
-//            MusicInfo * tempMusicInfo    = [MusicInfo MR_createEntity];
-//            tempMusicInfo.title          =  musicTitle;
-//            tempMusicInfo.artist         = [info valueForKey:@"Artist"];
-//            tempMusicInfo.localFilePath  = currentLocationPath;
-//            [[NSManagedObjectContext MR_defaultContext]MR_saveOnlySelfAndWait];
+            //判断是否已经在本地有音乐库的文件
+            NSArray * array =[PersistentStore getAllObjectWithType:[MusicInfo class]];
+            if ([array count]) {
+                for (MusicInfo * object in array) {
+                    if ([object.title isEqualToString:musicTitle]) {
+                        objc_msgSend(self, action,object.localFilePath);
+                        return;
+                    }
+                }
+            }
+            //在数据库中没有找到已经读取的文件，执行一下操作：从ipd library 中复制音乐文件到用户document 目录下
+            //1) 保存数据到数据库
+            MusicInfo * tempMusicInfo    = [MusicInfo MR_createEntity];
+            tempMusicInfo.title          =  musicTitle;
+            tempMusicInfo.artist         = [info valueForKey:@"Artist"];
+            tempMusicInfo.localFilePath  = currentLocationPath;
+            [PersistentStore save];
         
             //复制文件到本地
             [self exportAssetAtURL:assetURL withTitle:info[@"Title"] completedHandler:^(NSString *path) {

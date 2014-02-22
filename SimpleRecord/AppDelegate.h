@@ -15,5 +15,10 @@
 @property (strong, nonatomic) AudioReader  * reader;
 @property (strong, nonatomic) AudioManager * audioMng;
 @property (assign, nonatomic) CGFloat        currentPlayMusicLength;
+
+
 -(void)palyItemWithURL:(NSURL *)inputFileURL;
+-(void)play;
+-(void)pause;
+-(BOOL)isPlaying;
 @end

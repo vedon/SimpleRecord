@@ -69,6 +69,11 @@
 		4EACE91418B838B5004383AD /* PersistentStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACE91318B838B5004383AD /* PersistentStore.m */; };
 		4EACE91818B8391F004383AD /* SimpleRecord.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4EACE91618B8391F004383AD /* SimpleRecord.xcdatamodeld */; };
 		4EACE91B18B83B9A004383AD /* RecordMusicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACE91A18B83B9A004383AD /* RecordMusicInfo.m */; };
+		4EACE92118B83DFB004383AD /* MusicInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACE92018B83DFB004383AD /* MusicInfo.m */; };
+		4EACE92618B83E48004383AD /* MyRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACE92418B83E48004383AD /* MyRecordViewController.m */; };
+		4EACE92718B83E48004383AD /* MyRecordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EACE92518B83E48004383AD /* MyRecordViewController.xib */; };
+		4EACE92B18B84541004383AD /* RecordItemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACE92918B84540004383AD /* RecordItemInfo.m */; };
+		4EACE92C18B84541004383AD /* RecordItemInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EACE92A18B84541004383AD /* RecordItemInfo.xib */; };
 		999BAC5DD096431E8456B8E7 /* libPods-SimpleRecord.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAC9D0F882D4445974C7140 /* libPods-SimpleRecord.a */; };
 /* End PBXBuildFile section */
 
@@ -188,6 +193,14 @@
 		4EACE91718B8391F004383AD /* SimpleRecord.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleRecord.xcdatamodel; sourceTree = "<group>"; };
 		4EACE91918B83B9A004383AD /* RecordMusicInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordMusicInfo.h; sourceTree = "<group>"; };
 		4EACE91A18B83B9A004383AD /* RecordMusicInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordMusicInfo.m; sourceTree = "<group>"; };
+		4EACE91F18B83DFB004383AD /* MusicInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicInfo.h; sourceTree = "<group>"; };
+		4EACE92018B83DFB004383AD /* MusicInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicInfo.m; sourceTree = "<group>"; };
+		4EACE92318B83E48004383AD /* MyRecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRecordViewController.h; sourceTree = "<group>"; };
+		4EACE92418B83E48004383AD /* MyRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRecordViewController.m; sourceTree = "<group>"; };
+		4EACE92518B83E48004383AD /* MyRecordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyRecordViewController.xib; sourceTree = "<group>"; };
+		4EACE92818B84540004383AD /* RecordItemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordItemInfo.h; sourceTree = "<group>"; };
+		4EACE92918B84540004383AD /* RecordItemInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordItemInfo.m; sourceTree = "<group>"; };
+		4EACE92A18B84541004383AD /* RecordItemInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordItemInfo.xib; sourceTree = "<group>"; };
 		DBAC9D0F882D4445974C7140 /* libPods-SimpleRecord.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SimpleRecord.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6DD35B9BF6C4F0A87DA89AE /* Pods-SimpleRecord.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleRecord.xcconfig"; path = "Pods/Pods-SimpleRecord.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -269,8 +282,8 @@
 			children = (
 				4EACE91518B83911004383AD /* Models */,
 				4EACB74418B79B1C001545AC /* Views */,
-				4EACB6FC18B78FDA001545AC /* Classes */,
 				4EACB6EB18B789EF001545AC /* Controllers */,
+				4EACB6FC18B78FDA001545AC /* Classes */,
 				4EACB6C318B78898001545AC /* Libs */,
 				4EACB69718B7877D001545AC /* AppDelegate.h */,
 				4EACB69818B7877D001545AC /* AppDelegate.mm */,
@@ -364,6 +377,7 @@
 		4EACB6EB18B789EF001545AC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4EACE92218B83E37004383AD /* MyRecord */,
 				4EACB70018B79409001545AC /* LocalFileBrowser */,
 				4EACB6F118B78AE9001545AC /* Record */,
 			);
@@ -465,6 +479,9 @@
 		4EACB74418B79B1C001545AC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4EACE92818B84540004383AD /* RecordItemInfo.h */,
+				4EACE92918B84540004383AD /* RecordItemInfo.m */,
+				4EACE92A18B84541004383AD /* RecordItemInfo.xib */,
 				4EACB74518B79B2E001545AC /* MusicInfoCell.h */,
 				4EACB74618B79B2E001545AC /* MusicInfoCell.m */,
 				4EACB74818B79B39001545AC /* MusicInfoCell.xib */,
@@ -476,10 +493,22 @@
 			isa = PBXGroup;
 			children = (
 				4EACE91618B8391F004383AD /* SimpleRecord.xcdatamodeld */,
+				4EACE91F18B83DFB004383AD /* MusicInfo.h */,
+				4EACE92018B83DFB004383AD /* MusicInfo.m */,
 				4EACE91918B83B9A004383AD /* RecordMusicInfo.h */,
 				4EACE91A18B83B9A004383AD /* RecordMusicInfo.m */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		4EACE92218B83E37004383AD /* MyRecord */ = {
+			isa = PBXGroup;
+			children = (
+				4EACE92318B83E48004383AD /* MyRecordViewController.h */,
+				4EACE92418B83E48004383AD /* MyRecordViewController.m */,
+				4EACE92518B83E48004383AD /* MyRecordViewController.xib */,
+			);
+			path = MyRecord;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -566,8 +595,10 @@
 				4EACB6F618B78AE9001545AC /* RecordViewController.xib in Resources */,
 				4EACB6E918B78898001545AC /* CHANGELOG in Resources */,
 				4EACB69318B7877D001545AC /* InfoPlist.strings in Resources */,
+				4EACE92718B83E48004383AD /* MyRecordViewController.xib in Resources */,
 				4EACB6EA18B78898001545AC /* VERSION in Resources */,
 				4EACB74918B79B39001545AC /* MusicInfoCell.xib in Resources */,
+				4EACE92C18B84541004383AD /* RecordItemInfo.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -626,6 +657,7 @@
 				4EACB6E518B78898001545AC /* EZOutput.m in Sources */,
 				4EACB6FF18B78FDA001545AC /* AudioRecorder.m in Sources */,
 				4EACE91B18B83B9A004383AD /* RecordMusicInfo.m in Sources */,
+				4EACE92618B83E48004383AD /* MyRecordViewController.m in Sources */,
 				4EACB72418B79762001545AC /* HWConnect.m in Sources */,
 				4EACB6E318B78898001545AC /* EZAudioPlotGLKViewController.m in Sources */,
 				4EACB74318B79A09001545AC /* MBProgressHUD.m in Sources */,
@@ -633,6 +665,7 @@
 				4EACB6DE18B78898001545AC /* AEFloatConverter.m in Sources */,
 				4EACB73C18B79821001545AC /* RingBuffer.mm in Sources */,
 				4EACB70418B7941D001545AC /* LocalFileBroserViewController.mm in Sources */,
+				4EACE92118B83DFB004383AD /* MusicInfo.m in Sources */,
 				4EACE91818B8391F004383AD /* SimpleRecord.xcdatamodeld in Sources */,
 				4EACB72618B79762001545AC /* NSDate+Utils.m in Sources */,
 				4EACB69918B7877D001545AC /* AppDelegate.mm in Sources */,
@@ -648,6 +681,7 @@
 				4EACB74718B79B2E001545AC /* MusicInfoCell.m in Sources */,
 				4EACB69518B7877D001545AC /* main.m in Sources */,
 				4EACB72D18B79762001545AC /* VersionManager.m in Sources */,
+				4EACE92B18B84541004383AD /* RecordItemInfo.m in Sources */,
 				4EACB72B18B79762001545AC /* UIImage+Util.m in Sources */,
 				4EACB6E618B78898001545AC /* EZPlot.m in Sources */,
 				4EACB73A18B79821001545AC /* AudioManager.m in Sources */,

@@ -79,19 +79,44 @@
     [reader setAudioFileURL:inputFileURL samplingRate:self.audioMng.samplingRate numChannels:self.audioMng.numOutputChannels];
     reader.currentTime = 0.0;
     reader.delegate = self;
-    
     __weak AppDelegate * weakSelf =self;
     [self.audioMng setOutputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels)
      {
          [weakSelf.reader retrieveFreshAudio:data numFrames:numFrames numChannels:numChannels];
      }];
+    
     [self.audioMng play];
 }
 
+-(void)play
+{
+    [self.audioMng play];
+    [self.reader play];
+}
 
+-(void)pause
+{
+    [self.audioMng pause];
+    [self.reader pause];
+}
 
+-(BOOL)isPlaying
+{
+    if ([self.reader playing]) {
+        return YES;
+    }
+    return NO;
+}
 -(void)currentFileLocation:(CGFloat)location
 {
+    __weak AppDelegate * weakSelf = self;
     [[NSNotificationCenter defaultCenter]postNotificationName:@"AudioProcessingLocation" object:[NSNumber numberWithFloat:location]];
+    if (location >= _currentPlayMusicLength) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.audioMng pause];
+            weakSelf.reader.currentTime = 0.0;
+            [weakSelf.audioMng play];
+        });
+    }
 }
 @end

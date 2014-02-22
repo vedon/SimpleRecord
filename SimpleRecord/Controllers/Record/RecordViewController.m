@@ -12,6 +12,8 @@
 #import "RecordMusicInfo.h"
 #import "MBProgressHUD.h"
 #import "GobalMethod.h"
+#import "AppDelegate.h"
+#import "AudioManager.h"
 
 @interface RecordViewController ()<UIAlertViewDelegate>
 {
@@ -25,6 +27,7 @@
     NSString * recordMakeTime;
     NSString * recordFilePath;
     NSString * defaultFileName;
+    AppDelegate * myDelegate;
 }
 @property (weak, nonatomic) IBOutlet UILabel *clocker;
 @end
@@ -45,6 +48,7 @@
     [super viewDidLoad];
     
     recorder = [AudioRecorder shareAudioRecord];
+    myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -139,6 +143,9 @@
 
 #pragma mark - Outlet Action
 - (IBAction)startRecordAction:(id)sender {
+    
+    [myDelegate pause];
+    
     recordMakeTime  = [self getMakeTime];
     defaultFileName = [self getDefaultFileName];
     //录音的格式为caf 格式

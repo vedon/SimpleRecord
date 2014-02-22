@@ -9,11 +9,11 @@
 #import "MainViewController.h"
 #import "RecordViewController.h"
 #import "LocalFileBroserViewController.h"
-#import "AudioManager.h"
-#import "AudioReader.h"
+#import "MyRecordViewController.h"
 #import "AppDelegate.h"
+#import "AudioReader.h"
 
-@interface MainViewController ()<AudioReaderDelegate>
+@interface MainViewController ()
 {
     AudioReader * audioReader;
     AppDelegate * myDelegate;
@@ -35,8 +35,12 @@
 {
     [super viewDidLoad];
     self.progressSlider.value = 0.0;
+    
+    
     //通知用来更新slider 位置
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateProcessingLocation:) name:@"AudioProcessingLocation" object:nil];
+    
+    [self.progressSlider addTarget:self action:@selector(updateCurrentPlayMusicPosition:) forControlEvents:UIControlEventValueChanged];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -44,6 +48,8 @@
     [self.navigationController.navigationBar setHidden:YES];
     myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     self.progressSlider.maximumValue = myDelegate.currentPlayMusicLength;
+    
+    [self.controllBtn setSelected:[myDelegate isPlaying]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -64,6 +70,14 @@
 }
 
 
+-(void)updateCurrentPlayMusicPosition:(id)sender
+{
+//    [myDelegate.audioMng pause];
+//    UISlider * slider = (UISlider*)sender;
+//    myDelegate.reader.currentTime = slider.value;
+//    [myDelegate.audioMng play];
+}
+
 #pragma mark - Outlet Method
 - (IBAction)gotoRecordViewController:(id)sender {
     RecordViewController * viewController = [[RecordViewController alloc]initWithNibName:@"RecordViewController" bundle:nil];
@@ -75,6 +89,24 @@
     LocalFileBroserViewController * viewController = [[LocalFileBroserViewController alloc]initWithNibName:@"LocalFileBroserViewController" bundle:nil];
     [self.navigationController pushViewController:viewController animated:YES];
     viewController = nil;
+}
+
+- (IBAction)gotoMyRecordViewController:(id)sender {
+    
+    MyRecordViewController * viewController = [[MyRecordViewController alloc]initWithNibName:@"MyRecordViewController" bundle:nil];
+    [self.navigationController pushViewController:viewController animated:YES];
+    viewController = nil;
+}
+
+- (IBAction)controlBtnAction:(id)sender {
+    UIButton * btn = (UIButton *)sender;
+    [btn setSelected:!btn.selected];
+    if (btn.selected) {
+        [myDelegate play];
+    }else
+    {
+        [myDelegate pause];
+    }
 }
 
 

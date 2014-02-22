@@ -12,7 +12,9 @@
 
 - (IBAction)gotoRecordViewController:(id)sender;
 - (IBAction)gotoLocalMusicViewController:(id)sender;
+- (IBAction)gotoMyRecordViewController:(id)sender;
 
+- (IBAction)controlBtnAction:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIButton *controllBtn;
 @property (weak, nonatomic) IBOutlet UISlider *progressSlider;
