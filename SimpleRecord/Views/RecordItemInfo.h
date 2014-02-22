@@ -11,4 +11,8 @@
 @interface RecordItemInfo : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *musicTitle;
+@property (weak, nonatomic) IBOutlet UIButton *shareBtn;
+@property (weak, nonatomic) IBOutlet UIButton *uploadBtn;
+
+-(void)resetContentAlpha:(CGFloat)alpha;
 @end

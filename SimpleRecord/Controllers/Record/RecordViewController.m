@@ -30,6 +30,7 @@
     AppDelegate * myDelegate;
     
     BOOL isRecording;
+    NSString * formatType;
 }
 @property (weak, nonatomic) IBOutlet UILabel *clocker;
 @end
@@ -49,11 +50,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setLeftCustomBarItem:@"Record_Btn_Back.png" action:nil];
-    recorder = [AudioRecorder shareAudioRecord];
-    myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    isRecording = NO;
-    // Do any additional setup after loading the view from its nib.
+    [self initializationInterface];
+    formatType = @"mp3";
+    [self.mp3Btn setSelected:YES];
+        // Do any additional setup after loading the view from its nib.
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -67,6 +67,16 @@
     // Dispose of any resources that can be recreated.
 }
 #pragma mark - Private Method
+-(void)initializationInterface
+{
+    [self setLeftCustomBarItem:@"Record_Btn_Back.png" action:nil];
+    //    [self setRightCustomBarItem:@"Record_Btn_Choose.png" action:@selector(showFormatTable:)];
+    recorder = [AudioRecorder shareAudioRecord];
+    myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    isRecording = NO;
+
+}
+
 -(void)timerStop
 {
     if (counter !=nil) {
@@ -152,6 +162,8 @@
     if (btn.selected) {
         
         if (!isRecording) {
+            [myDelegate pause];
+            
             isRecording = YES;
             recordMakeTime  = [self getMakeTime];
             defaultFileName = [self getDefaultFileName];
@@ -228,6 +240,20 @@
     UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"删除录音" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [alertView show];
     alertView = nil;
+}
+
+- (IBAction)wavFormatAction:(id)sender {
+    UIButton * btn = (UIButton *)sender;
+    [btn setSelected:!btn.selected];
+    [self.mp3Btn setSelected:NO];
+    formatType = @"mp3";
+}
+
+- (IBAction)mp3FormatAction:(id)sender {
+    UIButton * btn = (UIButton *)sender;
+    [btn setSelected:!btn.selected];
+    [self.wavBtn setSelected:NO];
+    formatType = @"wav";
 }
 
 #pragma mark - UIAlertViewDelegate

@@ -83,7 +83,7 @@
     self.currentPlayMusicInfo = info;
     
     [self.audioMng pause];
-    
+    [self.audioMng setForceOutputToSpeaker:YES];
     self.audioMng = [AudioManager shareAudioManager];
     
     

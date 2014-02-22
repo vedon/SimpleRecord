@@ -26,4 +26,11 @@
     // Configure the view for the selected state
 }
 
+-(void)resetContentAlpha:(CGFloat)alpha
+{
+    self.musicTitle.alpha = alpha;
+    self.shareBtn.alpha = alpha;
+    self.uploadBtn.alpha = alpha;
+}
+
 @end

@@ -49,23 +49,7 @@ static NSString * cellIdentifier = @"Identifier";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setLeftCustomBarItem:@"Record_Btn_Back.png" action:nil];
-    dataSource = [NSMutableArray array];
-    importTool = [[TSLibraryImport alloc] init];
-    
-    [self findArtistList];
-    if ([dataSource count] == 0) {
-        //没有歌曲
-        [self showAlertViewWithMessage:@"本地没有音乐文件"];
-    }
-
-    UINib * cellNib = [UINib nibWithNibName:@"MusicInfoCell" bundle:[NSBundle bundleForClass:[MusicInfoCell class]]];
-    [self.contentTable registerNib:cellNib forCellReuseIdentifier:cellIdentifier];
-    if ([OSHelper iOS7]) {
-        self.contentTable.separatorInset = UIEdgeInsetsZero;
-    }
-    [self.contentTable setBackgroundColor:[UIColor clearColor]];
-    [self.contentTable setBackgroundView:nil];
+    [self initializationInterface];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -81,6 +65,29 @@ static NSString * cellIdentifier = @"Identifier";
 
 
 #pragma mark - Private Method
+
+-(void)initializationInterface
+{
+    [self setLeftCustomBarItem:@"Record_Btn_Back.png" action:nil];
+    dataSource = [NSMutableArray array];
+    importTool = [[TSLibraryImport alloc] init];
+    
+    [self findArtistList];
+    if ([dataSource count] == 0) {
+        //没有歌曲
+        [self showAlertViewWithMessage:@"本地没有音乐文件"];
+    }
+    
+    UINib * cellNib = [UINib nibWithNibName:@"MusicInfoCell" bundle:[NSBundle bundleForClass:[MusicInfoCell class]]];
+    [self.contentTable registerNib:cellNib forCellReuseIdentifier:cellIdentifier];
+    if ([OSHelper iOS7]) {
+        self.contentTable.separatorInset = UIEdgeInsetsZero;
+    }
+    self.contentTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.contentTable setBackgroundColor:[UIColor clearColor]];
+    [self.contentTable setBackgroundView:nil];
+}
+
 -(void)configureLibraryMusicWithSelector:(SEL)action withInfo:(NSDictionary *)info
 {
     if ([self isValidMusicName:[info valueForKey:@"Title"]])

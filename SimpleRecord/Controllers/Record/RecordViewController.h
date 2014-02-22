@@ -14,6 +14,10 @@
 - (IBAction)pauseBtnAction:(id)sender;
 - (IBAction)stopRecordAction:(id)sender;
 - (IBAction)cancelRecordAction:(id)sender;
+- (IBAction)wavFormatAction:(id)sender;
+- (IBAction)mp3FormatAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *mp3Btn;
+@property (weak, nonatomic) IBOutlet UIButton *wavBtn;
 
 
 @end
