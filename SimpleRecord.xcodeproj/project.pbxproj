@@ -106,6 +106,10 @@
 		4EACE96D18B89071004383AD /* FormatView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACE96C18B89071004383AD /* FormatView.m */; };
 		4EACE96F18B8907E004383AD /* FormatView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EACE96E18B8907E004383AD /* FormatView.xib */; };
 		4EACE97318B8AA8C004383AD /* NSTimer+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACE97218B8AA8C004383AD /* NSTimer+Addition.m */; };
+		4EACE97618B8D40F004383AD /* ModifyItemAttributeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACE97518B8D40F004383AD /* ModifyItemAttributeView.m */; };
+		4EACE97818B8D41A004383AD /* ModifyItemAttributeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EACE97718B8D41A004383AD /* ModifyItemAttributeView.xib */; };
+		4EACE97B18B8D60F004383AD /* ModifyCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACE97A18B8D60F004383AD /* ModifyCellView.m */; };
+		4EACE97D18B8D618004383AD /* ModifyCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EACE97C18B8D618004383AD /* ModifyCellView.xib */; };
 		999BAC5DD096431E8456B8E7 /* libPods-SimpleRecord.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAC9D0F882D4445974C7140 /* libPods-SimpleRecord.a */; };
 /* End PBXBuildFile section */
 
@@ -267,6 +271,12 @@
 		4EACE96E18B8907E004383AD /* FormatView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FormatView.xib; sourceTree = "<group>"; };
 		4EACE97118B8AA8C004383AD /* NSTimer+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Addition.h"; sourceTree = "<group>"; };
 		4EACE97218B8AA8C004383AD /* NSTimer+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Addition.m"; sourceTree = "<group>"; };
+		4EACE97418B8D40F004383AD /* ModifyItemAttributeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyItemAttributeView.h; sourceTree = "<group>"; };
+		4EACE97518B8D40F004383AD /* ModifyItemAttributeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyItemAttributeView.m; sourceTree = "<group>"; };
+		4EACE97718B8D41A004383AD /* ModifyItemAttributeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModifyItemAttributeView.xib; sourceTree = "<group>"; };
+		4EACE97918B8D60F004383AD /* ModifyCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyCellView.h; sourceTree = "<group>"; };
+		4EACE97A18B8D60F004383AD /* ModifyCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyCellView.m; sourceTree = "<group>"; };
+		4EACE97C18B8D618004383AD /* ModifyCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModifyCellView.xib; sourceTree = "<group>"; };
 		DBAC9D0F882D4445974C7140 /* libPods-SimpleRecord.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SimpleRecord.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6DD35B9BF6C4F0A87DA89AE /* Pods-SimpleRecord.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleRecord.xcconfig"; path = "Pods/Pods-SimpleRecord.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -556,6 +566,12 @@
 				4EACE96B18B89071004383AD /* FormatView.h */,
 				4EACE96C18B89071004383AD /* FormatView.m */,
 				4EACE96E18B8907E004383AD /* FormatView.xib */,
+				4EACE97418B8D40F004383AD /* ModifyItemAttributeView.h */,
+				4EACE97518B8D40F004383AD /* ModifyItemAttributeView.m */,
+				4EACE97718B8D41A004383AD /* ModifyItemAttributeView.xib */,
+				4EACE97918B8D60F004383AD /* ModifyCellView.h */,
+				4EACE97A18B8D60F004383AD /* ModifyCellView.m */,
+				4EACE97C18B8D618004383AD /* ModifyCellView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -717,6 +733,7 @@
 				4EACE95418B8725E004383AD /* Home_Slide_Track@2x.png in Resources */,
 				4EACB6A118B7877D001545AC /* Images.xcassets in Resources */,
 				4EACB70518B7941D001545AC /* LocalFileBroserViewController.xib in Resources */,
+				4EACE97D18B8D618004383AD /* ModifyCellView.xib in Resources */,
 				4EACE94E18B8725E004383AD /* Home_Btn_Play@2x.png in Resources */,
 				4EACE96118B8725F004383AD /* Record_Btn_Done@2x.png in Resources */,
 				4EACB6FB18B78AF5001545AC /* MainViewController.xib in Resources */,
@@ -731,6 +748,7 @@
 				4EACE95C18B8725F004383AD /* List_Line@2x.png in Resources */,
 				4EACB6E918B78898001545AC /* CHANGELOG in Resources */,
 				4EACE95D18B8725F004383AD /* List_Settings_Bg@2x.png in Resources */,
+				4EACE97818B8D41A004383AD /* ModifyItemAttributeView.xib in Resources */,
 				4EACB69318B7877D001545AC /* InfoPlist.strings in Resources */,
 				4EACE95B18B8725F004383AD /* List_Btn_Upload@2x.png in Resources */,
 				4EACE92718B83E48004383AD /* MyRecordViewController.xib in Resources */,
@@ -821,6 +839,7 @@
 				4EACB70418B7941D001545AC /* LocalFileBroserViewController.mm in Sources */,
 				4EACE92118B83DFB004383AD /* MusicInfo.m in Sources */,
 				4EACE91818B8391F004383AD /* SimpleRecord.xcdatamodeld in Sources */,
+				4EACE97B18B8D60F004383AD /* ModifyCellView.m in Sources */,
 				4EACB72618B79762001545AC /* NSDate+Utils.m in Sources */,
 				4EACB69918B7877D001545AC /* AppDelegate.mm in Sources */,
 				4EACB6F518B78AE9001545AC /* RecordViewController.m in Sources */,
@@ -830,6 +849,7 @@
 				4EACB72918B79762001545AC /* OSHelper.m in Sources */,
 				4EACB73918B79821001545AC /* AudioReader.mm in Sources */,
 				4EACB72C18B79762001545AC /* UIViewController+BarItem.m in Sources */,
+				4EACE97618B8D40F004383AD /* ModifyItemAttributeView.m in Sources */,
 				4EACB6E018B78898001545AC /* EZAudioFile.m in Sources */,
 				4EACB6E218B78898001545AC /* EZAudioPlotGL.m in Sources */,
 				4EACB74718B79B2E001545AC /* MusicInfoCell.m in Sources */,

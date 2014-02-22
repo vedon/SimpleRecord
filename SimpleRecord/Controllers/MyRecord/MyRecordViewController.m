@@ -11,11 +11,13 @@
 #import "RecordMusicInfo.h"
 #import "PersistentStore.h"
 #import "AppDelegate.h"
+#import "ModifyCellView.h"
+
 
 static NSString * cellIdentifier = @"cellIdentifier";
 @interface MyRecordViewController ()<UITableViewDataSource,UITableViewDelegate>
 {
-    NSArray * dataSource;
+    NSMutableArray * dataSource;
     NSArray * cells;
 }
 @end
@@ -35,6 +37,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    dataSource = [NSMutableArray array];
     [self initializationInterface];
     // Do any additional setup after loading the view from its nib.
 }
@@ -53,7 +56,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 -(void)initializationInterface
 {
     [self setLeftCustomBarItem:@"Record_Btn_Back.png" action:nil];
-    dataSource = [PersistentStore getAllObjectWithType:[RecordMusicInfo class]];
+    [self updateDataSource];
     
     
     UINib * cellNib = [UINib nibWithNibName:@"RecordItemInfo" bundle:[NSBundle bundleForClass:[RecordItemInfo class]]];
@@ -64,6 +67,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     self.contentTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.contentTable setBackgroundView:nil];
     [self.contentTable setBackgroundColor:[UIColor clearColor]];
+
 }
 
 -(void)playItemWithPath:(NSString *)localFilePath musicInfo:(NSDictionary *)dic
@@ -84,6 +88,57 @@ static NSString * cellIdentifier = @"cellIdentifier";
     }
     
 }
+
+-(void)updateDataSource
+{
+    [dataSource removeAllObjects];
+     [dataSource  addObjectsFromArray:[PersistentStore getAllObjectWithType:[RecordMusicInfo class]]];
+    [self.contentTable reloadData];
+}
+
+-(void)addLongPressGestureToCell:(UITableViewCell *)cell withIndex:(NSInteger)index
+{
+    UIView * gestureView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320,50)];
+    UILongPressGestureRecognizer * longPressGes = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(modifyItemName:)];
+    longPressGes.allowableMovement = 200.0f;
+    longPressGes.minimumPressDuration = 1.0;
+    [gestureView addGestureRecognizer:longPressGes];
+    [gestureView setBackgroundColor:[UIColor clearColor]];
+    gestureView.tag = index;
+    [cell.contentView addSubview:gestureView];
+    gestureView = nil;
+    longPressGes = nil;
+}
+
+-(void)modifyItemName:(UILongPressGestureRecognizer *)gesture
+{
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        __weak MyRecordViewController * weakSelf = self;
+        UIView * tempView = gesture.view;
+        RecordMusicInfo * object = [dataSource objectAtIndex:tempView.tag];
+        ModifyCellView * cellView = [[[NSBundle mainBundle]loadNibNamed:@"ModifyCellView" owner:self options:nil]objectAtIndex:0];
+        cellView.contentTextField.text = object.title;
+        [cellView.contentTextField becomeFirstResponder];
+        [cellView setBlock:^(BOOL isModify,NSString *modifiedName)
+         {
+             if (isModify) {
+                 NSLog(@"%@",modifiedName);
+                 [PersistentStore updateObject:object Key:@"title" Value:modifiedName];
+                 [weakSelf updateDataSource];
+             }
+         }];
+        cellView.alpha = 0.3;
+        [UIView animateWithDuration:0.3 animations:^{
+            cellView.alpha = 1.0;
+            [self.view addSubview:cellView];
+            
+        }];
+        cellView = nil;
+
+    }
+   
+}
+
 
 #pragma mark - UITableView Stuff
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -107,6 +162,8 @@ static NSString * cellIdentifier = @"cellIdentifier";
     [cell resetContentAlpha:alpha];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell setBackgroundColor:[UIColor clearColor]];
+    [self addLongPressGestureToCell:cell withIndex:indexPath.row];
+    
     return cell;
 }
 
@@ -120,5 +177,30 @@ static NSString * cellIdentifier = @"cellIdentifier";
 {
     cells = [tableView visibleCells];
     [self resetTheCellAlphaWhenScrolling];
+}
+- (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView
+           editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    BOOL someCondition = YES;
+    return (someCondition) ?
+    UITableViewCellEditingStyleDelete : UITableViewCellEditingStyleNone;
+}
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //Delete the local Record of the music item
+        RecordMusicInfo * object = [dataSource objectAtIndex:indexPath.row];
+        [PersistentStore deleteObje:object];
+        
+        //Delete Data source
+        [dataSource removeObjectAtIndex:indexPath.row];
+        
+        //Of course,delete the item in the table
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        
+    }
 }
 @end
