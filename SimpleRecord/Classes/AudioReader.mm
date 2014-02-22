@@ -164,7 +164,7 @@
         // Need to change your output block to check for [fileReader playing] and nuke your fileReader if it is   //
         // not playing and not paused, on the next frame. Otherwise, the sound clip's final buffer is not played. //
         //        self.currentTime = 0.0f;
-        [self stop];
+//        [self stop];
         ringBuffer->Clear();
     }
     
@@ -182,10 +182,8 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self pause];
         ExtAudioFileSeek(self.inputFile, thisCurrentTime*self.samplingRate);
-        
         [self clearBuffer];
         [self bufferNewAudio];
-        
         [self play];
     });
 }

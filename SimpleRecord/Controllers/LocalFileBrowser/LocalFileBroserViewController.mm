@@ -20,6 +20,7 @@
 #import "AppDelegate.h"
 #import "MusicInfo.h"
 #import "PersistentStore.h"
+#import "GobalMethod.h"
 
 //#import "PersistentStore.h"
 static NSString * cellIdentifier = @"Identifier";
@@ -48,6 +49,7 @@ static NSString * cellIdentifier = @"Identifier";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setLeftCustomBarItem:@"Record_Btn_Back.png" action:nil];
     dataSource = [NSMutableArray array];
     importTool = [[TSLibraryImport alloc] init];
     
@@ -62,6 +64,8 @@ static NSString * cellIdentifier = @"Identifier";
     if ([OSHelper iOS7]) {
         self.contentTable.separatorInset = UIEdgeInsetsZero;
     }
+    [self.contentTable setBackgroundColor:[UIColor clearColor]];
+    [self.contentTable setBackgroundView:nil];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -91,7 +95,7 @@ static NSString * cellIdentifier = @"Identifier";
             if ([array count]) {
                 for (MusicInfo * object in array) {
                     if ([object.title isEqualToString:musicTitle]) {
-                        objc_msgSend(self, action,object.localFilePath);
+                        objc_msgSend(self, action,object.localFilePath,@{@"Title": object.title,@"Length":object.length});
                         return;
                     }
                 }
@@ -102,6 +106,7 @@ static NSString * cellIdentifier = @"Identifier";
             tempMusicInfo.title          =  musicTitle;
             tempMusicInfo.artist         = [info valueForKey:@"Artist"];
             tempMusicInfo.localFilePath  = currentLocationPath;
+            tempMusicInfo.length         = [info valueForKey:@"musicTime"];
             [PersistentStore save];
         
             //复制文件到本地
@@ -109,7 +114,7 @@ static NSString * cellIdentifier = @"Identifier";
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (action) {
-                        objc_msgSend(self, action,path);
+                        objc_msgSend(self, action,path,info);
                     }
                 });
                 
@@ -213,10 +218,10 @@ static NSString * cellIdentifier = @"Identifier";
     }
 }
 
--(void)playItemWithPath:(NSString *)localFilePath
+-(void)playItemWithPath:(NSString *)localFilePath musicInfo:(NSDictionary *)dic
 {
     AppDelegate * myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    [myDelegate palyItemWithURL:[NSURL fileURLWithPath:localFilePath]];
+    [myDelegate palyItemWithURL:[NSURL fileURLWithPath:localFilePath]withMusicInfo:dic];
 }
 
 
@@ -245,7 +250,7 @@ static NSString * cellIdentifier = @"Identifier";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary * musicInfo = [dataSource objectAtIndex:indexPath.row];
-    [self configureLibraryMusicWithSelector:@selector(playItemWithPath:) withInfo:musicInfo];
+    [self configureLibraryMusicWithSelector:@selector(playItemWithPath:musicInfo:) withInfo:musicInfo];
 }
 
 @end

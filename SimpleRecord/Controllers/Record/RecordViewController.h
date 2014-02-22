@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface RecordViewController : UIViewController
+#import "CommonViewController.h"
+@interface RecordViewController : CommonViewController
 
 - (IBAction)startRecordAction:(id)sender;
 - (IBAction)pauseBtnAction:(id)sender;

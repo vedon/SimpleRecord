@@ -41,6 +41,16 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateProcessingLocation:) name:@"AudioProcessingLocation" object:nil];
     
     [self.progressSlider addTarget:self action:@selector(updateCurrentPlayMusicPosition:) forControlEvents:UIControlEventValueChanged];
+    
+    UIImage *minImage = [[UIImage imageNamed:@"Home_Slide_Track_Fill.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 4, 0, 4)];
+    UIImage *maxImage = [UIImage imageNamed:@"Home_Slide_Track.png"];
+    UIImage *thumbImage = [UIImage imageNamed:@"Home_Slide_Cap.png"];
+    
+    
+    [[UISlider appearance] setMaximumTrackImage:maxImage forState:UIControlStateNormal];
+    [[UISlider appearance] setMinimumTrackImage:minImage forState:UIControlStateNormal];
+    [[UISlider appearance] setThumbImage:thumbImage forState:UIControlStateNormal];
+    [[UISlider appearance] setThumbImage:thumbImage forState:UIControlStateHighlighted];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -50,6 +60,10 @@
     self.progressSlider.maximumValue = myDelegate.currentPlayMusicLength;
     
     [self.controllBtn setSelected:[myDelegate isPlaying]];
+    if (myDelegate.currentPlayMusicInfo) {
+        self.musicTitle.text = [myDelegate.currentPlayMusicInfo valueForKey:@"Title"];
+        self.progressingMusicLength.text = [myDelegate.currentPlayMusicInfo valueForKey:@"Length"];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -73,8 +87,8 @@
 -(void)updateCurrentPlayMusicPosition:(id)sender
 {
 //    [myDelegate.audioMng pause];
-//    UISlider * slider = (UISlider*)sender;
-//    myDelegate.reader.currentTime = slider.value;
+    UISlider * slider = (UISlider*)sender;
+    myDelegate.reader.currentTime = slider.value;
 //    [myDelegate.audioMng play];
 }
 

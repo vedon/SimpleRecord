@@ -28,6 +28,8 @@
     NSString * recordFilePath;
     NSString * defaultFileName;
     AppDelegate * myDelegate;
+    
+    BOOL isRecording;
 }
 @property (weak, nonatomic) IBOutlet UILabel *clocker;
 @end
@@ -38,6 +40,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.title = @"录音";
         // Custom initialization
     }
     return self;
@@ -46,9 +49,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self setLeftCustomBarItem:@"Record_Btn_Back.png" action:nil];
     recorder = [AudioRecorder shareAudioRecord];
     myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    isRecording = NO;
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -74,7 +78,7 @@
 -(void)timerStart
 {
     if (counter == nil) {
-        counter = [NSTimer timerWithTimeInterval:0.0 target:self selector:@selector(increateTime) userInfo:nil repeats:YES];
+        counter = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(increateTime) userInfo:nil repeats:YES];
         [[NSRunLoop currentRunLoop]addTimer:counter forMode:NSRunLoopCommonModes];
         [counter fire];
         
@@ -106,7 +110,7 @@
 -(void)resetClocker
 {
     hour = minute = second = 0;
-    self.clocker.text = @"";
+    self.clocker.text = @"00:00:00";
 }
 
 -(void)increateTime
@@ -143,27 +147,39 @@
 
 #pragma mark - Outlet Action
 - (IBAction)startRecordAction:(id)sender {
-    
-    [myDelegate pause];
-    
-    recordMakeTime  = [self getMakeTime];
-    defaultFileName = [self getDefaultFileName];
-    //录音的格式为caf 格式
-    NSString * localRecordFileFullName = [defaultFileName stringByAppendingPathExtension:@"caf"];
-    
-    recordFilePath = [[self getDocumentDirectory] stringByAppendingPathComponent:localRecordFileFullName];
-    recordFileURL = [NSURL fileURLWithPath:recordFilePath];
-    NSLog(@"URL: %@", recordFileURL);
-    if ([[NSFileManager defaultManager]fileExistsAtPath:recordFilePath isDirectory:NULL]) {
-        [[NSFileManager defaultManager]removeItemAtPath:recordFilePath error:nil];
+    UIButton * btn = (UIButton *)sender;
+    [btn setSelected:!btn.selected];
+    if (btn.selected) {
+        
+        if (!isRecording) {
+            isRecording = YES;
+            recordMakeTime  = [self getMakeTime];
+            defaultFileName = [self getDefaultFileName];
+            //录音的格式为caf 格式
+            NSString * localRecordFileFullName = [defaultFileName stringByAppendingPathExtension:@"caf"];
+            
+            recordFilePath = [[self getDocumentDirectory] stringByAppendingPathComponent:localRecordFileFullName];
+            recordFileURL = [NSURL fileURLWithPath:recordFilePath];
+            
+            
+            [recorder initRecordWithPath:recordFilePath];
+            [recorder startRecord];
+            
+            [self resetClocker];
+            [self timerStart];
+            
+
+        }else
+        {
+            [self timerStart];
+            [recorder startRecord];
+        }
+    }else
+    {
+        [self timerStop];
+        [recorder pauseRecord];
     }
     
-    
-    [recorder initRecordWithPath:recordFilePath];
-    [recorder startRecord];
-    [self timerStart];
-    [self resetClocker];
-
 }
 
 - (IBAction)pauseBtnAction:(id)sender {
@@ -183,8 +199,7 @@
     [recorder stopRecord];
     [self timerStop];
     self.clocker.text = @"00:00:00";
-    
-    
+    isRecording = NO;
     //1）转换格式
     NSString * destinationFileName = [[self getDocumentDirectory] stringByAppendingPathComponent:[defaultFileName stringByAppendingPathExtension:@"mp3"]];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];

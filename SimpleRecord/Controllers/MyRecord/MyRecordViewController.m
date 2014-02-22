@@ -10,6 +10,7 @@
 #import "RecordItemInfo.h"
 #import "RecordMusicInfo.h"
 #import "PersistentStore.h"
+#import "AppDelegate.h"
 
 static NSString * cellIdentifier = @"cellIdentifier";
 @interface MyRecordViewController ()
@@ -33,6 +34,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setLeftCustomBarItem:@"Record_Btn_Back.png" action:nil];
     dataSource = [PersistentStore getAllObjectWithType:[RecordMusicInfo class]];
     
     
@@ -41,6 +43,9 @@ static NSString * cellIdentifier = @"cellIdentifier";
     if ([OSHelper iOS7]) {
         self.contentTable.separatorInset = UIEdgeInsetsZero;
     }
+    self.contentTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.contentTable setBackgroundView:nil];
+    [self.contentTable setBackgroundColor:[UIColor clearColor]];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -53,7 +58,12 @@ static NSString * cellIdentifier = @"cellIdentifier";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+#pragma mark - Private method
+-(void)playItemWithPath:(NSString *)localFilePath musicInfo:(NSDictionary *)dic
+{
+    AppDelegate * myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    [myDelegate palyItemWithURL:[NSURL fileURLWithPath:localFilePath]withMusicInfo:dic];
+}
 
 #pragma mark - UITableView Stuff
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -73,12 +83,13 @@ static NSString * cellIdentifier = @"cellIdentifier";
     
     cell.musicTitle.text = info.title;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell setBackgroundColor:[UIColor clearColor]];
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-//    [self configureLibraryMusicWithSelector:@selector(playItemWithPath:) withInfo:musicInfo];
+    RecordMusicInfo * info = [dataSource objectAtIndex:indexPath.row];
+    [self playItemWithPath:info.localPath musicInfo:@{@"Title": info.title,@"Length":info.length}];
 }
 @end

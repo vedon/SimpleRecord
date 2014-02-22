@@ -14,10 +14,11 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) AudioReader  * reader;
 @property (strong, nonatomic) AudioManager * audioMng;
+@property (strong, nonatomic) NSDictionary * currentPlayMusicInfo;
 @property (assign, nonatomic) CGFloat        currentPlayMusicLength;
 
 
--(void)palyItemWithURL:(NSURL *)inputFileURL;
+-(void)palyItemWithURL:(NSURL *)inputFileURL withMusicInfo:(NSDictionary *)info;
 -(void)play;
 -(void)pause;
 -(BOOL)isPlaying;

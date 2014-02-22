@@ -20,6 +20,7 @@
 {
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"SimpleRecord.sqlite"];
     
+    [self custonNavigationBar];
     
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     MainViewController * mainController = [[MainViewController alloc]initWithNibName:@"MainViewController" bundle:nil];
@@ -59,20 +60,31 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+
+- (void)custonNavigationBar
+{
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:@{UITextAttributeTextColor:[UIColor whiteColor],NSFontAttributeName: [UIFont systemFontOfSize:21.0f]}];
+    if([OSHelper iOS7])
+    {
+        [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"Record_Bar_Top.png"] forBarMetrics:UIBarMetricsDefault];
+    }
+    else
+    {
+        [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"Record_Bar_Top.png"] forBarMetrics:UIBarMetricsDefault];
+    }
+
+}
+
 #pragma mark - Audio Stuff
--(void)palyItemWithURL:(NSURL *)inputFileURL
+-(void)palyItemWithURL:(NSURL *)inputFileURL withMusicInfo:(NSDictionary *)info
 {
     self.currentPlayMusicLength = [GobalMethod getMusicLength:inputFileURL];
+    self.currentPlayMusicInfo = info;
     
     [self.audioMng pause];
-    if ([self.reader playing]) {
-        [self.reader stop];
-    }
     
     self.audioMng = [AudioManager shareAudioManager];
-    if (self.reader) {
-        self.reader = nil;
-    }
     
     
     reader = [AudioReader shareAudioReader];
@@ -92,6 +104,7 @@
 {
     [self.audioMng play];
     [self.reader play];
+    [self.audioMng setForceOutputToSpeaker:YES];
 }
 
 -(void)pause
@@ -113,9 +126,7 @@
     [[NSNotificationCenter defaultCenter]postNotificationName:@"AudioProcessingLocation" object:[NSNumber numberWithFloat:location]];
     if (location >= _currentPlayMusicLength) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf.audioMng pause];
             weakSelf.reader.currentTime = 0.0;
-            [weakSelf.audioMng play];
         });
     }
 }
