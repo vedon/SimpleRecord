@@ -10,11 +10,12 @@
 #import "MainViewController.h"
 #import "AudioManager.h"
 #import "AudioReader.h"
+#import "GobalMethod.h"
 @interface AppDelegate()<AudioReaderDelegate>
 @end
 
 @implementation AppDelegate
-
+@synthesize reader;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -55,26 +56,28 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-
+#pragma mark - Audio Stuff
 -(void)palyItemWithURL:(NSURL *)inputFileURL
 {
-    self.audioMng = [AudioManager shareAudioManager];
+    self.currentPlayMusicLength = [GobalMethod getMusicLength:inputFileURL];
+    
     [self.audioMng pause];
     if ([self.reader playing]) {
         [self.reader stop];
     }
-//    currentPlayFileLength = [self getMusicLength:inputFileURL];
+    
+    self.audioMng = [AudioManager shareAudioManager];
     if (self.reader) {
         self.reader = nil;
     }
     
     
-    self.reader = [AudioReader shareAudioReader];
-    [self.reader setAudioFileURL:inputFileURL samplingRate:self.audioMng.samplingRate numChannels:self.audioMng.numOutputChannels];
-    //太累了，要记住一定要设置currentime = 0.0,表示开始时间   :]
-    self.reader.currentTime = 0.0;
-    __weak AppDelegate * weakSelf =self;
+    reader = [AudioReader shareAudioReader];
+    [reader setAudioFileURL:inputFileURL samplingRate:self.audioMng.samplingRate numChannels:self.audioMng.numOutputChannels];
+    reader.currentTime = 0.0;
+    reader.delegate = self;
     
+    __weak AppDelegate * weakSelf =self;
     [self.audioMng setOutputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels)
      {
          [weakSelf.reader retrieveFreshAudio:data numFrames:numFrames numChannels:numChannels];
@@ -82,19 +85,10 @@
     [self.audioMng play];
 }
 
+
+
 -(void)currentFileLocation:(CGFloat)location
 {
-    //    if (location == currentPlayFileLength) {
-    //        [self.audioMng pause];
-    ////        [currentPlayItemControlBtn setSelected:NO];
-    ////        currentSelectedItemSlider.value = 0.0f;
-    //    }else
-    //    {
-    //        NSLog(@"%f",location);
-    //        dispatch_async(dispatch_get_main_queue(), ^{
-    ////            currentSelectedItemSlider.value = ceil(location);
-    //        });
-    //    }
-    
+    [[NSNotificationCenter defaultCenter]postNotificationName:@"AudioProcessingLocation" object:[NSNumber numberWithFloat:location]];
 }
 @end

@@ -65,6 +65,7 @@
 		4EACB74C18B79FC8001545AC /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB74B18B79FC8001545AC /* Accelerate.framework */; };
 		4EACB74E18B7A44C001545AC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB74D18B7A44C001545AC /* CoreMedia.framework */; };
 		4EACB75018B7A466001545AC /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB74F18B7A466001545AC /* MediaPlayer.framework */; };
+		4EACE91118B835C4004383AD /* GobalMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACE91018B835C4004383AD /* GobalMethod.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -176,6 +177,8 @@
 		4EACB74B18B79FC8001545AC /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		4EACB74D18B7A44C001545AC /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		4EACB74F18B7A466001545AC /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		4EACE90F18B835C4004383AD /* GobalMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GobalMethod.h; sourceTree = "<group>"; };
+		4EACE91018B835C4004383AD /* GobalMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GobalMethod.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -365,6 +368,8 @@
 		4EACB6FC18B78FDA001545AC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				4EACE90F18B835C4004383AD /* GobalMethod.h */,
+				4EACE91018B835C4004383AD /* GobalMethod.m */,
 				4EACB72E18B79821001545AC /* AudioReader.h */,
 				4EACB72F18B79821001545AC /* AudioReader.mm */,
 				4EACB73018B79821001545AC /* AudioManager.h */,
@@ -554,6 +559,7 @@
 			files = (
 				4EACB72718B79762001545AC /* NSString+MD5_32.m in Sources */,
 				4EACB72518B79762001545AC /* IO.m in Sources */,
+				4EACE91118B835C4004383AD /* GobalMethod.m in Sources */,
 				4EACB6E818B78898001545AC /* TPCircularBuffer.c in Sources */,
 				4EACB6E518B78898001545AC /* EZOutput.m in Sources */,
 				4EACB6FF18B78FDA001545AC /* AudioRecorder.m in Sources */,

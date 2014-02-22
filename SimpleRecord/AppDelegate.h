@@ -12,8 +12,8 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) AudioReader * reader;
+@property (strong, nonatomic) AudioReader  * reader;
 @property (strong, nonatomic) AudioManager * audioMng;
-
+@property (assign, nonatomic) CGFloat        currentPlayMusicLength;
 -(void)palyItemWithURL:(NSURL *)inputFileURL;
 @end

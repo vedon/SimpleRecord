@@ -27,7 +27,6 @@ static NSString * cellIdentifier = @"Identifier";
     NSMutableArray * dataSource;
     //当前选择文件的本地路径
     NSString * currentLocationPath;
-    CGFloat currentPlayFileLength;
 }
 @property (strong ,nonatomic) NSOperationQueue *autoCompleteQueue;
 @end
@@ -218,13 +217,7 @@ static NSString * cellIdentifier = @"Identifier";
     [myDelegate palyItemWithURL:[NSURL fileURLWithPath:localFilePath]];
 }
 
--(CGFloat)getMusicLength:(NSURL *)url
-{
-    AVURLAsset* audioAsset =[AVURLAsset assetWithURL:url];
-    CMTime audioDuration = audioAsset.duration;
-    float audioDurationSeconds =CMTimeGetSeconds(audioDuration)/60.0f;
-    return audioDurationSeconds;
-}
+
 
 #pragma mark - UITableView Stuff
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
