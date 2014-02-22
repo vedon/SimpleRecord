@@ -11,6 +11,7 @@
 @interface GobalMethod : NSObject
 +(void)getExportPath:(NSString *)fileName completedBlock:(void (^)(BOOL isDownloaded,NSString * exportFilePath))block;
 
+/*                 Public                  */
 
 +(NSString *)getMakeTime;
 
@@ -24,13 +25,20 @@
 
 +(NSString *)getTempPath:(NSString *)fileName;
 
+
+
 /*                 Audio                  */
 +(CGFloat)getMusicLength:(NSURL *)url;
 +(CGFloat)getAudioFileLength:(NSURL *)fileURL;
++(void)audio_PCMtoMP3WithSourceFile:(NSString *)sourceFile destinationFile:(NSString *)desFile withSampleRate:(NSInteger)sampleRate;
+
 
 /**
  @desc: 本地通知
  */
 +(void)localNotificationBody:(NSString *)body;
 
+
+
 @end
+

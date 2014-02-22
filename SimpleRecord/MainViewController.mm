@@ -57,6 +57,10 @@
 {
     CGFloat location = [noti.object floatValue];
     NSLog(@"%f",location);
+    __weak MainViewController * weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        weakSelf.progressSlider.value = ceil(location);
+    });
 }
 
 
@@ -74,10 +78,4 @@
 }
 
 
-#pragma mark -
--(void)currentFileLocation:(CGFloat)location
-{
-    NSLog(@"%f",location);
-    
-}
 @end

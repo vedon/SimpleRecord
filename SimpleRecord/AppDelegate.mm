@@ -18,6 +18,9 @@
 @synthesize reader;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [MagicalRecord setupCoreDataStackWithStoreNamed:@"SimpleRecord.sqlite"];
+    
+    
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     MainViewController * mainController = [[MainViewController alloc]initWithNibName:@"MainViewController" bundle:nil];
     

@@ -9,6 +9,9 @@
 #import "RecordViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "AudioRecorder.h"
+#import "RecordMusicInfo.h"
+#import "MBProgressHUD.h"
+#import "GobalMethod.h"
 
 @interface RecordViewController ()<UIAlertViewDelegate>
 {
@@ -175,22 +178,22 @@
     self.clocker.text = @"00:00:00";
     
     
-//    //1）转换格式
-//    NSString * destinationFileName = [[self getDocumentDirectory] stringByAppendingPathComponent:[defaultFileName stringByAppendingPathExtension:@"mp3"]];
-//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-//    [audioManager audio_PCMtoMP3WithSourceFile:recordFilePath destinationFile:destinationFileName withSampleRate:44100];
-//    [MBProgressHUD hideHUDForView:self.view animated:YES];
-//    
-//    //2）保存录音文件信息
-//    RecordMusicInfo * recordFile = [RecordMusicInfo MR_createEntity];
-//    recordFile.title    = defaultFileName;
-//    recordFile.length   = [NSString stringWithFormat:@"%0.2f",[self getMusicLength:recordFileURL]];
-//    recordFile.makeTime = recordMakeTime;
-//    recordFile.localPath= destinationFileName;
-//    [[NSManagedObjectContext MR_defaultContext]MR_saveOnlySelfAndWait];
+    //1）转换格式
+    NSString * destinationFileName = [[self getDocumentDirectory] stringByAppendingPathComponent:[defaultFileName stringByAppendingPathExtension:@"mp3"]];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [GobalMethod audio_PCMtoMP3WithSourceFile:recordFilePath destinationFile:destinationFileName withSampleRate:44100];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    
+    //2）保存录音文件信息
+    RecordMusicInfo * recordFile = [RecordMusicInfo MR_createEntity];
+    recordFile.title    = defaultFileName;
+    recordFile.length   = [NSString stringWithFormat:@"%0.2f",[GobalMethod getMusicLength:recordFileURL]];
+    recordFile.makeTime = recordMakeTime;
+    recordFile.localPath= destinationFileName;
+    [[NSManagedObjectContext MR_defaultContext]MR_saveOnlySelfAndWait];
     
     //3）删除录音文件
-//    [[NSFileManager defaultManager]removeItemAtPath:recordFilePath error:nil];
+    [[NSFileManager defaultManager]removeItemAtPath:recordFilePath error:nil];
     
     
     UIAlertView * alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"保存成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
