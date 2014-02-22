@@ -20,7 +20,7 @@
             <subviews>
                 <view contentMode="scaleToFill" id="Ef8-jz-ee6">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Bg.png" id="6Tq-0G-HVa">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="576"/>
