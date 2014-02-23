@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 @class AudioReader;
 @class AudioManager;
+@class HTTPServer;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
-
+{
+    HTTPServer *httpServer;
+}
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) AudioReader  * reader;
 @property (strong, nonatomic) AudioManager * audioMng;

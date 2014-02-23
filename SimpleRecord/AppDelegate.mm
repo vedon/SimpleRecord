@@ -11,6 +11,12 @@
 #import "AudioManager.h"
 #import "AudioReader.h"
 #import "GobalMethod.h"
+
+#import "HTTPServer.h"
+#import "DDLog.h"
+#import "DDTTYLogger.h"
+#import "MyHTTPConnection.h"
+
 @interface AppDelegate()<AudioReaderDelegate>
 @end
 
@@ -19,7 +25,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"SimpleRecord.sqlite"];
-    
+    [self wifiTransferFileSetup];
     [self custonNavigationBar];
     
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -60,6 +66,54 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+#pragma mark - Private Method
+-(void)wifiTransferFileSetup
+{
+    NSNotificationCenter *nc=[NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(handlerPortSuccess:) name:@"HTTPServer_get_port_success" object:nil];
+    [nc addObserver:self selector:@selector(handlerPortFail:) name:@"HTTPServer_get_port_fail" object:nil];
+    
+    
+    // Configure our logging framework.
+	// To keep things simple and fast, we're just going to log to the Xcode console.
+	[DDLog addLogger:[DDTTYLogger sharedInstance]];
+	
+	// Initalize our http server
+	httpServer = [[HTTPServer alloc] init];
+	
+	// Tell the server to broadcast its presence via Bonjour.
+	// This allows browsers such as Safari to automatically discover our service.
+	[httpServer setType:@"_http._tcp."];
+	
+	// Normally there's no need to run our server on any specific port.
+	// Technologies like Bonjour allow clients to dynamically discover the server's port at runtime.
+	// However, for easy testing you may want force a certain port so you can just hit the refresh button.
+    //	[httpServer setPort:12345];
+	
+	// Serve files from the standard Sites folder
+	NSString *docRoot = [[[NSBundle mainBundle] pathForResource:@"index" ofType:@"html" inDirectory:@"web"] stringByDeletingLastPathComponent];
+	NSLog(@"Setting document root: %@", docRoot);
+	
+	[httpServer setDocumentRoot:docRoot];
+	
+	[httpServer setConnectionClass:[MyHTTPConnection class]];
+	
+	NSError *error = nil;
+	if(![httpServer start:&error])
+	{
+		NSLog(@"Error starting HTTP Server: %@", error);
+	}
+
+}
+
+-(void)handlerPortSuccess:(NSNotification *)notification{
+    NSDictionary* userInfo=notification.userInfo;
+    NSNumber* port=[userInfo valueForKey:@"local_port"];
+    NSLog(@"handlerPortSuccess----port:%d",port.unsignedShortValue);
+}
+-(void)handlerPortFail:(NSNotification *)notification{
+    NSLog(@"handlerPortFail-----");
+}
 
 - (void)custonNavigationBar
 {
