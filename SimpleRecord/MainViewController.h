@@ -20,5 +20,6 @@
 @property (weak, nonatomic) IBOutlet UISlider *progressSlider;
 @property (weak, nonatomic) IBOutlet UILabel *progressingMusicLength;
 @property (weak, nonatomic) IBOutlet UILabel *musicTitle;
+@property (weak, nonatomic) IBOutlet UIView *controlBtnContainerView;
 
 @end

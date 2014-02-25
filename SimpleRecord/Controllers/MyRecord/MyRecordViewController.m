@@ -61,9 +61,16 @@ static NSString * cellIdentifier = @"cellIdentifier";
     
     UINib * cellNib = [UINib nibWithNibName:@"RecordItemInfo" bundle:[NSBundle bundleForClass:[RecordItemInfo class]]];
     [self.contentTable registerNib:cellNib forCellReuseIdentifier:cellIdentifier];
+#ifdef iOS7_SDK
     if ([OSHelper iOS7]) {
         self.contentTable.separatorInset = UIEdgeInsetsZero;
     }
+#else
+    CGRect rect = _tableContainerView.frame;
+    rect.origin.y +=20;
+    _tableContainerView.frame = rect;
+
+#endif
     self.contentTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.contentTable setBackgroundView:nil];
     [self.contentTable setBackgroundColor:[UIColor clearColor]];

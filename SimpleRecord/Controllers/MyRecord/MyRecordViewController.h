@@ -11,4 +11,5 @@
 @interface MyRecordViewController : CommonViewController
 
 @property (weak, nonatomic) IBOutlet UITableView *contentTable;
+@property (weak, nonatomic) IBOutlet UIView *tableContainerView;
 @end

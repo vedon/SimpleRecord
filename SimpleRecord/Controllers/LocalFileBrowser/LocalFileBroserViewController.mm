@@ -80,9 +80,16 @@ static NSString * cellIdentifier = @"Identifier";
     
     UINib * cellNib = [UINib nibWithNibName:@"MusicInfoCell" bundle:[NSBundle bundleForClass:[MusicInfoCell class]]];
     [self.contentTable registerNib:cellNib forCellReuseIdentifier:cellIdentifier];
+#ifdef iOS7_SDK
     if ([OSHelper iOS7]) {
         self.contentTable.separatorInset = UIEdgeInsetsZero;
     }
+#else
+    CGRect rect = _tableContainerView.frame;
+    rect.origin.y +=20;
+    _tableContainerView.frame = rect;
+    
+#endif
     self.contentTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.contentTable setBackgroundColor:[UIColor clearColor]];
     [self.contentTable setBackgroundView:nil];

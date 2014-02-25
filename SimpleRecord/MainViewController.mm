@@ -51,6 +51,12 @@
     [[UISlider appearance] setMinimumTrackImage:minImage forState:UIControlStateNormal];
     [[UISlider appearance] setThumbImage:thumbImage forState:UIControlStateNormal];
     [[UISlider appearance] setThumbImage:thumbImage forState:UIControlStateHighlighted];
+    
+    if ([OSHelper iPhone5]) {
+        CGRect rect = _controlBtnContainerView.frame;
+        rect.origin.y += 35;
+        _controlBtnContainerView.frame = rect;
+    }
 }
 
 -(void)viewWillAppear:(BOOL)animated

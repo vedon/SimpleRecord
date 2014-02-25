@@ -18,7 +18,7 @@
 #import "AppDelegate.h"
 #import "AudioManager.h"
 #import "NSTimer+Addition.h"
-
+#import "PersistentStore.h"
 @interface RecordViewController ()<UIAlertViewDelegate>
 {
     AudioRecorder * recorder;
@@ -223,12 +223,15 @@
             
             if (error == nil) {
                 //2）保存录音文件信息
-                RecordMusicInfo * recordFile = [RecordMusicInfo MR_createEntity];
-                recordFile.title    = defaultFileName;
-                recordFile.length   = [NSString stringWithFormat:@"%0.2f",[GobalMethod getMusicLength:recordFileURL]];
-                recordFile.makeTime = recordMakeTime;
-                recordFile.localPath= destinationFileName;
-                [[NSManagedObjectContext MR_defaultContext]MR_saveOnlySelfAndWait];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    RecordMusicInfo * recordFile = [RecordMusicInfo MR_createEntity];
+                    recordFile.title    = defaultFileName;
+                    recordFile.length   = [NSString stringWithFormat:@"%0.2f",[GobalMethod getMusicLength:recordFileURL]];
+                    recordFile.makeTime = recordMakeTime;
+                    recordFile.localPath= destinationFileName;
+                    [PersistentStore save];
+                });
+               
                 
                 //3）删除录音文件
                 [[NSFileManager defaultManager]removeItemAtPath:recordFilePath error:nil];
@@ -350,7 +353,7 @@
             }else
             {
                 [self saveRecordFile];
-                [self.navigationController popViewControllerAnimated:YES];
+//                [self.navigationController popViewControllerAnimated:YES];
             }
             
             break;
