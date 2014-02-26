@@ -203,41 +203,37 @@
         int read, write;
         
         FILE *pcm = fopen([cafFilePath cStringUsingEncoding:NSUTF8StringEncoding], "rb");  //source 被转换的音频文件位置
-        if (pcm != NULL) {
-            fseek(pcm, 4*1024, SEEK_CUR);                                   //skip file header
-            FILE *mp3 = fopen([mp3FilePath cStringUsingEncoding:NSUTF8StringEncoding], "wb");  //output 输出生成的Mp3文件位置
-            
-            const int PCM_SIZE = 8192*2;
-            const int MP3_SIZE = 8192*2;
-            short int pcm_buffer[PCM_SIZE*2];
-            unsigned char mp3_buffer[MP3_SIZE];
-            
-            lame_t lame = lame_init();
-            lame_set_in_samplerate(lame, sampleRate);
-            lame_set_VBR(lame, vbr_default);
-            lame_init_params(lame);
-            
-            do {
-                read = fread(pcm_buffer, 2*sizeof(short int), PCM_SIZE, pcm);
-                if (read == 0)
-                    write = lame_encode_flush(lame, mp3_buffer, MP3_SIZE);
-                else
-                    write = lame_encode_buffer_interleaved(lame, pcm_buffer, read, mp3_buffer, MP3_SIZE);
-                
-                fwrite(mp3_buffer, write, 1, mp3);
-                
-            } while (read != 0);
-            
-            lame_close(lame);
-            fclose(mp3);
-            fclose(pcm);
-            block(nil);
-
-        }else
-        {
-            //打开文件出错
-        }
+        fseek(pcm, 4*1024, SEEK_CUR);                                   //skip file header
+        FILE *mp3 = fopen([mp3FilePath cStringUsingEncoding:NSUTF8StringEncoding], "wb");  //output 输出生成的Mp3文件位置
         
+        const int PCM_SIZE = 8192*2;
+        const int MP3_SIZE = 8192*2;
+        short int pcm_buffer[PCM_SIZE*2];
+        unsigned char mp3_buffer[MP3_SIZE];
+        
+        lame_t lame = lame_init();
+        lame_set_in_samplerate(lame, sampleRate);
+        lame_set_VBR(lame, vbr_default);
+        lame_set_brate(lame, 88);
+        lame_set_mode(lame, 1);
+        lame_set_quality(lame, 2);
+        lame_init_params(lame);
+        
+        do {
+            read = fread(pcm_buffer, 2*sizeof(short int), PCM_SIZE, pcm);
+            if (read == 0)
+                write = lame_encode_flush(lame, mp3_buffer, MP3_SIZE);
+            else
+                write = lame_encode_buffer_interleaved(lame, pcm_buffer, read, mp3_buffer, MP3_SIZE);
+            
+            int writeCount = fwrite(mp3_buffer, write, 1, mp3);
+            
+        } while (read != 0);
+        
+        lame_close(lame);
+        fclose(mp3);
+        fclose(pcm);
+         block(nil);
     }
     @catch (NSException *exception) {
         NSLog(@"%@",[exception description]);
@@ -245,6 +241,86 @@
     @finally {
        
     }
+}
+
+-(void)recrdFromSourceFile:(NSString *)sourceFile destinateFile:(NSString *)destinatedFile frameSize:(UInt32)frameSize
+{
+    //mp3压缩参数
+    lame_t lame = lame_init();
+    lame_set_num_channels(lame, 2);
+    lame_set_in_samplerate(lame, 88200);
+    lame_set_brate(lame, 88);
+    lame_set_mode(lame, 1);
+    lame_set_quality(lame, 2);
+    lame_init_params(lame);
+    
+    //这种方式初始化的NSData不需要手动释放
+    NSMutableData *mp3Data = [[NSMutableData alloc] init];
+    
+    NSLog(@"record path: %@",sourceFile);
+    NSLog(@"out path: %@", destinatedFile);
+    FILE *fp;
+    fp = fopen([destinatedFile cStringUsingEncoding:NSASCIIStringEncoding], "rb");
+    
+    long curpos;
+    //if(fp) 这句得补上，但是还不确定是否有问题
+    while (true)
+    {
+        //需要手动释放
+        NSData *audioData = nil;
+        
+        curpos = ftell(fp);
+        long startPos = ftell(fp);//文件当前读到的位置
+        fseek(fp, 0, SEEK_END);
+        long endPos = ftell(fp);//文件末尾位置
+        long length = endPos - startPos;//剩下未读入文件长度
+        fseek(fp, curpos, SEEK_SET);//把文件指针重新置回
+        const int PCM_SIZE = frameSize;
+        char buff[PCM_SIZE];
+        memset(buff, 0, PCM_SIZE);
+        if(length > frameSize)
+        {
+            fread(buff, 1, frameSize, fp);
+            audioData = [NSData dataWithBytes:buff length:frameSize];
+            short *recordingData = (short *)audioData.bytes;
+            int pcmLen = audioData.length;
+            int nsamples = pcmLen / 2;
+            
+            unsigned char buffer[pcmLen];
+            
+            //执行encode
+            int recvLen = lame_encode_buffer(lame, recordingData, recordingData, nsamples, buffer, pcmLen);
+            [mp3Data appendBytes:buffer length:recvLen];
+        }
+        else
+        {
+            if (YES)
+            {
+                fread(buff, 1, length, fp);
+                audioData = [NSData dataWithBytes:buff length:length];
+                short *recordingData = (short *)audioData.bytes;
+                int pcmLen = audioData.length;
+                int nsamples = pcmLen / 2;
+                
+                unsigned char buffer[pcmLen];
+                
+                //执行encode
+                int recvLen = lame_encode_buffer(lame, recordingData, recordingData, nsamples, buffer, pcmLen);
+                [mp3Data appendBytes:buffer length:recvLen];
+                break;
+            }
+            else
+            {
+                [NSThread sleepForTimeInterval:0.05];
+            }
+        }
+    }
+    
+    //写入文件
+    [mp3Data writeToFile:destinatedFile atomically:YES];
+    
+    //释放lame  
+    lame_close(lame);  
 }
 
 +(void)exportLibrarySongsToLocalFolder:(NSString *)folderName CompletedHandler:(void (^)(NSDictionary * info,NSError * error))handler

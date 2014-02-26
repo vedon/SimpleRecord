@@ -220,34 +220,27 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [GobalMethod audio_PCMtoMP3WithSourceFile:recordFilePath destinationFile:destinationFileName withSampleRate:44100 completedHandler:^(NSError *error) {
-            
-            if (error == nil) {
-                //2）保存录音文件信息
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    RecordMusicInfo * recordFile = [RecordMusicInfo MR_createEntity];
-                    recordFile.title    = defaultFileName;
-                    recordFile.length   = [NSString stringWithFormat:@"%0.2f",[GobalMethod getMusicLength:recordFileURL]];
-                    recordFile.makeTime = recordMakeTime;
-                    recordFile.localPath= destinationFileName;
-                    [PersistentStore save];
-                });
-               
-                
-                //3）删除录音文件
-                [[NSFileManager defaultManager]removeItemAtPath:recordFilePath error:nil];
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [MBProgressHUD hideHUDForView:self.view animated:YES];
-                    [GobalMethod showAlertViewWithMsg:@"保存成功" title:nil];
-                });
-            }else
-            {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [MBProgressHUD hideHUDForView:self.view animated:YES];
-                    [GobalMethod showAlertViewWithMsg:@"保存失败" title:nil];
-                });
-            }
-            
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 if (error == nil) {
+                     //2）保存录音文件信息
+                     RecordMusicInfo * recordFile = [RecordMusicInfo MR_createEntity];
+                     recordFile.title    = defaultFileName;
+                     recordFile.length   = [NSString stringWithFormat:@"%0.2f",[GobalMethod getMusicLength:recordFileURL]];
+                     recordFile.makeTime = recordMakeTime;
+                     recordFile.localPath= destinationFileName;
+                     [PersistentStore save];
+                     
+                     //3）删除录音文件
+                     [[NSFileManager defaultManager]removeItemAtPath:recordFilePath error:nil];
+                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                     [GobalMethod showAlertViewWithMsg:@"保存成功" title:nil];
+                     
+                 }else
+                 {
+                     [MBProgressHUD hideHUDForView:self.view animated:YES];
+                     [GobalMethod showAlertViewWithMsg:@"保存失败" title:nil];
+                 }
+             });
         } ];
     });
    

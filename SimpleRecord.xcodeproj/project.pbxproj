@@ -1237,7 +1237,7 @@
 					"/Users/vedon/Documents/IOS\\ Develop/SimpleRecord/SimpleRecord/Classes/lame",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos7.0;
+				SDKROOT = iphoneos6.1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1262,7 +1262,7 @@
 					"/Users/vedon/Documents/IOS\\ Develop/SimpleRecord/SimpleRecord/Classes/lame",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos7.0;
+				SDKROOT = iphoneos6.1;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
