@@ -19,9 +19,13 @@
 #import "AudioManager.h"
 #import "NSTimer+Addition.h"
 #import "PersistentStore.h"
+
+#import "AsynEncodeAudioRecord.h"
+
 @interface RecordViewController ()<UIAlertViewDelegate>
 {
     AudioRecorder * recorder;
+    AsynEncodeAudioRecord * asynEncodeRecorder;
     NSTimer       * counter;
     
     NSInteger       hour;

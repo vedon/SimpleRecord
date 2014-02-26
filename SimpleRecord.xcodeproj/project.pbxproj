@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4EAC0E1618BE27C300AE5A04 /* AsynEncodeAudioRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EAC0E1518BE27C300AE5A04 /* AsynEncodeAudioRecord.m */; };
 		4EACB68918B7877D001545AC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB68818B7877D001545AC /* Foundation.framework */; };
 		4EACB68B18B7877D001545AC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB68A18B7877D001545AC /* CoreGraphics.framework */; };
 		4EACB68D18B7877D001545AC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB68C18B7877D001545AC /* UIKit.framework */; };
@@ -149,6 +150,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4EAC0E1418BE27C300AE5A04 /* AsynEncodeAudioRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynEncodeAudioRecord.h; sourceTree = "<group>"; };
+		4EAC0E1518BE27C300AE5A04 /* AsynEncodeAudioRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynEncodeAudioRecord.m; sourceTree = "<group>"; };
 		4EACB68518B7877D001545AC /* SimpleRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EACB68818B7877D001545AC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4EACB68A18B7877D001545AC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -575,6 +578,8 @@
 				4EACB70718B79660001545AC /* TSLibraryImport.m */,
 				4EACB6FD18B78FDA001545AC /* AudioRecorder.h */,
 				4EACB6FE18B78FDA001545AC /* AudioRecorder.m */,
+				4EAC0E1418BE27C300AE5A04 /* AsynEncodeAudioRecord.h */,
+				4EAC0E1518BE27C300AE5A04 /* AsynEncodeAudioRecord.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1093,6 +1098,7 @@
 				4EC09DD118BA363400D68C04 /* DDTTYLogger.m in Sources */,
 				4EACB6E618B78898001545AC /* EZPlot.m in Sources */,
 				4EC09DBC18BA363400D68C04 /* HTTPConnection.m in Sources */,
+				4EAC0E1618BE27C300AE5A04 /* AsynEncodeAudioRecord.m in Sources */,
 				4EACB73A18B79821001545AC /* AudioManager.m in Sources */,
 				4EACE91418B838B5004383AD /* PersistentStore.m in Sources */,
 				4EACB6E418B78898001545AC /* EZMicrophone.m in Sources */,
