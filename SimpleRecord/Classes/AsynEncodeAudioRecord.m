@@ -12,6 +12,7 @@
 @implementation AsynEncodeAudioRecord
 {
     NSString * audioFilePath;
+    NSString * extension;
 }
 +(id)shareAsynEncodeAudioRecord
 {
@@ -40,8 +41,9 @@
     self.isRecording = NO;
 }
 
--(void)initializationMicroPhone
+-(void)initializationAudioRecrodWithFileExtension:(NSString *)ext;
 {
+    extension = ext;
     self.microphone = [EZMicrophone microphoneWithDelegate:self];
 }
 
@@ -53,10 +55,23 @@
 
 
 #pragma mark - EZMicrophoneDelegate
+-(void)microphone:(EZMicrophone *)microphone
+ hasAudioReceived:(float **)buffer
+   withBufferSize:(UInt32)bufferSize
+withNumberOfChannels:(UInt32)numberOfChannels {
+    // Getting audio data as an array of float buffer arrays. What does that mean? Because the audio is coming in as a stereo signal the data is split into a left and right channel. So buffer[0] corresponds to the float* data for the left channel while buffer[1] corresponds to the float* data for the right channel.
+    
+    // See the Thread Safety warning above, but in a nutshell these callbacks happen on a separate audio thread. We wrap any UI updating in a GCD block on the main thread to avoid blocking that audio flow.
+    dispatch_async(dispatch_get_main_queue(),^{
+        // All the audio plot needs is the buffer data (float*) and the size. Internally the audio plot will handle all the drawing related code, history management, and freeing its own resources. Hence, one badass line of code gets you a pretty plot :)
+        
+    });
+}
+
 -(void)microphone:(EZMicrophone *)microphone hasAudioStreamBasicDescription:(AudioStreamBasicDescription)audioStreamBasicDescription {
     [EZAudio printASBD:audioStreamBasicDescription];
     self.recorder = [EZRecorder recorderWithDestinationURL:[self testFilePathURL]
-                                           andSourceFormat:audioStreamBasicDescription];
+                                           andSourceFormat:audioStreamBasicDescription destinateFileExtension:extension];
     
 }
 
@@ -84,6 +99,6 @@ withNumberOfChannels:(UInt32)numberOfChannels {
 }
 
 -(NSURL*)testFilePathURL {
-    return [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@",[self applicationDocumentsDirectory],audioFilePath]];
+    return [NSURL fileURLWithPath:audioFilePath];
 }
 @end

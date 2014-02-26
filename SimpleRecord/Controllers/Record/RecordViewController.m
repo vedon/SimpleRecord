@@ -97,7 +97,8 @@
 -(void)initializationInterface
 {
     [self setLeftCustomBarItem:@"Record_Btn_Back.png" action:@selector(backAction)];
-    recorder = [AudioRecorder shareAudioRecord];
+    asynEncodeRecorder = [AsynEncodeAudioRecord shareAsynEncodeAudioRecord];
+    
     myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     isRecording = NO;
     
@@ -138,7 +139,7 @@
 {
     [self resetStatus];
     [self timerStop];
-    [recorder stopRecord];
+    [asynEncodeRecorder stopPlayer];
     [[NSFileManager defaultManager]removeItemAtPath:recordFilePath error:nil];
 }
 -(NSString *)getDefaultFileName
@@ -210,45 +211,44 @@
     self.wavBtn.userInteractionEnabled = !isRecording;
     
     [self.recordControlBtn setSelected:NO];
-    [recorder stopRecord];
+    [asynEncodeRecorder stopPlayer];
     [self timerStop];
     
 }
 
 -(void)saveRecordFile
 {
-    [self resetStatus];
-    
     //1）转换格式
     NSString * destinationFileName = [[self getDocumentDirectory] stringByAppendingPathComponent:[defaultFileName stringByAppendingPathExtension:formatType]];
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [GobalMethod audio_PCMtoMP3WithSourceFile:recordFilePath destinationFile:destinationFileName withSampleRate:44100 completedHandler:^(NSError *error) {
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 if (error == nil) {
-                     //2）保存录音文件信息
-                     RecordMusicInfo * recordFile = [RecordMusicInfo MR_createEntity];
-                     recordFile.title    = defaultFileName;
-                     recordFile.length   = [NSString stringWithFormat:@"%0.2f",[GobalMethod getMusicLength:recordFileURL]];
-                     recordFile.makeTime = recordMakeTime;
-                     recordFile.localPath= destinationFileName;
-                     [PersistentStore save];
-                     
-                     //3）删除录音文件
-                     [[NSFileManager defaultManager]removeItemAtPath:recordFilePath error:nil];
-                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                     [GobalMethod showAlertViewWithMsg:@"保存成功" title:nil];
-                     
-                 }else
-                 {
-                     [MBProgressHUD hideHUDForView:self.view animated:YES];
-                     [GobalMethod showAlertViewWithMsg:@"保存失败" title:nil];
-                 }
-             });
-        } ];
-    });
-   
+    
+    //2）保存录音文件信息
+    RecordMusicInfo * recordFile = [RecordMusicInfo MR_createEntity];
+    recordFile.title    = defaultFileName;
+    recordFile.length   = [NSString stringWithFormat:@"%0.2f",[GobalMethod getMusicLength:recordFileURL]];
+    recordFile.makeTime = recordMakeTime;
+    recordFile.localPath= destinationFileName;
+    [PersistentStore save];
+    
+    //3）删除录音文件
+    [[NSFileManager defaultManager]removeItemAtPath:recordFilePath error:nil];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 
+    
+    
+    dispatch_barrier_async(dispatch_get_main_queue(), ^{
+        [self resetStatus];
+    });
+    dispatch_barrier_async(dispatch_get_main_queue(), ^{
+        [self saveSuccessfully];
+    });
+
+
+}
+
+-(void)saveSuccessfully
+{
+    [GobalMethod showAlertViewWithMsg:@"保存成功" title:nil];
 }
 #pragma mark - Outlet Action
 - (IBAction)startRecordAction:(id)sender {
@@ -274,8 +274,9 @@
             recordFilePath = [[self getDocumentDirectory] stringByAppendingPathComponent:localRecordFileFullName];
             recordFileURL = [NSURL fileURLWithPath:recordFilePath];
         
-            [recorder initRecordWithPath:recordFilePath];
-            [recorder startRecord];
+            [asynEncodeRecorder initializationAudioRecrodWithFileExtension:formatType];
+            [asynEncodeRecorder playFile:recordFilePath];
+            [asynEncodeRecorder startPlayer];
             
             [self resetClocker];
             [self timerStart];
@@ -284,12 +285,12 @@
         }else
         {
             [self timerStart];
-            [recorder startRecord];
+            [asynEncodeRecorder stopPlayer];
         }
     }else
     {
         [self timerStop];
-        [recorder pauseRecord];
+        [asynEncodeRecorder stopPlayer];
     }
     
 }

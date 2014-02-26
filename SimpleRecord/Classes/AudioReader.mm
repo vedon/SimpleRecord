@@ -194,7 +194,7 @@
 
 - (float)getCurrentTime
 {
-    return self.currentFileTime - ringBuffer->NumUnreadFrames()/self.samplingRate;
+    return ceil(self.currentFileTime - ringBuffer->NumUnreadFrames()/self.samplingRate);
 }
 
 

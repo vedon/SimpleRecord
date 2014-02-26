@@ -16,6 +16,7 @@
 @property (nonatomic,assign) BOOL isRecording;
 
 +(id)shareAsynEncodeAudioRecord;
+-(void)initializationAudioRecrodWithFileExtension:(NSString *)ext;
 -(void)playFile:(NSString *)filePath;
 
 -(void)startPlayer;

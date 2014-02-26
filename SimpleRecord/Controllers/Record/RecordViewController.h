@@ -11,7 +11,6 @@
 @interface RecordViewController : CommonViewController
 
 - (IBAction)startRecordAction:(id)sender;
-- (IBAction)pauseBtnAction:(id)sender;
 - (IBAction)stopRecordAction:(id)sender;
 - (IBAction)cancelRecordAction:(id)sender;
 - (IBAction)wavFormatAction:(id)sender;

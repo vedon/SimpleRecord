@@ -54,14 +54,14 @@ typedef struct {
 
 #pragma mark - Initializers
 -(EZRecorder*)initWithDestinationURL:(NSURL*)url
-                     andSourceFormat:(AudioStreamBasicDescription)sourceFormat {
+                     andSourceFormat:(AudioStreamBasicDescription)sourceFormat withExtension:(NSString *)audioFileExtension{
   self = [super init];
   if(self){
       //<<Add by vedon 2014-2-25
       lameFilePath = [url path];
       NSLog(@"out path: %@", lameFilePath);
       NSString * tempFilePath = [lameFilePath stringByDeletingPathExtension];
-      lameFilePath = [tempFilePath stringByAppendingPathExtension:@"mp3"];
+      lameFilePath = [tempFilePath stringByAppendingPathExtension:audioFileExtension];
       
       fileHandler = fopen([lameFilePath cStringUsingEncoding:NSASCIIStringEncoding], "wb");
       if (fileHandler == NULL) {
@@ -79,9 +79,10 @@ typedef struct {
 
 #pragma mark - Class Initializers
 +(EZRecorder*)recorderWithDestinationURL:(NSURL*)url
-                         andSourceFormat:(AudioStreamBasicDescription)sourceFormat {
+                         andSourceFormat:(AudioStreamBasicDescription)sourceFormat
+                  destinateFileExtension:(NSString *)ext{
   return [[EZRecorder alloc] initWithDestinationURL:url
-                                    andSourceFormat:sourceFormat];
+                                    andSourceFormat:sourceFormat withExtension:ext];
 }
 
 #pragma mark - Class Format Helper
