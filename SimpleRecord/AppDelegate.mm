@@ -17,6 +17,8 @@
 #import "DDTTYLogger.h"
 #import "MyHTTPConnection.h"
 
+#import "AudioFloatPointReader.h"
+
 @interface AppDelegate()<AudioReaderDelegate>
 @end
 
@@ -25,7 +27,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [MagicalRecord setupCoreDataStackWithStoreNamed:@"SimpleRecord.sqlite"];
-    [self wifiTransferFileSetup];
+//    [self wifiTransferFileSetup];
     [self custonNavigationBar];
     
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -131,63 +133,90 @@
 }
 
 #pragma mark - Audio Stuff
--(void)palyItemWithURL:(NSURL *)inputFileURL withMusicInfo:(NSDictionary *)info
+//-(void)palyItemWithURL:(NSURL *)inputFileURL withMusicInfo:(NSDictionary *)info
+//{
+//    self.currentPlayMusicLength = [GobalMethod getMusicLength:inputFileURL];
+//    self.currentPlayMusicInfo = info;
+//    
+//    [self.audioMng pause];
+//    [self.audioMng setForceOutputToSpeaker:YES];
+//    self.audioMng = [AudioManager shareAudioManager];
+//    
+//    
+//    reader = [AudioReader shareAudioReader];
+//    [reader setAudioFileURL:inputFileURL samplingRate:self.audioMng.samplingRate numChannels:self.audioMng.numOutputChannels completedHandler:^(NSError *error) {
+//        if (error) {
+//            NSLog(@"%@",[error description]);
+//            NSDictionary * dic = [error userInfo];
+//            [GobalMethod showAlertViewWithMsg:[NSString stringWithFormat:@"打开%@ 文件出错",dic[@"fileName"]] title:nil];
+//        }
+//    }];
+//    reader.currentTime = 0.0;
+//    reader.delegate = self;
+//    __weak AppDelegate * weakSelf =self;
+//    [self.audioMng setOutputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels)
+//     {
+//         [weakSelf.reader retrieveFreshAudio:data numFrames:numFrames numChannels:numChannels];
+//     }];
+//    
+//    [self.audioMng play];
+//}
+
+//-(void)play
+//{
+//    [self.audioMng play];
+//    [self.reader play];
+//    [self.audioMng setForceOutputToSpeaker:YES];
+//}
+//
+//-(void)pause
+//{
+//    [self.audioMng pause];
+//    [self.reader pause];
+//}
+//
+//-(BOOL)isPlaying
+//{
+//    if ([self.reader playing]) {
+//        return YES;
+//    }
+//    return NO;
+//}
+-(void)palyItemWithURL:(NSURL *)inputFileURL withMusicInfo:(NSDictionary *)info withPlaylist:(NSArray *)list
 {
-    self.currentPlayMusicLength = [GobalMethod getMusicLength:inputFileURL];
+    _floatReader = [AudioFloatPointReader shareAudioFloatPointReader];
+    [_floatReader playAudioFile:inputFileURL];
+    if ([list count]) {
+        [_floatReader setPlaylist:list];
+    }
+    
+    self.currentPlayMusicLength = _floatReader.audioDuration;
+    self.audioTotalFrame   = _floatReader.totalFrame;
     self.currentPlayMusicInfo = info;
     
-    [self.audioMng pause];
-    [self.audioMng setForceOutputToSpeaker:YES];
-    self.audioMng = [AudioManager shareAudioManager];
+     self.audioMng = [AudioManager shareAudioManager];
     
-    
-    reader = [AudioReader shareAudioReader];
-    [reader setAudioFileURL:inputFileURL samplingRate:self.audioMng.samplingRate numChannels:self.audioMng.numOutputChannels completedHandler:^(NSError *error) {
-        if (error) {
-            NSLog(@"%@",[error description]);
-            NSDictionary * dic = [error userInfo];
-            [GobalMethod showAlertViewWithMsg:[NSString stringWithFormat:@"打开%@ 文件出错",dic[@"fileName"]] title:nil];
-        }
-    }];
-    reader.currentTime = 0.0;
-    reader.delegate = self;
-    __weak AppDelegate * weakSelf =self;
-    [self.audioMng setOutputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels)
-     {
-         [weakSelf.reader retrieveFreshAudio:data numFrames:numFrames numChannels:numChannels];
-     }];
-    
-    [self.audioMng play];
+    [self play];
+   
 }
 
 -(void)play
 {
-    [self.audioMng play];
-    [self.reader play];
+    [_floatReader startReader];
     [self.audioMng setForceOutputToSpeaker:YES];
 }
 
 -(void)pause
 {
-    [self.audioMng pause];
-    [self.reader pause];
+    [_floatReader stopReader];
 }
 
 -(BOOL)isPlaying
 {
-    if ([self.reader playing]) {
-        return YES;
-    }
-    return NO;
+    return _floatReader.playing;
 }
--(void)currentFileLocation:(CGFloat)location
+-(void)seekToPostion:(CGFloat)postion
 {
-    __weak AppDelegate * weakSelf = self;
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"AudioProcessingLocation" object:[NSNumber numberWithFloat:location]];
-    if (location >= _currentPlayMusicLength) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            weakSelf.reader.currentTime = 0.0;
-        });
-    }
+    [_floatReader seekToFilePostion:postion];
 }
 @end

@@ -141,8 +141,6 @@
         [self bufferNewAudio];
     }
     
-    
-    
 }
 
 - (void)clearBuffer

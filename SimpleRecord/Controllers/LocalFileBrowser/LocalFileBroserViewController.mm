@@ -30,6 +30,8 @@ static NSString * cellIdentifier = @"Identifier";
     NSMutableArray * dataSource;
     //当前选择文件的本地路径
     NSString * currentLocationPath;
+    
+    NSArray * playlist;
 }
 @property (strong ,nonatomic) NSOperationQueue *autoCompleteQueue;
 @end
@@ -72,10 +74,14 @@ static NSString * cellIdentifier = @"Identifier";
     dataSource = [NSMutableArray array];
     importTool = [[TSLibraryImport alloc] init];
     
+    playlist = nil;
     [self findArtistList];
     if ([dataSource count] == 0) {
         //没有歌曲
         [self showAlertViewWithMessage:@"本地没有音乐文件"];
+    }else
+    {
+        //TODO:playlist configuration
     }
     
     UINib * cellNib = [UINib nibWithNibName:@"MusicInfoCell" bundle:[NSBundle bundleForClass:[MusicInfoCell class]]];
@@ -128,7 +134,7 @@ static NSString * cellIdentifier = @"Identifier";
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (action) {
-                        objc_msgSend(self, action,path,@{@"Title":tempMusicInfo.length,@"Length":tempMusicInfo.length});
+                        objc_msgSend(self, action,path,@{@"Title":tempMusicInfo.title,@"Length":tempMusicInfo.length});
                     }
                 });
                 
@@ -235,7 +241,7 @@ static NSString * cellIdentifier = @"Identifier";
 -(void)playItemWithPath:(NSString *)localFilePath musicInfo:(NSDictionary *)dic
 {
     AppDelegate * myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    [myDelegate palyItemWithURL:[NSURL fileURLWithPath:localFilePath]withMusicInfo:dic];
+    [myDelegate palyItemWithURL:[NSURL fileURLWithPath:localFilePath]withMusicInfo:dic withPlaylist:nil];
 }
 
 

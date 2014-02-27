@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *mp3Btn;
 @property (weak, nonatomic) IBOutlet UIButton *wavBtn;
 @property (weak, nonatomic) IBOutlet UIButton *recordControlBtn;
+@property (weak, nonatomic) IBOutlet UIButton *finishBtn;
 
 
 @end

@@ -10,19 +10,23 @@
 @class AudioReader;
 @class AudioManager;
 @class HTTPServer;
+@class AudioFloatPointReader;
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 {
     HTTPServer *httpServer;
 }
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) AudioReader  * reader;
+@property (strong, nonatomic) AudioFloatPointReader * floatReader;
 @property (strong, nonatomic) AudioManager * audioMng;
+
 @property (strong, nonatomic) NSDictionary * currentPlayMusicInfo;
 @property (assign, nonatomic) CGFloat        currentPlayMusicLength;
+@property (assign, nonatomic) CGFloat        audioTotalFrame;
 
-
--(void)palyItemWithURL:(NSURL *)inputFileURL withMusicInfo:(NSDictionary *)info;
+-(void)palyItemWithURL:(NSURL *)inputFileURL withMusicInfo:(NSDictionary *)info withPlaylist:(NSArray *)list;
 -(void)play;
 -(void)pause;
 -(BOOL)isPlaying;
+-(void)seekToPostion:(CGFloat)postion;
 @end

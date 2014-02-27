@@ -101,6 +101,7 @@
     
     myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     isRecording = NO;
+    _finishBtn.userInteractionEnabled = NO;
     
 }
 -(void)backAction
@@ -155,7 +156,7 @@
 {
     NSDate * currentDate = [NSDate date];
     NSDateFormatter * format = [[NSDateFormatter alloc]init];
-    [format setDateFormat:@"yyyy-MM-dd"];
+    [format setDateFormat:@"yyyyMMddhhmmss"];
     NSString * dateStr = [format stringFromDate:currentDate];
     return dateStr;
 }
@@ -207,6 +208,7 @@
 {
     [self resetClocker];
     isRecording = NO;
+    _finishBtn.userInteractionEnabled  = isRecording;
     self.mp3Btn.userInteractionEnabled = !isRecording;
     self.wavBtn.userInteractionEnabled = !isRecording;
     
@@ -261,8 +263,11 @@
             //stop the music that is playing
             [myDelegate pause];
             
+            
             //Reset the recording mark
+            
             isRecording = YES;
+            _finishBtn.userInteractionEnabled  = isRecording;
             self.mp3Btn.userInteractionEnabled = !isRecording;
             self.wavBtn.userInteractionEnabled = !isRecording;
             recordMakeTime  = [self getMakeTime];
@@ -278,9 +283,9 @@
             [asynEncodeRecorder playFile:recordFilePath];
             [asynEncodeRecorder startPlayer];
             
+            
             [self resetClocker];
             [self timerStart];
-            
 
         }else
         {
@@ -297,7 +302,11 @@
 
 
 - (IBAction)stopRecordAction:(id)sender {
-    [self saveRecordFile];
+    UIButton * btn = (UIButton *)sender;
+    if (isRecording) {
+        [self saveRecordFile];
+    }
+    
 }
 
 

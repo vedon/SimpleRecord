@@ -19,6 +19,8 @@ static NSString * cellIdentifier = @"cellIdentifier";
 {
     NSMutableArray * dataSource;
     NSArray * cells;
+    
+    NSArray * playList;
 }
 @end
 
@@ -77,11 +79,6 @@ static NSString * cellIdentifier = @"cellIdentifier";
 
 }
 
--(void)playItemWithPath:(NSString *)localFilePath musicInfo:(NSDictionary *)dic
-{
-    AppDelegate * myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    [myDelegate palyItemWithURL:[NSURL fileURLWithPath:localFilePath]withMusicInfo:dic];
-}
 
 -(void)resetTheCellAlphaWhenScrolling
 {
@@ -100,7 +97,33 @@ static NSString * cellIdentifier = @"cellIdentifier";
 {
     [dataSource removeAllObjects];
      [dataSource  addObjectsFromArray:[PersistentStore getAllObjectWithType:[RecordMusicInfo class]]];
-    [self.contentTable reloadData];
+    if ([dataSource count]) {
+        NSArray * tempSordedArray = [dataSource sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            RecordMusicInfo * object1 = (RecordMusicInfo *)obj1;
+            RecordMusicInfo * object2 = (RecordMusicInfo *)obj2;
+            
+            if (object1.makeTime.integerValue > object2.makeTime.integerValue) {
+                return NSOrderedAscending;
+            }else
+            {
+                return NSOrderedDescending;
+            }
+            return NSOrderedSame;
+            
+        }];
+        [dataSource removeAllObjects];
+        [dataSource addObjectsFromArray:tempSordedArray];
+         tempSordedArray = nil;
+        //Get the playLists
+        NSMutableArray * tempPlaylist = [NSMutableArray array];
+        for (RecordMusicInfo * object in dataSource) {
+            [tempPlaylist addObject:[NSURL fileURLWithPath:object.localPath]];
+        }
+        playList = tempPlaylist;
+        [self.contentTable reloadData];
+    }
+
+    
 }
 
 -(void)addLongPressGestureToCell:(UITableViewCell *)cell withIndex:(NSInteger)index
@@ -177,7 +200,9 @@ static NSString * cellIdentifier = @"cellIdentifier";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     RecordMusicInfo * info = [dataSource objectAtIndex:indexPath.row];
-    [self playItemWithPath:info.localPath musicInfo:@{@"Title": info.title,@"Length":info.length}];
+//    [self playItemWithPath:info.localPath musicInfo:@{@"Title": info.title,@"Length":info.length}];
+    AppDelegate * myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    [myDelegate palyItemWithURL:[NSURL fileURLWithPath:info.localPath]withMusicInfo:@{@"Title": info.title,@"Length":info.length} withPlaylist:nil];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

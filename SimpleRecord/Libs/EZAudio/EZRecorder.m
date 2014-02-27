@@ -191,8 +191,7 @@ typedef struct {
             write = lame_encode_buffer_interleaved(lame, convertedData->mBuffers[0].mData, convertedData->mBuffers[0].mDataByteSize, mp3_buffer, convertedData->mBuffers[0].mDataByteSize/2);
         }
         
-        int isWrite = fwrite(mp3_buffer,write, 1, fileHandler);
-        NSLog(@"%d",isWrite);
+        fwrite(mp3_buffer,write, 1, fileHandler);
     }
     
   // Free resources

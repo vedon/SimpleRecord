@@ -17,6 +17,8 @@
 {
     AudioReader * audioReader;
     AppDelegate * myDelegate;
+    
+    BOOL isBeginTouchSlider;
 }
 @end
 
@@ -40,7 +42,9 @@
     //通知用来更新slider 位置
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateProcessingLocation:) name:@"AudioProcessingLocation" object:nil];
     
-    [self.progressSlider addTarget:self action:@selector(updateCurrentPlayMusicPosition:) forControlEvents:UIControlEventValueChanged];
+    [self.progressSlider addTarget:self action:@selector(updateCurrentPlayMusicPosition:) forControlEvents:UIControlEventTouchUpInside];
+    [self.progressSlider addTarget:self action:@selector(touchingTheSlider:) forControlEvents:UIControlEventTouchDown];
+    self.progressSlider.continuous = NO;
     
     UIImage *minImage = [[UIImage imageNamed:@"Home_Slide_Track_Fill.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 4, 0, 4)];
     UIImage *maxImage = [UIImage imageNamed:@"Home_Slide_Track.png"];
@@ -57,13 +61,14 @@
         rect.origin.y += 35;
         _controlBtnContainerView.frame = rect;
     }
+    isBeginTouchSlider = NO;
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController.navigationBar setHidden:YES];
     myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    self.progressSlider.maximumValue = myDelegate.currentPlayMusicLength;
+    self.progressSlider.maximumValue = myDelegate.audioTotalFrame;
     
     [self.controllBtn setSelected:[myDelegate isPlaying]];
     if (myDelegate.currentPlayMusicInfo) {
@@ -85,20 +90,28 @@
 #pragma mark - Private Method
 -(void)updateProcessingLocation:(NSNotification *)noti
 {
-    CGFloat location = [noti.object floatValue];
-    __weak MainViewController * weakSelf = self;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        weakSelf.progressSlider.value = ceil(location);
-    });
+    if (!isBeginTouchSlider) {
+        CGFloat location = [noti.object floatValue];
+        __weak MainViewController * weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            weakSelf.progressSlider.value = ceil(location);
+        });
+    }
+   
 }
-
+-(void)touchingTheSlider:(id)sender
+{
+    NSLog(@"start Touching");
+    isBeginTouchSlider = YES;
+}
 
 -(void)updateCurrentPlayMusicPosition:(id)sender
 {
-//    [myDelegate.audioMng pause];
+    isBeginTouchSlider = NO;
+    NSLog(@"end Touching");
     UISlider * slider = (UISlider*)sender;
-    myDelegate.reader.currentTime = slider.value;
-//    [myDelegate.audioMng play];
+    [myDelegate seekToPostion:slider.value];
+
 }
 
 #pragma mark - Outlet Method
