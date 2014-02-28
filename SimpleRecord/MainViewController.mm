@@ -152,7 +152,7 @@
         }else
         {
             if ([previousPlayItemInfo count]) {
-                [myDelegate playCurrentSong];
+                [myDelegate playCurrentSongWithInfo:previousPlayItemInfo];
                 self.progressSlider.maximumValue = myDelegate.audioTotalFrame;
                 return;
             }

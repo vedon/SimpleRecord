@@ -165,13 +165,18 @@
    
 }
 
--(void)playCurrentSong
+-(void)playCurrentSongWithInfo:(NSDictionary *)info
 {
-    NSDictionary * playItemInfo = [GobalMethod getThePreviousPlayItemInfo];
-    
     _floatReader = [AudioFloatPointReader shareAudioFloatPointReader];
-    [_floatReader playAudioFile:[NSURL fileURLWithPath:[playItemInfo valueForKey:@"FileURL"]]];
-    [_floatReader seekToFilePostion:[[playItemInfo valueForKey:@"CurrentPosition"] floatValue]];
+    [_floatReader playAudioFile:[NSURL fileURLWithPath:[info valueForKey:@"FileURL"]]];
+    CGFloat recordPostion = [[info valueForKey:@"CurrentPosition"] floatValue];
+    if (recordPostion <= _floatReader.currentPositionOfAudioFile) {
+        [_floatReader seekToFilePostion:[[info valueForKey:@"CurrentPosition"] floatValue]];
+    }else
+    {
+        [_floatReader seekToFilePostion:_floatReader.currentPositionOfAudioFile];
+    }
+    
     self.currentPlayMusicLength = _floatReader.audioDuration;
     self.audioTotalFrame   = _floatReader.totalFrame;
     self.audioMng = [AudioManager shareAudioManager];

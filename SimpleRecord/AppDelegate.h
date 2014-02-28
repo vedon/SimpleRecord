@@ -27,7 +27,7 @@
 -(void)palyItemWithURL:(NSURL *)inputFileURL withMusicInfo:(NSDictionary *)info withPlaylist:(NSArray *)list;
 
 -(void)seekToPostion:(CGFloat)postion;
--(void)playCurrentSong;
+-(void)playCurrentSongWithInfo:(NSDictionary *)info;
 -(BOOL)isPlaying;
 -(void)pause;
 -(void)play;
