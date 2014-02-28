@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import "AudioReader.h"
 
+
 @interface MainViewController ()
 {
     AudioReader * audioReader;
@@ -40,7 +41,7 @@
     
     
     //通知用来更新slider 位置
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateProcessingLocation:) name:@"AudioProcessingLocation" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateProcessingLocation:) name:CurrentPlayFilePostionInfo object:nil];
     
     [self.progressSlider addTarget:self action:@selector(updateCurrentPlayMusicPosition:) forControlEvents:UIControlEventTouchUpInside];
     [self.progressSlider addTarget:self action:@selector(touchingTheSlider:) forControlEvents:UIControlEventTouchDown];

@@ -116,7 +116,7 @@ withNumberOfChannels:(UInt32)numberOfChannels {
 -(void)audioFile:(EZAudioFile *)audioFile
  updatedPosition:(SInt64)framePosition {
         _currentPositionOfAudioFile = (float)framePosition;
-    [[NSNotificationCenter defaultCenter]postNotificationName:@"AudioProcessingLocation" object:[NSNumber numberWithFloat:_currentPositionOfAudioFile]];
+    [[NSNotificationCenter defaultCenter]postNotificationName:CurrentPlayFilePostionInfo object:[NSNumber numberWithFloat:_currentPositionOfAudioFile]];
 
 }
 

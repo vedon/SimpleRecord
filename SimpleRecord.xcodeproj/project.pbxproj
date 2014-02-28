@@ -94,7 +94,6 @@
 		4EACB73F18B79867001545AC /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB73E18B79867001545AC /* CoreData.framework */; };
 		4EACB74718B79B2E001545AC /* MusicInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACB74618B79B2E001545AC /* MusicInfoCell.m */; };
 		4EACB74918B79B39001545AC /* MusicInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EACB74818B79B39001545AC /* MusicInfoCell.xib */; };
-		4EACB74A18B79F67001545AC /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB73818B79821001545AC /* libmp3lame.a */; };
 		4EACB74C18B79FC8001545AC /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB74B18B79FC8001545AC /* Accelerate.framework */; };
 		4EACB74E18B7A44C001545AC /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB74D18B7A44C001545AC /* CoreMedia.framework */; };
 		4EACB75018B7A466001545AC /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB74F18B7A466001545AC /* MediaPlayer.framework */; };
@@ -158,6 +157,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4E37255F18C0339400AAB235 /* Marco.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Marco.h; sourceTree = "<group>"; };
 		4E7753A618BE3830000BCA95 /* AsynEncodeAudioRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynEncodeAudioRecord.h; sourceTree = "<group>"; };
 		4E7753A718BE3830000BCA95 /* AsynEncodeAudioRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynEncodeAudioRecord.m; sourceTree = "<group>"; };
 		4E7753A918BE3830000BCA95 /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
@@ -309,8 +309,6 @@
 		4EACB73118B79821001545AC /* AudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioManager.m; sourceTree = "<group>"; };
 		4EACB73418B79821001545AC /* RingBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RingBuffer.h; sourceTree = "<group>"; };
 		4EACB73518B79821001545AC /* RingBuffer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RingBuffer.mm; sourceTree = "<group>"; };
-		4EACB73718B79821001545AC /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
-		4EACB73818B79821001545AC /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
 		4EACB73E18B79867001545AC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		4EACB74518B79B2E001545AC /* MusicInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicInfoCell.h; sourceTree = "<group>"; };
 		4EACB74618B79B2E001545AC /* MusicInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicInfoCell.m; sourceTree = "<group>"; };
@@ -388,7 +386,6 @@
 				4EACB75018B7A466001545AC /* MediaPlayer.framework in Frameworks */,
 				4EACB74E18B7A44C001545AC /* CoreMedia.framework in Frameworks */,
 				4EACB74C18B79FC8001545AC /* Accelerate.framework in Frameworks */,
-				4EACB74A18B79F67001545AC /* libmp3lame.a in Frameworks */,
 				4EACB73F18B79867001545AC /* CoreData.framework in Frameworks */,
 				4E7753AC18BE3830000BCA95 /* libmp3lame.a in Frameworks */,
 				4EACB6C218B7886A001545AC /* AVFoundation.framework in Frameworks */,
@@ -739,11 +736,11 @@
 				4EACB73118B79821001545AC /* AudioManager.m */,
 				4EACB73418B79821001545AC /* RingBuffer.h */,
 				4EACB73518B79821001545AC /* RingBuffer.mm */,
-				4EACB73618B79821001545AC /* lame */,
 				4EACB70618B79660001545AC /* TSLibraryImport.h */,
 				4EACB70718B79660001545AC /* TSLibraryImport.m */,
 				4EACB6FD18B78FDA001545AC /* AudioRecorder.h */,
 				4EACB6FE18B78FDA001545AC /* AudioRecorder.m */,
+				4E37255F18C0339400AAB235 /* Marco.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -788,15 +785,6 @@
 				4EACB72218B79762001545AC /* VersionManager.m */,
 			);
 			path = HWSDK;
-			sourceTree = "<group>";
-		};
-		4EACB73618B79821001545AC /* lame */ = {
-			isa = PBXGroup;
-			children = (
-				4EACB73718B79821001545AC /* lame.h */,
-				4EACB73818B79821001545AC /* libmp3lame.a */,
-			);
-			path = lame;
 			sourceTree = "<group>";
 		};
 		4EACB74418B79B1C001545AC /* Views */ = {
@@ -1271,14 +1259,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SimpleRecord/SimpleRecord-Prefix.pch";
 				INFOPLIST_FILE = "SimpleRecord/SimpleRecord-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/vedon/Documents/IOS\\ Develop/SimpleRecord/SimpleRecord/Classes/lame",
 					/Users/vedon/Documents/GitHub/SimpleRecord/SimpleRecord/Classes/lame,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos6.1;
+				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1298,14 +1286,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SimpleRecord/SimpleRecord-Prefix.pch";
 				INFOPLIST_FILE = "SimpleRecord/SimpleRecord-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/vedon/Documents/IOS\\ Develop/SimpleRecord/SimpleRecord/Classes/lame",
 					/Users/vedon/Documents/GitHub/SimpleRecord/SimpleRecord/Classes/lame,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos6.1;
+				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};

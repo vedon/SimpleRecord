@@ -133,55 +133,7 @@
 }
 
 #pragma mark - Audio Stuff
-//-(void)palyItemWithURL:(NSURL *)inputFileURL withMusicInfo:(NSDictionary *)info
-//{
-//    self.currentPlayMusicLength = [GobalMethod getMusicLength:inputFileURL];
-//    self.currentPlayMusicInfo = info;
-//    
-//    [self.audioMng pause];
-//    [self.audioMng setForceOutputToSpeaker:YES];
-//    self.audioMng = [AudioManager shareAudioManager];
-//    
-//    
-//    reader = [AudioReader shareAudioReader];
-//    [reader setAudioFileURL:inputFileURL samplingRate:self.audioMng.samplingRate numChannels:self.audioMng.numOutputChannels completedHandler:^(NSError *error) {
-//        if (error) {
-//            NSLog(@"%@",[error description]);
-//            NSDictionary * dic = [error userInfo];
-//            [GobalMethod showAlertViewWithMsg:[NSString stringWithFormat:@"打开%@ 文件出错",dic[@"fileName"]] title:nil];
-//        }
-//    }];
-//    reader.currentTime = 0.0;
-//    reader.delegate = self;
-//    __weak AppDelegate * weakSelf =self;
-//    [self.audioMng setOutputBlock:^(float *data, UInt32 numFrames, UInt32 numChannels)
-//     {
-//         [weakSelf.reader retrieveFreshAudio:data numFrames:numFrames numChannels:numChannels];
-//     }];
-//    
-//    [self.audioMng play];
-//}
 
-//-(void)play
-//{
-//    [self.audioMng play];
-//    [self.reader play];
-//    [self.audioMng setForceOutputToSpeaker:YES];
-//}
-//
-//-(void)pause
-//{
-//    [self.audioMng pause];
-//    [self.reader pause];
-//}
-//
-//-(BOOL)isPlaying
-//{
-//    if ([self.reader playing]) {
-//        return YES;
-//    }
-//    return NO;
-//}
 -(void)palyItemWithURL:(NSURL *)inputFileURL withMusicInfo:(NSDictionary *)info withPlaylist:(NSArray *)list
 {
     _floatReader = [AudioFloatPointReader shareAudioFloatPointReader];
