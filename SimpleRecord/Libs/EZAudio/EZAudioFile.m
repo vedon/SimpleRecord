@@ -45,6 +45,7 @@
   UInt32 _waveformFrameRate;
   UInt32 _waveformTotalBuffers;
   
+    dispatch_queue_t serialQueue;
 }
 @end
 
@@ -142,6 +143,7 @@
     _floatBuffers[i] = (float*)malloc(outputBufferSize);
   }
   
+    serialQueue = dispatch_queue_create("com.audioPlayerSerialQueue", DISPATCH_QUEUE_SERIAL);
 }
 
 #pragma mark - Events
@@ -149,45 +151,53 @@
   audioBufferList:(AudioBufferList *)audioBufferList
        bufferSize:(UInt32 *)bufferSize
               eof:(BOOL *)eof {
-  @autoreleasepool {
+//  @autoreleasepool {
     // Setup the buffers
-    UInt32 outputBufferSize = 32 * frames; // 32 KB
-    audioBufferList->mNumberBuffers = 1;
-    audioBufferList->mBuffers[0].mNumberChannels = _clientFormat.mChannelsPerFrame;
-    audioBufferList->mBuffers[0].mDataByteSize = outputBufferSize;
-    audioBufferList->mBuffers[0].mData = (AudioUnitSampleType*)malloc(sizeof(AudioUnitSampleType*)*outputBufferSize);
-    [EZAudio checkResult:ExtAudioFileRead(_audioFile,
-                                          &frames,
-                                          audioBufferList)
-               operation:"Failed to read audio data from audio file"];
-    *bufferSize = audioBufferList->mBuffers[0].mDataByteSize/sizeof(AudioUnitSampleType);
-    *eof = frames == 0;
-    _frameIndex += frames;
-    if( self.audioFileDelegate ){
-      if( [self.audioFileDelegate respondsToSelector:@selector(audioFile:updatedPosition:)] ){
-        [self.audioFileDelegate audioFile:self
-                          updatedPosition:_frameIndex];
-      }
-      if( [self.audioFileDelegate respondsToSelector:@selector(audioFile:readAudio:withBufferSize:withNumberOfChannels:)] ){
-        AEFloatConverterToFloat(_floatConverter,audioBufferList,_floatBuffers,frames);
-        [self.audioFileDelegate audioFile:self
-                                readAudio:_floatBuffers
-                           withBufferSize:frames
-                     withNumberOfChannels:_clientFormat.mChannelsPerFrame];
-      }
-    }
-  }
+          dispatch_sync(serialQueue, ^{
+              UInt32 outputBufferSize = 32 * frames; // 32 KB
+              audioBufferList->mNumberBuffers = 1;
+              audioBufferList->mBuffers[0].mNumberChannels = _clientFormat.mChannelsPerFrame;
+              audioBufferList->mBuffers[0].mDataByteSize = outputBufferSize;
+              audioBufferList->mBuffers[0].mData = (AudioUnitSampleType*)malloc(sizeof(AudioUnitSampleType*)*outputBufferSize);
+              [EZAudio checkResult:ExtAudioFileRead(_audioFile,
+                                                    &frames,
+                                                    audioBufferList)
+                         operation:"Failed to read audio data from audio file"];
+              
+              
+              *bufferSize = audioBufferList->mBuffers[0].mDataByteSize/sizeof(AudioUnitSampleType);
+              *eof = frames == 0;
+              _frameIndex += frames;
+              if( self.audioFileDelegate ){
+                  if( [self.audioFileDelegate respondsToSelector:@selector(audioFile:updatedPosition:)] ){
+                      [self.audioFileDelegate audioFile:self
+                                        updatedPosition:_frameIndex];
+                  }
+                  if( [self.audioFileDelegate respondsToSelector:@selector(audioFile:readAudio:withBufferSize:withNumberOfChannels:)] ){
+                      AEFloatConverterToFloat(_floatConverter,audioBufferList,_floatBuffers,frames);
+                      [self.audioFileDelegate audioFile:self
+                                              readAudio:_floatBuffers
+                                         withBufferSize:frames
+                                   withNumberOfChannels:_clientFormat.mChannelsPerFrame];
+                  }
+              }
+          });
+   
+//  }
 }
 
 -(void)seekToFrame:(SInt64)frame {
-  [EZAudio checkResult:ExtAudioFileSeek(_audioFile,frame)
-             operation:"Failed to seek frame position within audio file"];
-  _frameIndex = frame;
-  if( self.audioFileDelegate ){
-    if( [self.audioFileDelegate respondsToSelector:@selector(audioFile:updatedPosition:)] ){
-      [self.audioFileDelegate audioFile:self updatedPosition:_frameIndex];
-    }
-  }
+    dispatch_sync(serialQueue, ^{
+        [EZAudio checkResult:ExtAudioFileSeek(_audioFile,frame)
+                   operation:"Failed to seek frame position within audio file"];
+        _frameIndex = frame;
+        if( self.audioFileDelegate ){
+            if( [self.audioFileDelegate respondsToSelector:@selector(audioFile:updatedPosition:)] ){
+                [self.audioFileDelegate audioFile:self updatedPosition:_frameIndex];
+            }
+        }
+    });
+  
 }
 
 #pragma mark - Getters

@@ -19,6 +19,8 @@
 @property (strong, nonatomic) AudioReader  * reader;
 @property (strong, nonatomic) AudioFloatPointReader * floatReader;
 @property (strong, nonatomic) AudioManager * audioMng;
+@property (strong, nonatomic) UIImageView  * spinnerImage;
+@property (strong, nonatomic) NSTimer      * spinnerImageTimer;
 
 @property (strong, nonatomic) NSDictionary * currentPlayMusicInfo;
 @property (assign, nonatomic) CGFloat        currentPlayMusicLength;

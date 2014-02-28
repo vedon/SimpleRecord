@@ -21,7 +21,6 @@ static NSString * cellIdentifier = @"cellIdentifier";
     NSArray * cells;
     
     NSArray * playList;
-    UIImageView * spinnerImage;
 }
 @end
 
@@ -59,14 +58,6 @@ static NSString * cellIdentifier = @"cellIdentifier";
 -(void)initializationInterface
 {
     [self setLeftCustomBarItem:@"Record_Btn_Back.png" action:nil];
-//    [self setRightCustomBarItem:@"spinner" action:nil];
-    
-    spinnerImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"spinner.png"]];
-    [spinnerImage setFrame:CGRectMake(270, 30, 25, 25)];
-    AppDelegate * myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    [myDelegate.window addSubview:spinnerImage];
-    
-    
     [self updateDataSource];
     
     
@@ -85,14 +76,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     self.contentTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.contentTable setBackgroundView:nil];
     [self.contentTable setBackgroundColor:[UIColor clearColor]];
-
-    [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(rotateSpinnerview) userInfo:nil repeats:YES];
     
-}
-
--(void)rotateSpinnerview
-{
-    spinnerImage.transform = CGAffineTransformRotate(spinnerImage.transform, 0.3);
 }
 
 -(void)resetTheCellAlphaWhenScrolling
@@ -215,9 +199,32 @@ static NSString * cellIdentifier = @"cellIdentifier";
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     RecordMusicInfo * info = [dataSource objectAtIndex:indexPath.row];
-//    [self playItemWithPath:info.localPath musicInfo:@{@"Title": info.title,@"Length":info.length}];
     AppDelegate * myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    [myDelegate palyItemWithURL:[NSURL fileURLWithPath:info.localPath]withMusicInfo:@{@"Title": info.title,@"Length":info.length} withPlaylist:nil];
+
+    dispatch_barrier_async(dispatch_get_main_queue(), ^{
+        UIImageView * musicIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"musicIcon.png"]];
+        
+        CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
+        CGRect rectInSuperview = [tableView convertRect:cellRect toView:[tableView superview]];
+        [musicIcon setFrame:CGRectMake(10, rectInSuperview.origin.y+rectInSuperview.size.height, 20, 20)];
+        [myDelegate.window addSubview:musicIcon];
+        [UIView animateWithDuration:1.5 animations:^{
+            
+            CATransform3D transform = CATransform3DTranslate(musicIcon.layer.transform,250, -rectInSuperview.origin.y, 0);
+            transform = CATransform3DRotate(transform, M_PI/2, 0,0, 1.0f);
+            musicIcon.layer.transform = transform;
+            
+        } completion:^(BOOL finished) {
+            [musicIcon removeFromSuperview];
+        }];
+    });
+
+    
+    dispatch_barrier_async(dispatch_get_main_queue(), ^{
+        [myDelegate palyItemWithURL:[NSURL fileURLWithPath:info.localPath]withMusicInfo:@{@"Title": info.title,@"Length":info.length} withPlaylist:nil];
+    });
+    
+    
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

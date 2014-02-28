@@ -269,8 +269,33 @@ static NSString * cellIdentifier = @"Identifier";
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary * musicInfo = [dataSource objectAtIndex:indexPath.row];
-    [self configureLibraryMusicWithSelector:@selector(playItemWithPath:musicInfo:) withInfo:musicInfo];
+    AppDelegate * myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    dispatch_barrier_async(dispatch_get_main_queue(), ^{
+        UIImageView * musicIcon = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"musicIcon.png"]];
+        
+        CGRect cellRect = [tableView rectForRowAtIndexPath:indexPath];
+        CGRect rectInSuperview = [tableView convertRect:cellRect toView:[tableView superview]];
+        [musicIcon setFrame:CGRectMake(10, rectInSuperview.origin.y+rectInSuperview.size.height, 20, 20)];
+        [myDelegate.window addSubview:musicIcon];
+        [UIView animateWithDuration:1.5 animations:^{
+            
+            CATransform3D transform = CATransform3DTranslate(musicIcon.layer.transform,250, -rectInSuperview.origin.y, 0);
+            transform = CATransform3DRotate(transform, M_PI/2, 0,0, 1.0f);
+            musicIcon.layer.transform = transform;
+            
+        } completion:^(BOOL finished) {
+            [musicIcon removeFromSuperview];
+        }];
+    });
+    
+    dispatch_barrier_async(dispatch_get_main_queue(), ^{
+        NSDictionary * musicInfo = [dataSource objectAtIndex:indexPath.row];
+        [self configureLibraryMusicWithSelector:@selector(playItemWithPath:musicInfo:) withInfo:musicInfo];
+    });
+    
+    
+    
+    
 }
 
 @end

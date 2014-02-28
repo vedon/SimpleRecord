@@ -18,6 +18,7 @@
 #import "MyHTTPConnection.h"
 
 #import "AudioFloatPointReader.h"
+#import "NSTimer+Addition.h"
 @interface AppDelegate()<AudioReaderDelegate>
 @end
 
@@ -29,13 +30,24 @@
 //    [self wifiTransferFileSetup];
     [self custonNavigationBar];
     
+    
+    
+    
+    
     self.window = [[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     MainViewController * mainController = [[MainViewController alloc]initWithNibName:@"MainViewController" bundle:nil];
-    
     UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:mainController];
-    
     self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
+    
+    
+    _spinnerImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"spinner.png"]];
+    [_spinnerImage setFrame:CGRectMake(270, 30, 25, 25)];
+//    [_spinnerImage setHidden:YES];
+    [self.window addSubview:_spinnerImage];
+    _spinnerImageTimer =
+    [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(rotateSpinnerview) userInfo:nil repeats:YES];
+    [_spinnerImageTimer pauseTimer];
     // Override point for customization after application launch.
     return YES;
 }
@@ -137,8 +149,14 @@
 
 }
 
-#pragma mark - Audio Stuff
 
+-(void)rotateSpinnerview
+{
+    _spinnerImage.layer.transform = CATransform3DRotate(_spinnerImage.layer.transform, 0.2, 0, 0, 1);
+}
+
+
+#pragma mark - Audio Stuff
 -(void)palyItemWithURL:(NSURL *)inputFileURL withMusicInfo:(NSDictionary *)info withPlaylist:(NSArray *)list
 {
     
@@ -187,12 +205,15 @@
 
 -(void)play
 {
+    [_spinnerImageTimer resumeTimer];
+    
     [_floatReader startReader];
     [self.audioMng setForceOutputToSpeaker:YES];
 }
 
 -(void)pause
 {
+    [_spinnerImageTimer pauseTimer];
     [_floatReader stopReader];
 }
 
@@ -202,6 +223,6 @@
 }
 -(void)seekToPostion:(CGFloat)postion
 {
-    [_floatReader seekToFilePostion:postion];
+    [_floatReader seekToFilePostion:(SInt64)postion];
 }
 @end

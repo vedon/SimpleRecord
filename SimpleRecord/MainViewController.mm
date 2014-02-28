@@ -45,7 +45,6 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateProcessingLocation:) name:CurrentPlayFilePostionInfo object:nil];
     
     [self.progressSlider addTarget:self action:@selector(updateCurrentPlayMusicPosition:) forControlEvents:UIControlEventTouchUpInside];
-    [self.progressSlider addTarget:self action:@selector(touchingTheSlider:) forControlEvents:UIControlEventTouchDown];
     self.progressSlider.continuous = NO;
     
     UIImage *minImage =     [[UIImage imageNamed:@"Home_Slide_Track_Fill.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 4, 0, 4)];
@@ -98,29 +97,16 @@
 #pragma mark - Private Method
 -(void)updateProcessingLocation:(NSNotification *)noti
 {
-    if (!isBeginTouchSlider) {
-        @synchronized(self)
-        {
-            CGFloat location = [noti.object floatValue];
-            __weak MainViewController * weakSelf = self;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf.progressSlider.value = ceil(location);
-            });
-        }
+    if (!_progressSlider.touchInside) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _progressSlider.value = [noti.object floatValue];
+        });
         
     }
    
 }
--(void)touchingTheSlider:(id)sender
-{
-    NSLog(@"start Touching");
-    isBeginTouchSlider = YES;
-}
-
 -(void)updateCurrentPlayMusicPosition:(id)sender
 {
-    isBeginTouchSlider = NO;
-    NSLog(@"end Touching");
     UISlider * slider = (UISlider*)sender;
     [myDelegate seekToPostion:slider.value];
 
