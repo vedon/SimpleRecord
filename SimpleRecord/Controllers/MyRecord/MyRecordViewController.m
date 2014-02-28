@@ -21,6 +21,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
     NSArray * cells;
     
     NSArray * playList;
+    UIImageView * spinnerImage;
 }
 @end
 
@@ -58,6 +59,14 @@ static NSString * cellIdentifier = @"cellIdentifier";
 -(void)initializationInterface
 {
     [self setLeftCustomBarItem:@"Record_Btn_Back.png" action:nil];
+//    [self setRightCustomBarItem:@"spinner" action:nil];
+    
+    spinnerImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"spinner.png"]];
+    [spinnerImage setFrame:CGRectMake(270, 30, 25, 25)];
+    AppDelegate * myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    [myDelegate.window addSubview:spinnerImage];
+    
+    
     [self updateDataSource];
     
     
@@ -77,8 +86,14 @@ static NSString * cellIdentifier = @"cellIdentifier";
     [self.contentTable setBackgroundView:nil];
     [self.contentTable setBackgroundColor:[UIColor clearColor]];
 
+    [NSTimer scheduledTimerWithTimeInterval:0.3 target:self selector:@selector(rotateSpinnerview) userInfo:nil repeats:YES];
+    
 }
 
+-(void)rotateSpinnerview
+{
+    spinnerImage.transform = CGAffineTransformRotate(spinnerImage.transform, 0.3);
+}
 
 -(void)resetTheCellAlphaWhenScrolling
 {

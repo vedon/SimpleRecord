@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E37256118C0467700AAB235 /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E37256018C0467700AAB235 /* spinner.png */; };
 		4E7753AB18BE3830000BCA95 /* AsynEncodeAudioRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E7753A718BE3830000BCA95 /* AsynEncodeAudioRecord.m */; };
 		4E7753AC18BE3830000BCA95 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E7753AA18BE3830000BCA95 /* libmp3lame.a */; };
 		4E7753F218BE3869000BCA95 /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E7753B118BE3869000BCA95 /* DDData.m */; };
@@ -158,6 +159,7 @@
 
 /* Begin PBXFileReference section */
 		4E37255F18C0339400AAB235 /* Marco.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Marco.h; sourceTree = "<group>"; };
+		4E37256018C0467700AAB235 /* spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinner.png; sourceTree = "<group>"; };
 		4E7753A618BE3830000BCA95 /* AsynEncodeAudioRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynEncodeAudioRecord.h; sourceTree = "<group>"; };
 		4E7753A718BE3830000BCA95 /* AsynEncodeAudioRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynEncodeAudioRecord.m; sourceTree = "<group>"; };
 		4E7753A918BE3830000BCA95 /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
@@ -842,6 +844,7 @@
 		4EACE92E18B8725E004383AD /* Img */ = {
 			isa = PBXGroup;
 			children = (
+				4E37256018C0467700AAB235 /* spinner.png */,
 				4EACE96918B88171004383AD /* Home_Icon_Nte@2x.png */,
 				4EACE96718B875D1004383AD /* adImage.png */,
 				4EACE92F18B8725E004383AD /* Bar_Bottom@2x.png */,
@@ -975,6 +978,7 @@
 				4EACE94D18B8725E004383AD /* Home_Btn_Pause@2x.png in Resources */,
 				4EACE94F18B8725E004383AD /* Home_Icon_List@2x.png in Resources */,
 				4E77540418BE3869000BCA95 /* About.txt in Resources */,
+				4E37256118C0467700AAB235 /* spinner.png in Resources */,
 				4EACE95F18B8725F004383AD /* Record_Btn_Back@2x.png in Resources */,
 				4EACE95E18B8725F004383AD /* Record_Bar_Top@2x.png in Resources */,
 				4EACB6F618B78AE9001545AC /* RecordViewController.xib in Resources */,

@@ -99,11 +99,15 @@
 -(void)updateProcessingLocation:(NSNotification *)noti
 {
     if (!isBeginTouchSlider) {
-        CGFloat location = [noti.object floatValue];
-        __weak MainViewController * weakSelf = self;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            weakSelf.progressSlider.value = ceil(location);
-        });
+        @synchronized(self)
+        {
+            CGFloat location = [noti.object floatValue];
+            __weak MainViewController * weakSelf = self;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.progressSlider.value = ceil(location);
+            });
+        }
+        
     }
    
 }
@@ -146,17 +150,22 @@
     UIButton * btn = (UIButton *)sender;
     [btn setSelected:!btn.selected];
     if (btn.selected) {
-        if ([myDelegate isPlaying]) {
-            [myDelegate play];
+//        if ([myDelegate isPlaying]) {
+//            [myDelegate play];
+//            return;
+//        }else
+//        {
+//            if ([previousPlayItemInfo count]) {
+//                [myDelegate playCurrentSongWithInfo:previousPlayItemInfo];
+//                self.progressSlider.maximumValue = myDelegate.audioTotalFrame;
+//                return;
+//            }
+//            
+//        }
+        if ([previousPlayItemInfo count]) {
+            [myDelegate playCurrentSongWithInfo:previousPlayItemInfo];
+            self.progressSlider.maximumValue = myDelegate.audioTotalFrame;
             return;
-        }else
-        {
-            if ([previousPlayItemInfo count]) {
-                [myDelegate playCurrentSongWithInfo:previousPlayItemInfo];
-                self.progressSlider.maximumValue = myDelegate.audioTotalFrame;
-                return;
-            }
-            
         }
         [btn setSelected:NO];
     }else

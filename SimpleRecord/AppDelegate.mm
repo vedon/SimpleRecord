@@ -170,7 +170,8 @@
     _floatReader = [AudioFloatPointReader shareAudioFloatPointReader];
     [_floatReader playAudioFile:[NSURL fileURLWithPath:[info valueForKey:@"FileURL"]]];
     CGFloat recordPostion = [[info valueForKey:@"CurrentPosition"] floatValue];
-    if (recordPostion <= _floatReader.currentPositionOfAudioFile) {
+    
+    if (recordPostion >= _floatReader.currentPositionOfAudioFile) {
         [_floatReader seekToFilePostion:[[info valueForKey:@"CurrentPosition"] floatValue]];
     }else
     {
