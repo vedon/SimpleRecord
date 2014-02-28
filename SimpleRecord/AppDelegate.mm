@@ -44,6 +44,10 @@
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    NSDictionary * playItemInfo = [GobalMethod getThePreviousPlayItemInfo];
+    NSMutableDictionary * temp = [NSMutableDictionary dictionaryWithDictionary:playItemInfo];
+    [temp setObject:[NSNumber numberWithFloat:_floatReader.currentPositionOfAudioFile] forKey:@"CurrentPosition"];
+    [GobalMethod saveDidPlayItemInfo:temp];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -55,6 +59,8 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -135,10 +141,7 @@
 
 -(void)palyItemWithURL:(NSURL *)inputFileURL withMusicInfo:(NSDictionary *)info withPlaylist:(NSArray *)list
 {
-    NSMutableDictionary * tempInfo = [NSMutableDictionary dictionaryWithDictionary:info];
-    [tempInfo setValue:inputFileURL.path forKey:@"FileURL"];
-    [GobalMethod saveDidPlayItemInfo:tempInfo];
-    tempInfo = nil;
+    
     
     _floatReader = [AudioFloatPointReader shareAudioFloatPointReader];
     [_floatReader playAudioFile:inputFileURL];
@@ -149,8 +152,14 @@
     self.currentPlayMusicLength = _floatReader.audioDuration;
     self.audioTotalFrame   = _floatReader.totalFrame;
     self.currentPlayMusicInfo = info;
+    self.audioMng = [AudioManager shareAudioManager];
     
-     self.audioMng = [AudioManager shareAudioManager];
+    NSMutableDictionary * tempInfo = [NSMutableDictionary dictionaryWithDictionary:info];
+    [tempInfo setValue:inputFileURL.path forKey:@"FileURL"];
+    [tempInfo setObject:[NSNumber numberWithFloat:0] forKey:@"CurrentPosition"];
+    [tempInfo setObject:[NSNumber numberWithFloat:_floatReader.totalFrame] forKey:@"TotalFrame"];
+    [GobalMethod saveDidPlayItemInfo:tempInfo];
+    tempInfo = nil;
     
     [self play];
    
@@ -162,6 +171,7 @@
     
     _floatReader = [AudioFloatPointReader shareAudioFloatPointReader];
     [_floatReader playAudioFile:[NSURL fileURLWithPath:[playItemInfo valueForKey:@"FileURL"]]];
+    [_floatReader seekToFilePostion:[[playItemInfo valueForKey:@"CurrentPosition"] floatValue]];
     self.currentPlayMusicLength = _floatReader.audioDuration;
     self.audioTotalFrame   = _floatReader.totalFrame;
     self.audioMng = [AudioManager shareAudioManager];

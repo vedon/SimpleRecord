@@ -20,6 +20,7 @@
     AppDelegate * myDelegate;
     
     BOOL isBeginTouchSlider;
+    NSDictionary * previousPlayItemInfo;
 }
 @end
 
@@ -63,24 +64,25 @@
         _controlBtnContainerView.frame = rect;
     }
     isBeginTouchSlider = NO;
+    previousPlayItemInfo = nil;
     myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
      [self.navigationController.navigationBar setHidden:YES];
-    NSDictionary * playItemInfo = [GobalMethod getThePreviousPlayItemInfo];
-    if ([playItemInfo count]) {
-        self.musicTitle.text = [playItemInfo valueForKey:@"Title"];
-        self.progressingMusicLength.text = [playItemInfo valueForKey:@"Length"];
+    previousPlayItemInfo= [GobalMethod getThePreviousPlayItemInfo];
+    if ([previousPlayItemInfo count]) {
+        self.musicTitle.text = [previousPlayItemInfo valueForKey:@"Title"];
+        self.progressingMusicLength.text = [previousPlayItemInfo valueForKey:@"Length"];
+        _progressSlider.maximumValue = [[previousPlayItemInfo valueForKey:@"TotalFrame"] floatValue];
+        _progressSlider.value       = [[previousPlayItemInfo valueForKey:@"CurrentPosition"] floatValue];
     }
-    self.progressSlider.maximumValue = myDelegate.audioTotalFrame;
-    [self.controllBtn setSelected:[myDelegate isPlaying]];
-    
-//    if (myDelegate.currentPlayMusicInfo) {
-//        self.musicTitle.text = [myDelegate.currentPlayMusicInfo valueForKey:@"Title"];
-//        self.progressingMusicLength.text = [myDelegate.currentPlayMusicInfo valueForKey:@"Length"];
-//    }
+    if ([myDelegate isPlaying]) {
+        self.progressSlider.maximumValue = myDelegate.audioTotalFrame;
+        [self.controllBtn setSelected:[myDelegate isPlaying]];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -146,12 +148,17 @@
     if (btn.selected) {
         if ([myDelegate isPlaying]) {
             [myDelegate play];
+            return;
         }else
         {
-            [myDelegate playCurrentSong];
-            self.progressSlider.maximumValue = myDelegate.audioTotalFrame;
+            if ([previousPlayItemInfo count]) {
+                [myDelegate playCurrentSong];
+                self.progressSlider.maximumValue = myDelegate.audioTotalFrame;
+                return;
+            }
+            
         }
-    
+        [btn setSelected:NO];
     }else
     {
         [myDelegate pause];
