@@ -18,7 +18,6 @@
 #import "MyHTTPConnection.h"
 
 #import "AudioFloatPointReader.h"
-
 @interface AppDelegate()<AudioReaderDelegate>
 @end
 
@@ -136,6 +135,11 @@
 
 -(void)palyItemWithURL:(NSURL *)inputFileURL withMusicInfo:(NSDictionary *)info withPlaylist:(NSArray *)list
 {
+    NSMutableDictionary * tempInfo = [NSMutableDictionary dictionaryWithDictionary:info];
+    [tempInfo setValue:inputFileURL.path forKey:@"FileURL"];
+    [GobalMethod saveDidPlayItemInfo:tempInfo];
+    tempInfo = nil;
+    
     _floatReader = [AudioFloatPointReader shareAudioFloatPointReader];
     [_floatReader playAudioFile:inputFileURL];
     if ([list count]) {
@@ -150,6 +154,19 @@
     
     [self play];
    
+}
+
+-(void)playCurrentSong
+{
+    NSDictionary * playItemInfo = [GobalMethod getThePreviousPlayItemInfo];
+    
+    _floatReader = [AudioFloatPointReader shareAudioFloatPointReader];
+    [_floatReader playAudioFile:[NSURL fileURLWithPath:[playItemInfo valueForKey:@"FileURL"]]];
+    self.currentPlayMusicLength = _floatReader.audioDuration;
+    self.audioTotalFrame   = _floatReader.totalFrame;
+    self.audioMng = [AudioManager shareAudioManager];
+    
+    [self play];
 }
 
 -(void)play

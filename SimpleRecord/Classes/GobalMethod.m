@@ -414,4 +414,19 @@
         alertView = nil;
     });
 }
+
++(void)saveDidPlayItemInfo:(NSDictionary *)songInfo
+{
+    [[NSUserDefaults standardUserDefaults]setObject:songInfo forKey:CurrentPlayFileInfo];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
++(NSDictionary *)getThePreviousPlayItemInfo
+{
+    NSDictionary * dic = [[NSUserDefaults standardUserDefaults]dictionaryForKey:CurrentPlayFileInfo];
+    if (dic) {
+        return dic;
+    }
+    return [NSDictionary dictionary];
+}
 @end

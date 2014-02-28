@@ -12,7 +12,7 @@
 #import "MyRecordViewController.h"
 #import "AppDelegate.h"
 #import "AudioReader.h"
-
+#import "GobalMethod.h"
 
 @interface MainViewController ()
 {
@@ -47,9 +47,9 @@
     [self.progressSlider addTarget:self action:@selector(touchingTheSlider:) forControlEvents:UIControlEventTouchDown];
     self.progressSlider.continuous = NO;
     
-    UIImage *minImage = [[UIImage imageNamed:@"Home_Slide_Track_Fill.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 4, 0, 4)];
-    UIImage *maxImage = [UIImage imageNamed:@"Home_Slide_Track.png"];
-    UIImage *thumbImage = [UIImage imageNamed:@"Home_Slide_Cap.png"];
+    UIImage *minImage =     [[UIImage imageNamed:@"Home_Slide_Track_Fill.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 4, 0, 4)];
+    UIImage *maxImage =     [UIImage imageNamed:@"Home_Slide_Track.png"];
+    UIImage *thumbImage =   [UIImage imageNamed:@"Home_Slide_Cap.png"];
     
     
     [[UISlider appearance] setMaximumTrackImage:maxImage forState:UIControlStateNormal];
@@ -63,19 +63,24 @@
         _controlBtnContainerView.frame = rect;
     }
     isBeginTouchSlider = NO;
+    myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self.navigationController.navigationBar setHidden:YES];
-    myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    self.progressSlider.maximumValue = myDelegate.audioTotalFrame;
-    
-    [self.controllBtn setSelected:[myDelegate isPlaying]];
-    if (myDelegate.currentPlayMusicInfo) {
-        self.musicTitle.text = [myDelegate.currentPlayMusicInfo valueForKey:@"Title"];
-        self.progressingMusicLength.text = [myDelegate.currentPlayMusicInfo valueForKey:@"Length"];
+     [self.navigationController.navigationBar setHidden:YES];
+    NSDictionary * playItemInfo = [GobalMethod getThePreviousPlayItemInfo];
+    if ([playItemInfo count]) {
+        self.musicTitle.text = [playItemInfo valueForKey:@"Title"];
+        self.progressingMusicLength.text = [playItemInfo valueForKey:@"Length"];
     }
+    self.progressSlider.maximumValue = myDelegate.audioTotalFrame;
+    [self.controllBtn setSelected:[myDelegate isPlaying]];
+    
+//    if (myDelegate.currentPlayMusicInfo) {
+//        self.musicTitle.text = [myDelegate.currentPlayMusicInfo valueForKey:@"Title"];
+//        self.progressingMusicLength.text = [myDelegate.currentPlayMusicInfo valueForKey:@"Length"];
+//    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -139,7 +144,14 @@
     UIButton * btn = (UIButton *)sender;
     [btn setSelected:!btn.selected];
     if (btn.selected) {
-        [myDelegate play];
+        if ([myDelegate isPlaying]) {
+            [myDelegate play];
+        }else
+        {
+            [myDelegate playCurrentSong];
+            self.progressSlider.maximumValue = myDelegate.audioTotalFrame;
+        }
+    
     }else
     {
         [myDelegate pause];

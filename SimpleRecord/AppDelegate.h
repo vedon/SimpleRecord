@@ -25,8 +25,14 @@
 @property (assign, nonatomic) CGFloat        audioTotalFrame;
 
 -(void)palyItemWithURL:(NSURL *)inputFileURL withMusicInfo:(NSDictionary *)info withPlaylist:(NSArray *)list;
--(void)play;
--(void)pause;
--(BOOL)isPlaying;
+
 -(void)seekToPostion:(CGFloat)postion;
+-(void)playCurrentSong;
+-(BOOL)isPlaying;
+-(void)pause;
+-(void)play;
+
+
+
+
 @end

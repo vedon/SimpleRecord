@@ -59,5 +59,15 @@
  */
 +(void)showAlertViewWithMsg:(NSString *)msg title:(NSString *)msgTitle;
 
+/**
+ @desc: Save the current play file info
+ */
++(void)saveDidPlayItemInfo:(NSDictionary *)songInfo;
+
+
+/**
+ @desc: Get the current play file info
+ */
++(NSDictionary *)getThePreviousPlayItemInfo;
 @end
 
