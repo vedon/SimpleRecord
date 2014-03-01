@@ -144,6 +144,17 @@
 		4EACE97818B8D41A004383AD /* ModifyItemAttributeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EACE97718B8D41A004383AD /* ModifyItemAttributeView.xib */; };
 		4EACE97B18B8D60F004383AD /* ModifyCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACE97A18B8D60F004383AD /* ModifyCellView.m */; };
 		4EACE97D18B8D618004383AD /* ModifyCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EACE97C18B8D618004383AD /* ModifyCellView.xib */; };
+		4EAF84C618C225D70054E588 /* AAFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84A418C225D70054E588 /* AAFilter.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4EAF84C718C225D70054E588 /* BPMDetect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84A618C225D70054E588 /* BPMDetect.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4EAF84C818C225D70054E588 /* cpu_detect_x86.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84A818C225D70054E588 /* cpu_detect_x86.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4EAF84C918C225D70054E588 /* FIRFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84AC18C225D70054E588 /* FIRFilter.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4EAF84CE18C225D70054E588 /* mmx_optimized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84B518C225D70054E588 /* mmx_optimized.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4EAF84CF18C225D70054E588 /* PeakFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84B618C225D70054E588 /* PeakFinder.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4EAF84D018C225D70054E588 /* RateTransposer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84B818C225D70054E588 /* RateTransposer.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4EAF84D518C225D70054E588 /* sse_optimized.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84BF18C225D70054E588 /* sse_optimized.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4EAF84D618C225D70054E588 /* TDStretch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84C118C225D70054E588 /* TDStretch.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4EAF84D718C225D70054E588 /* FIFOSampleBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84C318C225D70054E588 /* FIFOSampleBuffer.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		4EAF84D818C225D70054E588 /* SoundTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84C418C225D70054E588 /* SoundTouch.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4EBFC19618BEDF36003FEEA1 /* AudioFloatPointReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFC19518BEDF36003FEEA1 /* AudioFloatPointReader.m */; };
 		999BAC5DD096431E8456B8E7 /* libPods-SimpleRecord.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAC9D0F882D4445974C7140 /* libPods-SimpleRecord.a */; };
 /* End PBXBuildFile section */
@@ -375,6 +386,29 @@
 		4EACE97918B8D60F004383AD /* ModifyCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyCellView.h; sourceTree = "<group>"; };
 		4EACE97A18B8D60F004383AD /* ModifyCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyCellView.m; sourceTree = "<group>"; };
 		4EACE97C18B8D618004383AD /* ModifyCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModifyCellView.xib; sourceTree = "<group>"; };
+		4EAF84A418C225D70054E588 /* AAFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AAFilter.cpp; path = SoundTouch/AAFilter.cpp; sourceTree = "<group>"; };
+		4EAF84A518C225D70054E588 /* AAFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AAFilter.h; path = SoundTouch/AAFilter.h; sourceTree = "<group>"; };
+		4EAF84A618C225D70054E588 /* BPMDetect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BPMDetect.cpp; path = SoundTouch/BPMDetect.cpp; sourceTree = "<group>"; };
+		4EAF84A718C225D70054E588 /* BPMDetect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BPMDetect.h; path = SoundTouch/BPMDetect.h; sourceTree = "<group>"; };
+		4EAF84A818C225D70054E588 /* cpu_detect_x86.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cpu_detect_x86.cpp; path = SoundTouch/cpu_detect_x86.cpp; sourceTree = "<group>"; };
+		4EAF84A918C225D70054E588 /* cpu_detect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cpu_detect.h; path = SoundTouch/cpu_detect.h; sourceTree = "<group>"; };
+		4EAF84AA18C225D70054E588 /* FIFOSampleBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FIFOSampleBuffer.h; path = SoundTouch/FIFOSampleBuffer.h; sourceTree = "<group>"; };
+		4EAF84AB18C225D70054E588 /* FIFOSamplePipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FIFOSamplePipe.h; path = SoundTouch/FIFOSamplePipe.h; sourceTree = "<group>"; };
+		4EAF84AC18C225D70054E588 /* FIRFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FIRFilter.cpp; path = SoundTouch/FIRFilter.cpp; sourceTree = "<group>"; };
+		4EAF84AD18C225D70054E588 /* FIRFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FIRFilter.h; path = SoundTouch/FIRFilter.h; sourceTree = "<group>"; };
+		4EAF84B518C225D70054E588 /* mmx_optimized.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = mmx_optimized.cpp; path = SoundTouch/mmx_optimized.cpp; sourceTree = "<group>"; };
+		4EAF84B618C225D70054E588 /* PeakFinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PeakFinder.cpp; path = SoundTouch/PeakFinder.cpp; sourceTree = "<group>"; };
+		4EAF84B718C225D70054E588 /* PeakFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PeakFinder.h; path = SoundTouch/PeakFinder.h; sourceTree = "<group>"; };
+		4EAF84B818C225D70054E588 /* RateTransposer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RateTransposer.cpp; path = SoundTouch/RateTransposer.cpp; sourceTree = "<group>"; };
+		4EAF84B918C225D70054E588 /* RateTransposer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RateTransposer.h; path = SoundTouch/RateTransposer.h; sourceTree = "<group>"; };
+		4EAF84BC18C225D70054E588 /* SoundTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SoundTouch.h; path = SoundTouch/SoundTouch.h; sourceTree = "<group>"; };
+		4EAF84BF18C225D70054E588 /* sse_optimized.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sse_optimized.cpp; path = SoundTouch/sse_optimized.cpp; sourceTree = "<group>"; };
+		4EAF84C018C225D70054E588 /* STTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STTypes.h; path = SoundTouch/STTypes.h; sourceTree = "<group>"; };
+		4EAF84C118C225D70054E588 /* TDStretch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TDStretch.cpp; path = SoundTouch/TDStretch.cpp; sourceTree = "<group>"; };
+		4EAF84C218C225D70054E588 /* TDStretch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TDStretch.h; path = SoundTouch/TDStretch.h; sourceTree = "<group>"; };
+		4EAF84C318C225D70054E588 /* FIFOSampleBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FIFOSampleBuffer.cpp; path = SoundTouch/FIFOSampleBuffer.cpp; sourceTree = "<group>"; };
+		4EAF84C418C225D70054E588 /* SoundTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundTouch.cpp; path = SoundTouch/SoundTouch.cpp; sourceTree = "<group>"; };
+		4EAF84C518C225D70054E588 /* soundtouch_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = soundtouch_config.h; path = SoundTouch/soundtouch_config.h; sourceTree = "<group>"; };
 		4EBFC19418BEDF36003FEEA1 /* AudioFloatPointReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFloatPointReader.h; sourceTree = "<group>"; };
 		4EBFC19518BEDF36003FEEA1 /* AudioFloatPointReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFloatPointReader.m; sourceTree = "<group>"; };
 		DBAC9D0F882D4445974C7140 /* libPods-SimpleRecord.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SimpleRecord.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -656,6 +690,29 @@
 		4EACB6C318B78898001545AC /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				4EAF84A418C225D70054E588 /* AAFilter.cpp */,
+				4EAF84A518C225D70054E588 /* AAFilter.h */,
+				4EAF84A618C225D70054E588 /* BPMDetect.cpp */,
+				4EAF84A718C225D70054E588 /* BPMDetect.h */,
+				4EAF84A818C225D70054E588 /* cpu_detect_x86.cpp */,
+				4EAF84A918C225D70054E588 /* cpu_detect.h */,
+				4EAF84AA18C225D70054E588 /* FIFOSampleBuffer.h */,
+				4EAF84AB18C225D70054E588 /* FIFOSamplePipe.h */,
+				4EAF84AC18C225D70054E588 /* FIRFilter.cpp */,
+				4EAF84AD18C225D70054E588 /* FIRFilter.h */,
+				4EAF84B518C225D70054E588 /* mmx_optimized.cpp */,
+				4EAF84B618C225D70054E588 /* PeakFinder.cpp */,
+				4EAF84B718C225D70054E588 /* PeakFinder.h */,
+				4EAF84B818C225D70054E588 /* RateTransposer.cpp */,
+				4EAF84B918C225D70054E588 /* RateTransposer.h */,
+				4EAF84BC18C225D70054E588 /* SoundTouch.h */,
+				4EAF84BF18C225D70054E588 /* sse_optimized.cpp */,
+				4EAF84C018C225D70054E588 /* STTypes.h */,
+				4EAF84C118C225D70054E588 /* TDStretch.cpp */,
+				4EAF84C218C225D70054E588 /* TDStretch.h */,
+				4EAF84C318C225D70054E588 /* FIFOSampleBuffer.cpp */,
+				4EAF84C418C225D70054E588 /* SoundTouch.cpp */,
+				4EAF84C518C225D70054E588 /* soundtouch_config.h */,
 				4E7753AD18BE3869000BCA95 /* CocoaHTTPServer */,
 				4EACB70918B79762001545AC /* HWSDK */,
 				4EACB6C418B78898001545AC /* EZAudio */,
@@ -1072,7 +1129,9 @@
 				4E77540118BE3869000BCA95 /* HTTPRedirectResponse.m in Sources */,
 				4E7753F318BE3869000BCA95 /* DDNumber.m in Sources */,
 				4EACB72518B79762001545AC /* IO.m in Sources */,
+				4EAF84C718C225D70054E588 /* BPMDetect.cpp in Sources */,
 				4E7753AB18BE3830000BCA95 /* AsynEncodeAudioRecord.m in Sources */,
+				4EAF84C818C225D70054E588 /* cpu_detect_x86.cpp in Sources */,
 				4EACE91118B835C4004383AD /* GobalMethod.m in Sources */,
 				4E7753FD18BE3869000BCA95 /* HTTPDataResponse.m in Sources */,
 				4EACB6E818B78898001545AC /* TPCircularBuffer.c in Sources */,
@@ -1088,14 +1147,18 @@
 				4EACB6E318B78898001545AC /* EZAudioPlotGLKViewController.m in Sources */,
 				4EACB72818B79762001545AC /* NSString+Utils.m in Sources */,
 				4E77540D18BE3869000BCA95 /* DispatchQueueLogFormatter.m in Sources */,
+				4EAF84D518C225D70054E588 /* sse_optimized.cpp in Sources */,
 				4EACB6DE18B78898001545AC /* AEFloatConverter.m in Sources */,
+				4EAF84CF18C225D70054E588 /* PeakFinder.cpp in Sources */,
 				4EACB73C18B79821001545AC /* RingBuffer.mm in Sources */,
 				4EACB70418B7941D001545AC /* LocalFileBroserViewController.mm in Sources */,
 				4EACE92118B83DFB004383AD /* MusicInfo.m in Sources */,
 				4E7753FF18BE3869000BCA95 /* HTTPErrorResponse.m in Sources */,
 				4EACE91818B8391F004383AD /* SimpleRecord.xcdatamodeld in Sources */,
+				4EAF84D718C225D70054E588 /* FIFOSampleBuffer.cpp in Sources */,
 				4EACE97B18B8D60F004383AD /* ModifyCellView.m in Sources */,
 				4E7753F918BE3869000BCA95 /* MultipartFormDataParser.m in Sources */,
+				4EAF84D818C225D70054E588 /* SoundTouch.cpp in Sources */,
 				4EACB72618B79762001545AC /* NSDate+Utils.m in Sources */,
 				4EACB69918B7877D001545AC /* AppDelegate.mm in Sources */,
 				4EACB6F518B78AE9001545AC /* RecordViewController.m in Sources */,
@@ -1104,6 +1167,7 @@
 				4E77540018BE3869000BCA95 /* HTTPFileResponse.m in Sources */,
 				4EACB72A18B79762001545AC /* UIColor+Utils.m in Sources */,
 				4EACB72918B79762001545AC /* OSHelper.m in Sources */,
+				4EAF84CE18C225D70054E588 /* mmx_optimized.cpp in Sources */,
 				4E77540518BE3869000BCA95 /* GCDAsyncSocket.m in Sources */,
 				4E7753F218BE3869000BCA95 /* DDData.m in Sources */,
 				4EACB73918B79821001545AC /* AudioReader.mm in Sources */,
@@ -1111,6 +1175,7 @@
 				4E7753FC18BE3869000BCA95 /* HTTPAsyncFileResponse.m in Sources */,
 				4EACE97618B8D40F004383AD /* ModifyItemAttributeView.m in Sources */,
 				4E77540A18BE3869000BCA95 /* DDLog.m in Sources */,
+				4EAF84C618C225D70054E588 /* AAFilter.cpp in Sources */,
 				4EACB6E018B78898001545AC /* EZAudioFile.m in Sources */,
 				4E7753FA18BE3869000BCA95 /* MultipartMessageHeader.m in Sources */,
 				4E77540C18BE3869000BCA95 /* ContextFilterLogFormatter.m in Sources */,
@@ -1118,7 +1183,9 @@
 				4EACB74718B79B2E001545AC /* MusicInfoCell.m in Sources */,
 				4E7753F818BE3869000BCA95 /* HTTPServer.m in Sources */,
 				4EACB69518B7877D001545AC /* main.m in Sources */,
+				4EAF84C918C225D70054E588 /* FIRFilter.cpp in Sources */,
 				4E7753FE18BE3869000BCA95 /* HTTPDynamicFileResponse.m in Sources */,
+				4EAF84D018C225D70054E588 /* RateTransposer.cpp in Sources */,
 				4E7753FB18BE3869000BCA95 /* MultipartMessageHeaderField.m in Sources */,
 				4EACB72D18B79762001545AC /* VersionManager.m in Sources */,
 				4EACE92B18B84541004383AD /* RecordItemInfo.m in Sources */,
@@ -1128,6 +1195,7 @@
 				4E77540B18BE3869000BCA95 /* DDTTYLogger.m in Sources */,
 				4EACB6E618B78898001545AC /* EZPlot.m in Sources */,
 				4E7753F618BE3869000BCA95 /* HTTPConnection.m in Sources */,
+				4EAF84D618C225D70054E588 /* TDStretch.cpp in Sources */,
 				4EACB73A18B79821001545AC /* AudioManager.m in Sources */,
 				4EACE91418B838B5004383AD /* PersistentStore.m in Sources */,
 				4EACB6E418B78898001545AC /* EZMicrophone.m in Sources */,
@@ -1260,7 +1328,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu89;
@@ -1287,7 +1355,7 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
 				CLANG_CXX_LIBRARY = "libc++";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu89;

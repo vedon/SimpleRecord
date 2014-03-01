@@ -293,9 +293,6 @@ static NSString * cellIdentifier = @"Identifier";
         [self configureLibraryMusicWithSelector:@selector(playItemWithPath:musicInfo:) withInfo:musicInfo];
     });
     
-    
-    
-    
 }
 
 @end
