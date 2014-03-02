@@ -7,9 +7,12 @@
 //
 
 #import "AudioFloatPointReader.h"
+
+
 @interface AudioFloatPointReader()
 {
     NSURL * curentPlayFileURL;
+
 }
 @end
 @implementation AudioFloatPointReader

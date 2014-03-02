@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "EZAudio.h"
 #import <AVFoundation/AVFoundation.h>
+
 @interface AsynEncodeAudioRecord : NSObject<EZMicrophoneDelegate>
 
 @property (nonatomic,strong) EZMicrophone *microphone;
@@ -21,4 +22,5 @@
 
 -(void)startPlayer;
 -(void)stopPlayer;
+-(void)saveSoundMakerFile;
 @end

@@ -7,12 +7,13 @@
 //
 
 #import "AsynEncodeAudioRecord.h"
-
+#import "SoundMaker.h"
 
 @implementation AsynEncodeAudioRecord
 {
     NSString * audioFilePath;
     NSString * extension;
+    SoundMaker * soundMaker;
 }
 +(id)shareAsynEncodeAudioRecord
 {
@@ -29,6 +30,7 @@
 {
     if (!self.isRecording ) {
         [self.microphone startFetchingAudio];
+        
     }
     self.isRecording = YES;
 }
@@ -53,6 +55,10 @@
     [self startPlayer];
 }
 
+-(void)saveSoundMakerFile
+{
+    [soundMaker save];
+}
 
 #pragma mark - EZMicrophoneDelegate
 -(void)microphone:(EZMicrophone *)microphone
@@ -70,6 +76,12 @@ withNumberOfChannels:(UInt32)numberOfChannels {
 
 -(void)microphone:(EZMicrophone *)microphone hasAudioStreamBasicDescription:(AudioStreamBasicDescription)audioStreamBasicDescription {
     [EZAudio printASBD:audioStreamBasicDescription];
+    
+    
+    soundMaker = [[SoundMaker alloc]init];
+    [soundMaker initalizationSoundTouchWithSampleRate:audioStreamBasicDescription.mSampleRate Channels:audioStreamBasicDescription.mChannelsPerFrame TempoChange:0.5 PitchSemiTones:12 RateChange:-0.7];
+    
+    
     self.recorder = [EZRecorder recorderWithDestinationURL:[self testFilePathURL]
                                            andSourceFormat:audioStreamBasicDescription destinateFileExtension:extension];
     
@@ -81,8 +93,12 @@ withNumberOfChannels:(UInt32)numberOfChannels {
 withNumberOfChannels:(UInt32)numberOfChannels {
     
     if( self.isRecording ){
-        [self.recorder appendDataFromBufferList:bufferList
-                                 withBufferSize:bufferSize];
+        [soundMaker processingSample:(short *)bufferList->mBuffers->mData length:bufferList->mBuffers->mDataByteSize];
+        [soundMaker getProcessedSample:(short *)bufferList->mBuffers->mData length:bufferList->mBuffers->mDataByteSize completedBlock:^{
+            [self.recorder appendDataFromBufferList:bufferList
+                                     withBufferSize:bufferSize];
+        }];
+        
     }
 }
 

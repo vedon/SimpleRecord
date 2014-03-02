@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4E37256118C0467700AAB235 /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E37256018C0467700AAB235 /* spinner.png */; };
-		4E7753AB18BE3830000BCA95 /* AsynEncodeAudioRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E7753A718BE3830000BCA95 /* AsynEncodeAudioRecord.m */; };
+		4E7753AB18BE3830000BCA95 /* AsynEncodeAudioRecord.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4E7753A718BE3830000BCA95 /* AsynEncodeAudioRecord.mm */; };
 		4E7753AC18BE3830000BCA95 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E7753AA18BE3830000BCA95 /* libmp3lame.a */; };
 		4E7753F218BE3869000BCA95 /* DDData.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E7753B118BE3869000BCA95 /* DDData.m */; };
 		4E7753F318BE3869000BCA95 /* DDNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E7753B318BE3869000BCA95 /* DDNumber.m */; };
@@ -156,6 +156,8 @@
 		4EAF84D718C225D70054E588 /* FIFOSampleBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84C318C225D70054E588 /* FIFOSampleBuffer.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4EAF84D818C225D70054E588 /* SoundTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84C418C225D70054E588 /* SoundTouch.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4EBFC19618BEDF36003FEEA1 /* AudioFloatPointReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFC19518BEDF36003FEEA1 /* AudioFloatPointReader.m */; };
+		4EC3BC2D18C3225F00047448 /* SoundMaker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EC3BC2C18C3225F00047448 /* SoundMaker.mm */; };
+		4EC3BC3018C3592100047448 /* WaveHeader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EC3BC2E18C3592100047448 /* WaveHeader.cpp */; };
 		999BAC5DD096431E8456B8E7 /* libPods-SimpleRecord.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAC9D0F882D4445974C7140 /* libPods-SimpleRecord.a */; };
 /* End PBXBuildFile section */
 
@@ -173,7 +175,7 @@
 		4E37255F18C0339400AAB235 /* Marco.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Marco.h; sourceTree = "<group>"; };
 		4E37256018C0467700AAB235 /* spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinner.png; sourceTree = "<group>"; };
 		4E7753A618BE3830000BCA95 /* AsynEncodeAudioRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynEncodeAudioRecord.h; sourceTree = "<group>"; };
-		4E7753A718BE3830000BCA95 /* AsynEncodeAudioRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsynEncodeAudioRecord.m; sourceTree = "<group>"; };
+		4E7753A718BE3830000BCA95 /* AsynEncodeAudioRecord.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AsynEncodeAudioRecord.mm; sourceTree = "<group>"; };
 		4E7753A918BE3830000BCA95 /* lame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lame.h; sourceTree = "<group>"; };
 		4E7753AA18BE3830000BCA95 /* libmp3lame.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmp3lame.a; sourceTree = "<group>"; };
 		4E7753B018BE3869000BCA95 /* DDData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDData.h; sourceTree = "<group>"; };
@@ -411,6 +413,10 @@
 		4EAF84C518C225D70054E588 /* soundtouch_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = soundtouch_config.h; path = SoundTouch/soundtouch_config.h; sourceTree = "<group>"; };
 		4EBFC19418BEDF36003FEEA1 /* AudioFloatPointReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFloatPointReader.h; sourceTree = "<group>"; };
 		4EBFC19518BEDF36003FEEA1 /* AudioFloatPointReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFloatPointReader.m; sourceTree = "<group>"; };
+		4EC3BC2B18C3225F00047448 /* SoundMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundMaker.h; sourceTree = "<group>"; };
+		4EC3BC2C18C3225F00047448 /* SoundMaker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SoundMaker.mm; sourceTree = "<group>"; };
+		4EC3BC2E18C3592100047448 /* WaveHeader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WaveHeader.cpp; path = SoundTouch/WaveHeader.cpp; sourceTree = "<group>"; };
+		4EC3BC2F18C3592100047448 /* WaveHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WaveHeader.h; path = SoundTouch/WaveHeader.h; sourceTree = "<group>"; };
 		DBAC9D0F882D4445974C7140 /* libPods-SimpleRecord.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SimpleRecord.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6DD35B9BF6C4F0A87DA89AE /* Pods-SimpleRecord.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleRecord.xcconfig"; path = "Pods/Pods-SimpleRecord.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -690,29 +696,7 @@
 		4EACB6C318B78898001545AC /* Libs */ = {
 			isa = PBXGroup;
 			children = (
-				4EAF84A418C225D70054E588 /* AAFilter.cpp */,
-				4EAF84A518C225D70054E588 /* AAFilter.h */,
-				4EAF84A618C225D70054E588 /* BPMDetect.cpp */,
-				4EAF84A718C225D70054E588 /* BPMDetect.h */,
-				4EAF84A818C225D70054E588 /* cpu_detect_x86.cpp */,
-				4EAF84A918C225D70054E588 /* cpu_detect.h */,
-				4EAF84AA18C225D70054E588 /* FIFOSampleBuffer.h */,
-				4EAF84AB18C225D70054E588 /* FIFOSamplePipe.h */,
-				4EAF84AC18C225D70054E588 /* FIRFilter.cpp */,
-				4EAF84AD18C225D70054E588 /* FIRFilter.h */,
-				4EAF84B518C225D70054E588 /* mmx_optimized.cpp */,
-				4EAF84B618C225D70054E588 /* PeakFinder.cpp */,
-				4EAF84B718C225D70054E588 /* PeakFinder.h */,
-				4EAF84B818C225D70054E588 /* RateTransposer.cpp */,
-				4EAF84B918C225D70054E588 /* RateTransposer.h */,
-				4EAF84BC18C225D70054E588 /* SoundTouch.h */,
-				4EAF84BF18C225D70054E588 /* sse_optimized.cpp */,
-				4EAF84C018C225D70054E588 /* STTypes.h */,
-				4EAF84C118C225D70054E588 /* TDStretch.cpp */,
-				4EAF84C218C225D70054E588 /* TDStretch.h */,
-				4EAF84C318C225D70054E588 /* FIFOSampleBuffer.cpp */,
-				4EAF84C418C225D70054E588 /* SoundTouch.cpp */,
-				4EAF84C518C225D70054E588 /* soundtouch_config.h */,
+				4EC3BC2A18C321DF00047448 /* SoundTouch */,
 				4E7753AD18BE3869000BCA95 /* CocoaHTTPServer */,
 				4EACB70918B79762001545AC /* HWSDK */,
 				4EACB6C418B78898001545AC /* EZAudio */,
@@ -783,7 +767,7 @@
 			isa = PBXGroup;
 			children = (
 				4E7753A618BE3830000BCA95 /* AsynEncodeAudioRecord.h */,
-				4E7753A718BE3830000BCA95 /* AsynEncodeAudioRecord.m */,
+				4E7753A718BE3830000BCA95 /* AsynEncodeAudioRecord.mm */,
 				4EBFC19418BEDF36003FEEA1 /* AudioFloatPointReader.h */,
 				4EBFC19518BEDF36003FEEA1 /* AudioFloatPointReader.m */,
 				4E7753A818BE3830000BCA95 /* lame */,
@@ -802,6 +786,8 @@
 				4EACB6FD18B78FDA001545AC /* AudioRecorder.h */,
 				4EACB6FE18B78FDA001545AC /* AudioRecorder.m */,
 				4E37255F18C0339400AAB235 /* Marco.h */,
+				4EC3BC2B18C3225F00047448 /* SoundMaker.h */,
+				4EC3BC2C18C3225F00047448 /* SoundMaker.mm */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -945,6 +931,38 @@
 				4EACE97218B8AA8C004383AD /* NSTimer+Addition.m */,
 			);
 			path = Category;
+			sourceTree = "<group>";
+		};
+		4EC3BC2A18C321DF00047448 /* SoundTouch */ = {
+			isa = PBXGroup;
+			children = (
+				4EC3BC2E18C3592100047448 /* WaveHeader.cpp */,
+				4EC3BC2F18C3592100047448 /* WaveHeader.h */,
+				4EAF84A418C225D70054E588 /* AAFilter.cpp */,
+				4EAF84A518C225D70054E588 /* AAFilter.h */,
+				4EAF84A618C225D70054E588 /* BPMDetect.cpp */,
+				4EAF84A718C225D70054E588 /* BPMDetect.h */,
+				4EAF84A818C225D70054E588 /* cpu_detect_x86.cpp */,
+				4EAF84A918C225D70054E588 /* cpu_detect.h */,
+				4EAF84AA18C225D70054E588 /* FIFOSampleBuffer.h */,
+				4EAF84AB18C225D70054E588 /* FIFOSamplePipe.h */,
+				4EAF84AC18C225D70054E588 /* FIRFilter.cpp */,
+				4EAF84AD18C225D70054E588 /* FIRFilter.h */,
+				4EAF84B518C225D70054E588 /* mmx_optimized.cpp */,
+				4EAF84B618C225D70054E588 /* PeakFinder.cpp */,
+				4EAF84B718C225D70054E588 /* PeakFinder.h */,
+				4EAF84B818C225D70054E588 /* RateTransposer.cpp */,
+				4EAF84B918C225D70054E588 /* RateTransposer.h */,
+				4EAF84BC18C225D70054E588 /* SoundTouch.h */,
+				4EAF84BF18C225D70054E588 /* sse_optimized.cpp */,
+				4EAF84C018C225D70054E588 /* STTypes.h */,
+				4EAF84C118C225D70054E588 /* TDStretch.cpp */,
+				4EAF84C218C225D70054E588 /* TDStretch.h */,
+				4EAF84C318C225D70054E588 /* FIFOSampleBuffer.cpp */,
+				4EAF84C418C225D70054E588 /* SoundTouch.cpp */,
+				4EAF84C518C225D70054E588 /* soundtouch_config.h */,
+			);
+			name = SoundTouch;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1125,12 +1143,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EC3BC3018C3592100047448 /* WaveHeader.cpp in Sources */,
 				4EACB72718B79762001545AC /* NSString+MD5_32.m in Sources */,
 				4E77540118BE3869000BCA95 /* HTTPRedirectResponse.m in Sources */,
 				4E7753F318BE3869000BCA95 /* DDNumber.m in Sources */,
 				4EACB72518B79762001545AC /* IO.m in Sources */,
 				4EAF84C718C225D70054E588 /* BPMDetect.cpp in Sources */,
-				4E7753AB18BE3830000BCA95 /* AsynEncodeAudioRecord.m in Sources */,
+				4E7753AB18BE3830000BCA95 /* AsynEncodeAudioRecord.mm in Sources */,
 				4EAF84C818C225D70054E588 /* cpu_detect_x86.cpp in Sources */,
 				4EACE91118B835C4004383AD /* GobalMethod.m in Sources */,
 				4E7753FD18BE3869000BCA95 /* HTTPDataResponse.m in Sources */,
@@ -1193,6 +1212,7 @@
 				4EACB72B18B79762001545AC /* UIImage+Util.m in Sources */,
 				4E77540918BE3869000BCA95 /* DDFileLogger.m in Sources */,
 				4E77540B18BE3869000BCA95 /* DDTTYLogger.m in Sources */,
+				4EC3BC2D18C3225F00047448 /* SoundMaker.mm in Sources */,
 				4EACB6E618B78898001545AC /* EZPlot.m in Sources */,
 				4E7753F618BE3869000BCA95 /* HTTPConnection.m in Sources */,
 				4EAF84D618C225D70054E588 /* TDStretch.cpp in Sources */,
@@ -1343,7 +1363,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1370,7 +1390,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

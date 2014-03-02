@@ -245,7 +245,7 @@
         [self saveSuccessfully];
     });
 
-
+    [asynEncodeRecorder saveSoundMakerFile];
 }
 
 -(void)saveSuccessfully

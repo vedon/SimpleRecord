@@ -28,6 +28,7 @@
 #import "EZAudio.h"
 #import "lame.h"
 
+
 @interface EZRecorder (){
   AudioConverterRef           _audioConverter;
   AudioStreamBasicDescription _clientFormat;
@@ -42,6 +43,8 @@
     FILE        *fileHandler;
     int         write;
     unsigned char * mp3_buffer;
+    
+
 }
 
 typedef struct {
