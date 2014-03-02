@@ -241,9 +241,9 @@
     dispatch_barrier_async(dispatch_get_main_queue(), ^{
         [self resetStatus];
     });
-    dispatch_barrier_async(dispatch_get_main_queue(), ^{
-        [self saveSuccessfully];
-    });
+//    dispatch_barrier_async(dispatch_get_main_queue(), ^{
+//        [self saveSuccessfully];
+//    });
 
     [asynEncodeRecorder saveSoundMakerFile];
 }
