@@ -14,6 +14,7 @@
     NSString * audioFilePath;
     NSString * extension;
     SoundMaker * soundMaker;
+    char * copyAudioBuffer;
 }
 +(id)shareAsynEncodeAudioRecord
 {
@@ -80,7 +81,7 @@ withNumberOfChannels:(UInt32)numberOfChannels {
     
     soundMaker = [[SoundMaker alloc]init];
     [soundMaker initalizationSoundTouchWithSampleRate:audioStreamBasicDescription.mSampleRate Channels:audioStreamBasicDescription.mChannelsPerFrame TempoChange:0.5 PitchSemiTones:12 RateChange:-0.7];
-    
+    copyAudioBuffer = NULL;
     
     self.recorder = [EZRecorder recorderWithDestinationURL:[self testFilePathURL]
                                            andSourceFormat:audioStreamBasicDescription destinateFileExtension:extension];
@@ -92,9 +93,18 @@ withNumberOfChannels:(UInt32)numberOfChannels {
    withBufferSize:(UInt32)bufferSize
 withNumberOfChannels:(UInt32)numberOfChannels {
     
+    //The incoming data is liner pcm data;
     if( self.isRecording ){
-        [soundMaker processingSample:(short *)bufferList->mBuffers->mData length:bufferList->mBuffers->mDataByteSize];
-        [soundMaker getProcessedSample:(short *)bufferList->mBuffers->mData length:bufferList->mBuffers->mDataByteSize completedBlock:^{
+        int dataSize = bufferList->mBuffers->mDataByteSize;
+        if (copyAudioBuffer == NULL) {
+            copyAudioBuffer = (char * )malloc(sizeof(char) * dataSize);
+        }
+        memset(copyAudioBuffer, 0, dataSize);
+        memcpy(copyAudioBuffer, bufferList->mBuffers->mData, dataSize);
+        
+        
+        [soundMaker processingSample:(short *)copyAudioBuffer length:dataSize/2];
+        [soundMaker getProcessedSample:(short *)bufferList->mBuffers->mData length:dataSize completedBlock:^{
             [self.recorder appendDataFromBufferList:bufferList
                                      withBufferSize:bufferSize];
         }];

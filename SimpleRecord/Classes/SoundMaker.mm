@@ -45,30 +45,32 @@
      
      ，那么实际上这里只存放了(16*2)/8=4bytes,64/4=16;16个sample
      */
-    mSoundTouch.putSamples(inSamples, nSamples);
+    mSoundTouch.putSamples(inSamples, nSamples/2);
 }
 
 -(void)getProcessedSample:(soundtouch::SAMPLETYPE *)outSamples
-                   length:(NSUInteger)nSamples
+                   length:(NSInteger)nSamples
            completedBlock:(void (^)())block
 {
+    
+    
     short *samples = (short *)malloc(sizeof(short)* nSamples);
-    [soundTouchDatas appendBytes:samples length:nSamples];
-    free(samples);
-    block();
-//    int numSamples = 0;
-//    do {
-//        memset(samples, 0, nSamples);
-//        numSamples = mSoundTouch.receiveSamples(samples, nSamples);
-//        if (numSamples <= 0) {
-//            
-//            free (samples);
-//            block();
-//        }else
-//        {
-//            [soundTouchDatas appendBytes:samples length:numSamples];
-//        }
-//    } while (numSamples > 0);
+    memset(samples, 0, nSamples);
+//    [soundTouchDatas appendBytes:samples length:nSamples*2];
+//    block();
+    
+    int numSamples = 0;
+    do {
+        numSamples = mSoundTouch.receiveSamples(samples, nSamples);
+        if (numSamples <= 0) {
+            free (samples);
+            block();
+            break;
+        }else
+        {
+            [soundTouchDatas appendBytes:samples length:numSamples * 2];
+        }
+    } while (numSamples > 0);
     
 }
 
