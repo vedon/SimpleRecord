@@ -98,7 +98,10 @@
 {
     [self setLeftCustomBarItem:@"Record_Btn_Back.png" action:@selector(backAction)];
     asynEncodeRecorder = [AsynEncodeAudioRecord shareAsynEncodeAudioRecord];
-    
+    [asynEncodeRecorder setDecibelBlock:^(CGFloat decibbel)
+    {
+        
+    }];
     myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     isRecording = NO;
     _finishBtn.userInteractionEnabled = NO;

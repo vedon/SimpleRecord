@@ -95,6 +95,12 @@ withNumberOfChannels:(UInt32)numberOfChannels {
     
     //The incoming data is liner pcm data;
     if( self.isRecording ){
+        
+        if (_decibelBlock) {
+            [self getTheDecibelFromAudioBufferList:bufferList numberOfFrames:bufferSize DBOffset:-80 lowPassFilter:0.2];
+        }
+        
+        
         int dataSize = bufferList->mBuffers->mDataByteSize;
         if (copyAudioBuffer == NULL) {
             copyAudioBuffer = (char * )malloc(sizeof(char) * dataSize);
@@ -126,5 +132,45 @@ withNumberOfChannels:(UInt32)numberOfChannels {
 
 -(NSURL*)testFilePathURL {
     return [NSURL fileURLWithPath:audioFilePath];
+}
+
+-(void)getTheDecibelFromAudioBufferList:(AudioBufferList *)inputBuffer
+                         numberOfFrames:(NSInteger)inNumberFrames
+                               DBOffset:(NSInteger)DBOFFSET
+                          lowPassFilter:(CGFloat)filter
+{
+    @autoreleasepool {
+        SInt16* samples = (SInt16*)(inputBuffer->mBuffers[0].mData); // Step 1: get an array of your samples that you can loop through. Each sample contains the amplitude.
+        
+        Float32 decibels = DBOFFSET; // When we have no signal we'll leave this on the lowest setting
+        Float32 currentFilteredValueOfSampleAmplitude, previousFilteredValueOfSampleAmplitude; // We'll need these in the low-pass filter
+        Float32 peakValue = DBOFFSET; // We'll end up storing the peak value here
+        
+        for (int i=0; i < inNumberFrames; i++) {
+            
+            Float32 absoluteValueOfSampleAmplitude = abs(samples[i]); //Step 2: for each sample, get its amplitude's absolute value.
+            
+            // Step 3: for each sample's absolute value, run it through a simple low-pass filter
+            // Begin low-pass filter
+            currentFilteredValueOfSampleAmplitude = filter * absoluteValueOfSampleAmplitude + (1.0 - filter) * previousFilteredValueOfSampleAmplitude;
+            previousFilteredValueOfSampleAmplitude = currentFilteredValueOfSampleAmplitude;
+            Float32 amplitudeToConvertToDB = currentFilteredValueOfSampleAmplitude;
+            // End low-pass filter
+            
+            Float32 sampleDB = 20.0*log10(amplitudeToConvertToDB) + DBOFFSET;
+            // Step 4: for each sample's filtered absolute value, convert it into decibels
+            // Step 5: for each sample's filtered absolute value in decibels, add an offset value that normalizes the clipping point of the device to zero.
+            
+            if((sampleDB == sampleDB) && (sampleDB != -DBL_MAX)) { // if it's a rational number and isn't infinite
+                
+                if(sampleDB > peakValue) peakValue = sampleDB; // Step 6: keep the highest value you find.
+                decibels = peakValue; // final value
+            }
+        }
+        if (_decibelBlock) {
+            _decibelBlock(decibels);
+        }
+        NSLog(@"decibel level is %f", decibels);
+    }
 }
 @end
