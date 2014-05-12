@@ -58,7 +58,9 @@
 
 -(void)saveSoundMakerFile
 {
-//    [soundMaker save];
+#if ISUSingSoundMaker
+    [soundMaker save];
+#endif
 }
 
 #pragma mark - EZMicrophoneDelegate
@@ -78,9 +80,11 @@ withNumberOfChannels:(UInt32)numberOfChannels {
 -(void)microphone:(EZMicrophone *)microphone hasAudioStreamBasicDescription:(AudioStreamBasicDescription)audioStreamBasicDescription {
     [EZAudio printASBD:audioStreamBasicDescription];
     
-//    soundMaker = [[SoundMaker alloc]init];
-//    [soundMaker initalizationSoundTouchWithSampleRate:audioStreamBasicDescription.mSampleRate Channels:audioStreamBasicDescription.mChannelsPerFrame TempoChange:0.5 PitchSemiTones:12 RateChange:-0.7];
+#if ISUSingSoundMaker
+    soundMaker = [[SoundMaker alloc]init];
+    [soundMaker initalizationSoundTouchWithSampleRate:audioStreamBasicDescription.mSampleRate Channels:1 TempoChange:10.0 PitchSemiTones:0 RateChange:0];
     copyAudioBuffer = NULL;
+#endif
     self.recorder = [EZRecorder recorderWithDestinationURL:[self testFilePathURL]
                                            andSourceFormat:audioStreamBasicDescription destinateFileExtension:extension];
     
@@ -94,27 +98,29 @@ withNumberOfChannels:(UInt32)numberOfChannels {
     //The incoming data is liner pcm data;
     if( self.isRecording ){
         
-//        if (_decibelBlock) {
-//            [self getTheDecibelFromAudioBufferList:bufferList numberOfFrames:bufferSize DBOffset:-84 lowPassFilter:0.2];
-//        }
+        if (_decibelBlock) {
+            [self getTheDecibelFromAudioBufferList:bufferList numberOfFrames:bufferSize DBOffset:-84 lowPassFilter:0.2];
+        }
         
+#if ISUSingSoundMaker
+        int dataSize = bufferList->mBuffers->mDataByteSize;
+        if (copyAudioBuffer == NULL) {
+            copyAudioBuffer = (char * )malloc(sizeof(char) * dataSize);
+            memset(copyAudioBuffer, 0, dataSize);
+        }
         
-//        int dataSize = bufferList->mBuffers->mDataByteSize;
-//        if (copyAudioBuffer == NULL) {
-//            copyAudioBuffer = (char * )malloc(sizeof(char) * dataSize);
-//        }
-//        memset(copyAudioBuffer, 0, dataSize);
-//        memcpy(copyAudioBuffer, bufferList->mBuffers->mData, dataSize);
-        
-        
-//        [soundMaker processingSample:(short *)copyAudioBuffer length:dataSize/2];
-//        [soundMaker getProcessedSample:(short *)bufferList->mBuffers->mData length:dataSize completedBlock:^{
-//        [self.recorder appendDataFromBufferList:bufferList
-//                                 withBufferSize:bufferSize];
-//        }];
-//
-    [self.recorder appendDataFromBufferList:bufferList
-                             withBufferSize:bufferSize];
+        memcpy(copyAudioBuffer, bufferList->mBuffers->mData, dataSize);
+        [soundMaker processingSample:(soundtouch::SAMPLETYPE  *)copyAudioBuffer length:dataSize/2];
+        [soundMaker getProcessedSample:(soundtouch::SAMPLETYPE *)bufferList->mBuffers->mData length:dataSize/2 completedBlock:^(soundtouch::SAMPLETYPE * data){
+            
+            memcpy(bufferList->mBuffers->mData, data, dataSize);
+            [self.recorder appendDataFromBufferList:bufferList
+                                     withBufferSize:bufferSize];
+        }];
+#else
+        [self.recorder appendDataFromBufferList:bufferList
+                                 withBufferSize:bufferSize];
+#endif
     }
 }
 

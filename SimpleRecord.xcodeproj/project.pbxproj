@@ -173,6 +173,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4E11D5211921033A0017B5AF /* SimpleRecord_macro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleRecord_macro.h; sourceTree = "<group>"; };
 		4E37255F18C0339400AAB235 /* Marco.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Marco.h; sourceTree = "<group>"; };
 		4E37256018C0467700AAB235 /* spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinner.png; sourceTree = "<group>"; };
 		4E7753A618BE3830000BCA95 /* AsynEncodeAudioRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsynEncodeAudioRecord.h; sourceTree = "<group>"; };
@@ -792,6 +793,7 @@
 				4E37255F18C0339400AAB235 /* Marco.h */,
 				4EC3BC2B18C3225F00047448 /* SoundMaker.h */,
 				4EC3BC2C18C3225F00047448 /* SoundMaker.mm */,
+				4E11D5211921033A0017B5AF /* SimpleRecord_macro.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1365,6 +1367,7 @@
 					"/Users/vedon/Documents/IOS\\ Develop/SimpleRecord/SimpleRecord/Classes/lame",
 					/Users/vedon/Documents/GitHub/SimpleRecord/SimpleRecord/Classes/lame,
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s arm64";
@@ -1392,6 +1395,7 @@
 					"/Users/vedon/Documents/IOS\\ Develop/SimpleRecord/SimpleRecord/Classes/lame",
 					/Users/vedon/Documents/GitHub/SimpleRecord/SimpleRecord/Classes/lame,
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s arm64";

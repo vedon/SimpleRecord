@@ -22,7 +22,7 @@
                  length:(NSUInteger)nSamples;
 -(void)getProcessedSample:(soundtouch::SAMPLETYPE *)outSamples
                    length:(NSInteger)nSamples
-           completedBlock:(void (^)())block;
+           completedBlock:(void (^)(short * data))block;
 
 -(void)save;
 @end

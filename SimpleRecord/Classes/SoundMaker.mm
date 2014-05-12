@@ -50,28 +50,25 @@
 
 -(void)getProcessedSample:(soundtouch::SAMPLETYPE *)outSamples
                    length:(NSInteger)nSamples
-           completedBlock:(void (^)())block
+           completedBlock:(void (^)(short * data))block
 {
     
     
     short *samples = (short *)malloc(sizeof(short)* nSamples);
     memset(samples, 0, nSamples);
-//    [soundTouchDatas appendBytes:samples length:nSamples*2];
-//    block();
-    
+
     int numSamples = 0;
     do {
         numSamples = mSoundTouch.receiveSamples(samples, nSamples);
         if (numSamples <= 0) {
-            free (samples);
-            block();
             break;
         }else
         {
+            block(samples);
             [soundTouchDatas appendBytes:samples length:numSamples * 2];
         }
     } while (numSamples > 0);
-    
+    free (samples);
 }
 
 -(void)save
@@ -80,7 +77,7 @@
     
     int fileLength = soundTouchDatas.length;
     void *header = createWaveHeader(fileLength, 1, 16000, 16);
-    [wavDatas appendBytes:header length:44];
+//    [wavDatas appendBytes:header length:44];
     [wavDatas appendData:soundTouchDatas];
     
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
