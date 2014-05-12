@@ -97,11 +97,12 @@
 -(void)initializationInterface
 {
     [self setLeftCustomBarItem:@"Record_Btn_Back.png" action:@selector(backAction)];
-    __weak RecordViewController * weakSelf = self;
+
     asynEncodeRecorder = [AsynEncodeAudioRecord shareAsynEncodeAudioRecord];
-    [asynEncodeRecorder setDecibelBlock:^(CGFloat decibbel)
-    {
-        @autoreleasepool {
+//    __weak RecordViewController * weakSelf = self;
+//    [asynEncodeRecorder setDecibelBlock:^(CGFloat decibbel)
+//    {
+//        @autoreleasepool {
 //            dispatch_async(dispatch_get_main_queue(), ^{
 //                CGFloat absDecibel = abs(decibbel);
 //                if (absDecibel == 0) {
@@ -115,9 +116,9 @@
 //                UIImage * tempImage = [GobalMethod newImageWithRect:CGRectMake(0, 0, size, size)];
 //                [weakSelf.gradientView setImage: tempImage];
 //            });
-        }
-       
-    }];
+//        }
+//       
+//    }];
     myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     isRecording = NO;
     _finishBtn.userInteractionEnabled = NO;
@@ -256,15 +257,7 @@
     [[NSFileManager defaultManager]removeItemAtPath:recordFilePath error:nil];
     [MBProgressHUD hideHUDForView:self.view animated:YES];
 
-    
-    
-    dispatch_barrier_async(dispatch_get_main_queue(), ^{
-        [self resetStatus];
-    });
-//    dispatch_barrier_async(dispatch_get_main_queue(), ^{
-//        [self saveSuccessfully];
-//    });
-
+    [self resetStatus];
     [asynEncodeRecorder saveSoundMakerFile];
 }
 
@@ -283,9 +276,7 @@
             //stop the music that is playing
             [myDelegate pause];
             
-            
             //Reset the recording mark
-            
             isRecording = YES;
             _finishBtn.userInteractionEnabled  = isRecording;
             self.mp3Btn.userInteractionEnabled = !isRecording;
@@ -306,7 +297,6 @@
             
             [self resetClocker];
             [self timerStart];
-
         }else
         {
             [self timerStart];

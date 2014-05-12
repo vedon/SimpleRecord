@@ -182,9 +182,6 @@ typedef struct {
              operation:"Failed to write audio data to file"];
 
     if (lameFileError == nil) {
-        //
-        
-        
         if (_clientFormat.mFormatFlags != kAudioFormatFlagIsNonInterleaved) {
             write = lame_encode_buffer(lame, convertedData->mBuffers[0].mData, convertedData->mBuffers[0].mData, bufferSize, mp3_buffer, 2*bufferSize);
             
@@ -193,7 +190,6 @@ typedef struct {
         {
             write = lame_encode_buffer_interleaved(lame, convertedData->mBuffers[0].mData, convertedData->mBuffers[0].mDataByteSize, mp3_buffer, convertedData->mBuffers[0].mDataByteSize/2);
         }
-        
         fwrite(mp3_buffer,write, 1, fileHandler);
     }
     

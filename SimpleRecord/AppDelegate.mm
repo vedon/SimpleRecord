@@ -180,7 +180,6 @@
     tempInfo = nil;
     
     [self play];
-   
 }
 
 -(void)playCurrentSongWithInfo:(NSDictionary *)info
