@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *wavBtn;
 @property (weak, nonatomic) IBOutlet UIButton *recordControlBtn;
 @property (weak, nonatomic) IBOutlet UIButton *finishBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *gradientView;
 
 
 @end

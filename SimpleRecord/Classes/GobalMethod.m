@@ -429,4 +429,41 @@
     }
     return [NSDictionary dictionary];
 }
+
++(UIImage *)newImageWithRect:(CGRect)rect
+{
+    
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(rect.size.width,rect.size.height), NO, 0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+//    UIColor * grandientColor1 = [UIColor colorWithRed:24.0/255 green:189.0/255.0 blue:30.0/255.0 alpha:0.8];
+//    UIColor * grandientColor2 = [UIColor colorWithRed:24.0/255 green:189.0/255.0 blue:30.0/255.0 alpha:0.3];
+//    UIColor * grandientColor3 = [UIColor colorWithRed:24.0/255 green:189.0/255.0 blue:30.0/255.0 alpha:0.1];
+    UIColor * grandientColor1 = [UIColor colorWithRed:255/255 green:255/255.0 blue:255/255.0 alpha:0.8];
+    UIColor * grandientColor2 = [UIColor colorWithRed:255/255 green:255/255.0 blue:255/255.0 alpha:0.3];
+    UIColor * grandientColor3 = [UIColor colorWithRed:255/255 green:255/255.0 blue:255/255.0 alpha:0.0];
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPoint centerPoint=CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
+    
+    CGFloat radius=rect.size.width/2.0 > rect.size.height/2.0?rect.size.height/2.0:rect.size.width/2.0;
+    CGPathAddArc(path, NULL, centerPoint.x, centerPoint.y, radius,0, M_PI*2, 0);
+    CGContextAddPath(context, path);
+    CGContextClip(context);
+    
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGFloat locations[] = { 0.0,0.62,1.0 };
+    NSArray *colors = @[(__bridge id) grandientColor1.CGColor, (__bridge id) grandientColor2.CGColor,(__bridge id) grandientColor3.CGColor ];
+    
+    CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef) colors, locations);
+    
+    CGContextDrawRadialGradient(context, gradient, centerPoint, 0, centerPoint, radius,kCGGradientDrawsAfterEndLocation );
+    
+    CGColorSpaceRelease(colorSpace);
+    CGGradientRelease (gradient);
+    UIImage *imageOfContext=UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    UIGraphicsPopContext();
+    return imageOfContext;
+
+}
+
 @end

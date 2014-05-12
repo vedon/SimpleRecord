@@ -97,14 +97,31 @@
 -(void)initializationInterface
 {
     [self setLeftCustomBarItem:@"Record_Btn_Back.png" action:@selector(backAction)];
+    __weak RecordViewController * weakSelf = self;
     asynEncodeRecorder = [AsynEncodeAudioRecord shareAsynEncodeAudioRecord];
     [asynEncodeRecorder setDecibelBlock:^(CGFloat decibbel)
     {
-        
+        @autoreleasepool {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                CGFloat absDecibel = abs(decibbel);
+//                if (absDecibel == 0) {
+//                    absDecibel = 1.0;
+//                }else if (absDecibel > 6.0 )
+//                {
+//                    absDecibel = 5.0;
+//                }
+//                NSInteger size = 60 * absDecibel;
+//                NSLog(@"size :%d",size);
+//                UIImage * tempImage = [GobalMethod newImageWithRect:CGRectMake(0, 0, size, size)];
+//                [weakSelf.gradientView setImage: tempImage];
+//            });
+        }
+       
     }];
     myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     isRecording = NO;
     _finishBtn.userInteractionEnabled = NO;
+    
     
 }
 -(void)backAction

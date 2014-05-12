@@ -197,7 +197,7 @@
     }
     
     self.currentPlayMusicLength = _floatReader.audioDuration;
-    self.audioTotalFrame   = _floatReader.totalFrame;
+    self.audioTotalFrame        = _floatReader.totalFrame;
     self.audioMng = [AudioManager shareAudioManager];
     
     [self play];

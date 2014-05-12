@@ -42,6 +42,7 @@
 		4E77540F18BE3869000BCA95 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 4E7753F018BE3869000BCA95 /* index.html */; };
 		4E77541018BE3869000BCA95 /* upload.html in Resources */ = {isa = PBXBuildFile; fileRef = 4E7753F118BE3869000BCA95 /* upload.html */; };
 		4EAA7FB618BF97BF0031F407 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EAA7FB518BF97BF0031F407 /* SystemConfiguration.framework */; };
+		4EAC0AEF18C8A877001697A1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EAC0AEE18C8A877001697A1 /* QuartzCore.framework */; };
 		4EAC4F6E18C0DE6D00B1F6C6 /* musicIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EAC4F6D18C0DE6D00B1F6C6 /* musicIcon.png */; };
 		4EACB68918B7877D001545AC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB68818B7877D001545AC /* Foundation.framework */; };
 		4EACB68B18B7877D001545AC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EACB68A18B7877D001545AC /* CoreGraphics.framework */; };
@@ -238,6 +239,7 @@
 		4E7753F018BE3869000BCA95 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		4E7753F118BE3869000BCA95 /* upload.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = upload.html; sourceTree = "<group>"; };
 		4EAA7FB518BF97BF0031F407 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		4EAC0AEE18C8A877001697A1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4EAC4F6D18C0DE6D00B1F6C6 /* musicIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = musicIcon.png; sourceTree = "<group>"; };
 		4EACB68518B7877D001545AC /* SimpleRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EACB68818B7877D001545AC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -426,6 +428,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EAC0AEF18C8A877001697A1 /* QuartzCore.framework in Frameworks */,
 				4EAA7FB618BF97BF0031F407 /* SystemConfiguration.framework in Frameworks */,
 				4EACB75018B7A466001545AC /* MediaPlayer.framework in Frameworks */,
 				4EACB74E18B7A44C001545AC /* CoreMedia.framework in Frameworks */,
@@ -626,6 +629,7 @@
 		4EACB68718B7877D001545AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4EAC0AEE18C8A877001697A1 /* QuartzCore.framework */,
 				4EAA7FB518BF97BF0031F407 /* SystemConfiguration.framework */,
 				4EACB74F18B7A466001545AC /* MediaPlayer.framework */,
 				4EACB74D18B7A44C001545AC /* CoreMedia.framework */,
@@ -1348,8 +1352,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu89;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1375,8 +1379,8 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++98";
-				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu89;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

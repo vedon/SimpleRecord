@@ -78,7 +78,6 @@ withNumberOfChannels:(UInt32)numberOfChannels {
 -(void)microphone:(EZMicrophone *)microphone hasAudioStreamBasicDescription:(AudioStreamBasicDescription)audioStreamBasicDescription {
     [EZAudio printASBD:audioStreamBasicDescription];
     
-    
     soundMaker = [[SoundMaker alloc]init];
     [soundMaker initalizationSoundTouchWithSampleRate:audioStreamBasicDescription.mSampleRate Channels:audioStreamBasicDescription.mChannelsPerFrame TempoChange:0.5 PitchSemiTones:12 RateChange:-0.7];
     copyAudioBuffer = NULL;
@@ -97,7 +96,7 @@ withNumberOfChannels:(UInt32)numberOfChannels {
     if( self.isRecording ){
         
         if (_decibelBlock) {
-            [self getTheDecibelFromAudioBufferList:bufferList numberOfFrames:bufferSize DBOffset:-80 lowPassFilter:0.2];
+            [self getTheDecibelFromAudioBufferList:bufferList numberOfFrames:bufferSize DBOffset:-84 lowPassFilter:0.2];
         }
         
         
@@ -170,7 +169,7 @@ withNumberOfChannels:(UInt32)numberOfChannels {
         if (_decibelBlock) {
             _decibelBlock(decibels);
         }
-        NSLog(@"decibel level is %f", decibels);
+//        NSLog(@"decibel level is %f", decibels);
     }
 }
 @end
