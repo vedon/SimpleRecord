@@ -127,7 +127,7 @@
   _clientFormat.mFormatFlags      = kAudioFormatFlagsCanonical | kAudioFormatFlagIsNonInterleaved;
   _clientFormat.mFormatID         = kAudioFormatLinearPCM;
   _clientFormat.mFramesPerPacket  = 1;
-	_clientFormat.mSampleRate       = 44100;
+  _clientFormat.mSampleRate       = 44100;
   
   [EZAudio checkResult:ExtAudioFileSetProperty(_audioFile,
                                                kExtAudioFileProperty_ClientDataFormat,

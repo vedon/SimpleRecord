@@ -281,7 +281,7 @@ static OSStatus inputCallback(void                          *inRefCon,
   microphone->streamFormat.mFormatFlags      = kAudioFormatFlagsCanonical | kAudioFormatFlagIsNonInterleaved;
   microphone->streamFormat.mFormatID         = kAudioFormatLinearPCM;
   microphone->streamFormat.mFramesPerPacket  = 1;
-microphone->streamFormat.mSampleRate       = hardwareSampleRate;
+  microphone->streamFormat.mSampleRate       = hardwareSampleRate;
   
   // Get the buffer duration (approximate for simulator, real device will have it's preferred value set)
   Float32 bufferDuration = 0.0232;

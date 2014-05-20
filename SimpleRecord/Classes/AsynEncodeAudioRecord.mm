@@ -8,13 +8,13 @@
 
 #import "AsynEncodeAudioRecord.h"
 #import "SoundMaker.h"
-
+#import  <AudioToolbox/AudioToolbox.h>
 @implementation AsynEncodeAudioRecord
 {
     NSString * audioFilePath;
     NSString * extension;
     SoundMaker * soundMaker;
-    char * copyAudioBuffer;
+    soundtouch::SAMPLETYPE * copyAudioBuffer;
 }
 +(id)shareAsynEncodeAudioRecord
 {
@@ -80,10 +80,11 @@ withNumberOfChannels:(UInt32)numberOfChannels {
 -(void)microphone:(EZMicrophone *)microphone hasAudioStreamBasicDescription:(AudioStreamBasicDescription)audioStreamBasicDescription {
     [EZAudio printASBD:audioStreamBasicDescription];
     
-#if ISUSingSoundMaker
+#if IsRecordingWithSoundMaker
     soundMaker = [[SoundMaker alloc]init];
-    [soundMaker initalizationSoundTouchWithSampleRate:audioStreamBasicDescription.mSampleRate Channels:1 TempoChange:10.0 PitchSemiTones:0 RateChange:0];
+    [soundMaker initalizationSoundTouchWithSampleRate:audioStreamBasicDescription.mSampleRate Channels:1 TempoChange:0.5 PitchSemiTones:12 RateChange:-0.7];
     copyAudioBuffer = NULL;
+    [soundMaker setAudio_des:audioStreamBasicDescription];
 #endif
     self.recorder = [EZRecorder recorderWithDestinationURL:[self testFilePathURL]
                                            andSourceFormat:audioStreamBasicDescription destinateFileExtension:extension];
@@ -102,21 +103,24 @@ withNumberOfChannels:(UInt32)numberOfChannels {
             [self getTheDecibelFromAudioBufferList:bufferList numberOfFrames:bufferSize DBOffset:-84 lowPassFilter:0.2];
         }
         
-#if ISUSingSoundMaker
+#if IsRecordingWithSoundMaker
         int dataSize = bufferList->mBuffers->mDataByteSize;
         if (copyAudioBuffer == NULL) {
-            copyAudioBuffer = (char * )malloc(sizeof(char) * dataSize);
+            copyAudioBuffer = (soundtouch::SAMPLETYPE * )malloc(dataSize);
             memset(copyAudioBuffer, 0, dataSize);
         }
         
         memcpy(copyAudioBuffer, bufferList->mBuffers->mData, dataSize);
-        [soundMaker processingSample:(soundtouch::SAMPLETYPE  *)copyAudioBuffer length:dataSize/2];
-        [soundMaker getProcessedSample:(soundtouch::SAMPLETYPE *)bufferList->mBuffers->mData length:dataSize/2 completedBlock:^(soundtouch::SAMPLETYPE * data){
-            
-            memcpy(bufferList->mBuffers->mData, data, dataSize);
+        
+        uint nSamples = dataSize/(soundMaker.audio_des.mBytesPerPacket);
+        [soundMaker processingSample:(soundtouch::SAMPLETYPE  *)copyAudioBuffer length:nSamples];
+        [soundMaker getProcessedSampleDataLength:dataSize nSamples:nSamples completedBlock:^(short * data,uint rev_sampLen) {
+            memcpy(bufferList->mBuffers->mData, data, rev_sampLen);
             [self.recorder appendDataFromBufferList:bufferList
-                                     withBufferSize:bufferSize];
+                                     withBufferSize:nSamples];
         }];
+        
+       
 #else
         [self.recorder appendDataFromBufferList:bufferList
                                  withBufferSize:bufferSize];

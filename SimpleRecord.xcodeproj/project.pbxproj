@@ -156,7 +156,10 @@
 		4EAF84D618C225D70054E588 /* TDStretch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84C118C225D70054E588 /* TDStretch.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4EAF84D718C225D70054E588 /* FIFOSampleBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84C318C225D70054E588 /* FIFOSampleBuffer.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4EAF84D818C225D70054E588 /* SoundTouch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84C418C225D70054E588 /* SoundTouch.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		4EBFC19618BEDF36003FEEA1 /* AudioFloatPointReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFC19518BEDF36003FEEA1 /* AudioFloatPointReader.m */; };
+		4EB40C25192A5E39002D60F1 /* InterpolateCubic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EB40C1F192A5E39002D60F1 /* InterpolateCubic.cpp */; };
+		4EB40C26192A5E39002D60F1 /* InterpolateLinear.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EB40C21192A5E39002D60F1 /* InterpolateLinear.cpp */; };
+		4EB40C27192A5E39002D60F1 /* InterpolateShannon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EB40C23192A5E39002D60F1 /* InterpolateShannon.cpp */; };
+		4EBFC19618BEDF36003FEEA1 /* AudioFloatPointReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EBFC19518BEDF36003FEEA1 /* AudioFloatPointReader.mm */; };
 		4EC3BC2D18C3225F00047448 /* SoundMaker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4EC3BC2C18C3225F00047448 /* SoundMaker.mm */; };
 		4EC3BC3018C3592100047448 /* WaveHeader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EC3BC2E18C3592100047448 /* WaveHeader.cpp */; };
 		999BAC5DD096431E8456B8E7 /* libPods-SimpleRecord.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DBAC9D0F882D4445974C7140 /* libPods-SimpleRecord.a */; };
@@ -414,8 +417,14 @@
 		4EAF84C318C225D70054E588 /* FIFOSampleBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FIFOSampleBuffer.cpp; path = SoundTouch/FIFOSampleBuffer.cpp; sourceTree = "<group>"; };
 		4EAF84C418C225D70054E588 /* SoundTouch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SoundTouch.cpp; path = SoundTouch/SoundTouch.cpp; sourceTree = "<group>"; };
 		4EAF84C518C225D70054E588 /* soundtouch_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = soundtouch_config.h; path = SoundTouch/soundtouch_config.h; sourceTree = "<group>"; };
+		4EB40C1F192A5E39002D60F1 /* InterpolateCubic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InterpolateCubic.cpp; path = SoundTouch/InterpolateCubic.cpp; sourceTree = "<group>"; };
+		4EB40C20192A5E39002D60F1 /* InterpolateCubic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InterpolateCubic.h; path = SoundTouch/InterpolateCubic.h; sourceTree = "<group>"; };
+		4EB40C21192A5E39002D60F1 /* InterpolateLinear.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InterpolateLinear.cpp; path = SoundTouch/InterpolateLinear.cpp; sourceTree = "<group>"; };
+		4EB40C22192A5E39002D60F1 /* InterpolateLinear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InterpolateLinear.h; path = SoundTouch/InterpolateLinear.h; sourceTree = "<group>"; };
+		4EB40C23192A5E39002D60F1 /* InterpolateShannon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InterpolateShannon.cpp; path = SoundTouch/InterpolateShannon.cpp; sourceTree = "<group>"; };
+		4EB40C24192A5E39002D60F1 /* InterpolateShannon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InterpolateShannon.h; path = SoundTouch/InterpolateShannon.h; sourceTree = "<group>"; };
 		4EBFC19418BEDF36003FEEA1 /* AudioFloatPointReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioFloatPointReader.h; sourceTree = "<group>"; };
-		4EBFC19518BEDF36003FEEA1 /* AudioFloatPointReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioFloatPointReader.m; sourceTree = "<group>"; };
+		4EBFC19518BEDF36003FEEA1 /* AudioFloatPointReader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AudioFloatPointReader.mm; sourceTree = "<group>"; };
 		4EC3BC2B18C3225F00047448 /* SoundMaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundMaker.h; sourceTree = "<group>"; };
 		4EC3BC2C18C3225F00047448 /* SoundMaker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SoundMaker.mm; sourceTree = "<group>"; };
 		4EC3BC2E18C3592100047448 /* WaveHeader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WaveHeader.cpp; path = SoundTouch/WaveHeader.cpp; sourceTree = "<group>"; };
@@ -774,7 +783,7 @@
 				4E7753A618BE3830000BCA95 /* AsynEncodeAudioRecord.h */,
 				4E7753A718BE3830000BCA95 /* AsynEncodeAudioRecord.mm */,
 				4EBFC19418BEDF36003FEEA1 /* AudioFloatPointReader.h */,
-				4EBFC19518BEDF36003FEEA1 /* AudioFloatPointReader.m */,
+				4EBFC19518BEDF36003FEEA1 /* AudioFloatPointReader.mm */,
 				4E7753A818BE3830000BCA95 /* lame */,
 				4EACE91218B838B5004383AD /* PersistentStore.h */,
 				4EACE91318B838B5004383AD /* PersistentStore.m */,
@@ -942,6 +951,12 @@
 		4EC3BC2A18C321DF00047448 /* SoundTouch */ = {
 			isa = PBXGroup;
 			children = (
+				4EB40C1F192A5E39002D60F1 /* InterpolateCubic.cpp */,
+				4EB40C20192A5E39002D60F1 /* InterpolateCubic.h */,
+				4EB40C21192A5E39002D60F1 /* InterpolateLinear.cpp */,
+				4EB40C22192A5E39002D60F1 /* InterpolateLinear.h */,
+				4EB40C23192A5E39002D60F1 /* InterpolateShannon.cpp */,
+				4EB40C24192A5E39002D60F1 /* InterpolateShannon.h */,
 				4EC3BC2E18C3592100047448 /* WaveHeader.cpp */,
 				4EC3BC2F18C3592100047448 /* WaveHeader.h */,
 				4EAF84A418C225D70054E588 /* AAFilter.cpp */,
@@ -1167,7 +1182,9 @@
 				4E7753F418BE3869000BCA95 /* DDRange.m in Sources */,
 				4EACE92618B83E48004383AD /* MyRecordViewController.m in Sources */,
 				4E77540818BE3869000BCA95 /* DDASLLogger.m in Sources */,
-				4EBFC19618BEDF36003FEEA1 /* AudioFloatPointReader.m in Sources */,
+				4EB40C25192A5E39002D60F1 /* InterpolateCubic.cpp in Sources */,
+				4EB40C27192A5E39002D60F1 /* InterpolateShannon.cpp in Sources */,
+				4EBFC19618BEDF36003FEEA1 /* AudioFloatPointReader.mm in Sources */,
 				4EACB72418B79762001545AC /* HWConnect.m in Sources */,
 				4EACB6E318B78898001545AC /* EZAudioPlotGLKViewController.m in Sources */,
 				4EACB72818B79762001545AC /* NSString+Utils.m in Sources */,
@@ -1183,6 +1200,7 @@
 				4EAF84D718C225D70054E588 /* FIFOSampleBuffer.cpp in Sources */,
 				4EACE97B18B8D60F004383AD /* ModifyCellView.m in Sources */,
 				4E7753F918BE3869000BCA95 /* MultipartFormDataParser.m in Sources */,
+				4EB40C26192A5E39002D60F1 /* InterpolateLinear.cpp in Sources */,
 				4EAF84D818C225D70054E588 /* SoundTouch.cpp in Sources */,
 				4EACB72618B79762001545AC /* NSDate+Utils.m in Sources */,
 				4EACB69918B7877D001545AC /* AppDelegate.mm in Sources */,

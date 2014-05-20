@@ -170,7 +170,7 @@ typedef struct {
   convertedData->mBuffers[0].mData           = (UInt8*)malloc(sizeof(UInt8)*MP3_SIZE);
     
     //Start Audio convert asyn
-      [EZAudio checkResult:AudioConverterFillComplexBuffer(_audioConverter,
+    [EZAudio checkResult:AudioConverterFillComplexBuffer(_audioConverter,
                                                        complexInputDataProc,
                                                        &(EZRecorderConverterStruct){ .sourceBuffer = bufferList },
                                                        &bufferSize,

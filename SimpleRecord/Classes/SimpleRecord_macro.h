@@ -9,6 +9,6 @@
 #ifndef SimpleRecord_SimpleRecord_macro_h
 #define SimpleRecord_SimpleRecord_macro_h
 
-#define ISUSingSoundMaker 1
-
+#define IsRecordingWithSoundMaker 0
+#define IsUserSoundMakeToPlayAudio 0
 #endif

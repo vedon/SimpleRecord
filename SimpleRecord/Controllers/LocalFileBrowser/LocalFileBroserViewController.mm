@@ -131,7 +131,6 @@ static NSString * cellIdentifier = @"Identifier";
         
             //复制文件到本地
             [self exportAssetAtURL:assetURL withTitle:tempMusicInfo.title completedHandler:^(NSString *path) {
-                
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (action) {
                         objc_msgSend(self, action,path,@{@"Title":tempMusicInfo.title,@"Length":tempMusicInfo.length});
