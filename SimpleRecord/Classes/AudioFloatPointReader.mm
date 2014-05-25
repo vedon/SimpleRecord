@@ -80,25 +80,29 @@ using namespace soundtouch;
 //       [self generateSoundMakerBuffer];
 //   });
     
-    [self generateSoundMakerBuffer];
+//    [self generateSoundMakerBuffer];
     
 #endif
 }
 
 -(void)generateSoundMakerBuffer
 {
-    AudioBufferList *bufferList = [EZAudio audioBufferList];
-    BOOL eof;
-    UInt32 frames = 1024;
-    UInt32 bufferSize = 0;
-    do {
-        [self.audioFile readFrames:frames
-                   audioBufferList:bufferList
-                        bufferSize:&bufferSize
-                               eof:&eof];
-        self.eof = eof;
-        TPCircularBufferProduceBytes(&circularBuffer, bufferList->mBuffers->mData,bufferList->mBuffers->mDataByteSize);
-    } while (frames !=0);
+      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+          AudioBufferList *bufferList = [EZAudio audioBufferList];
+          BOOL eof;
+          UInt32 frames = 1024;
+          UInt32 bufferSize = 0;
+          [self.audioFile readFrames:frames
+                     audioBufferList:bufferList
+                          bufferSize:&bufferSize
+                                 eof:&eof];
+          self.eof = eof;
+          TPCircularBufferProduceBytes(&circularBuffer, bufferList->mBuffers->mData,bufferList->mBuffers->mDataByteSize);
+
+          
+          [EZAudio freeBufferList:bufferList];
+       });
+    
 }
 
 
@@ -269,6 +273,7 @@ withNumberOfChannels:(UInt32)numberOfChannels {
             }
             self.eof = NO;
         }
+        [self generateSoundMakerBuffer];
         
         return &circularBuffer;
     }
