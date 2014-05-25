@@ -160,13 +160,14 @@
               audioBufferList->mBuffers[0].mDataByteSize = outputBufferSize;
               audioBufferList->mBuffers[0].mData = (AudioUnitSampleType*)malloc(sizeof(AudioUnitSampleType*)*outputBufferSize);
               [EZAudio checkResult:ExtAudioFileRead(_audioFile,
-                                                    &frames,
+                                                    (UInt32 *)&frames,
                                                     audioBufferList)
                          operation:"Failed to read audio data from audio file"];
               
               
               *bufferSize = audioBufferList->mBuffers[0].mDataByteSize/sizeof(AudioUnitSampleType);
               *eof = frames == 0;
+
               _frameIndex += frames;
               if( self.audioFileDelegate ){
                   if( [self.audioFileDelegate respondsToSelector:@selector(audioFile:updatedPosition:)] ){

@@ -10,7 +10,7 @@
 #import "SoundTouch.h"
 #import <AudioToolbox/AudioToolbox.h>
 
-
+typedef void(^CompletedBufferBlock) (int bufferSize,AudioBufferList * audioBufferList);
 @interface SoundMaker : NSObject
 @property (assign ,nonatomic) AudioStreamBasicDescription audio_des;
 
@@ -19,11 +19,23 @@
                                     Channels:(NSUInteger)channel
                                  TempoChange:(CGFloat)tempoChange
                               PitchSemiTones:(NSInteger)semiTones
+                                  RateChange:(CGFloat)rateChange
+                         processingAudioFile:(NSString *)filePath
+                                    destPath:(NSString *)destPath;
+
+-(void)initalizationSoundTouchWithSampleRate:(NSUInteger)sampleRate
+                                    Channels:(NSUInteger)channel
+                                 TempoChange:(CGFloat)tempoChange
+                              PitchSemiTones:(NSInteger)semiTones
                                   RateChange:(CGFloat)rateChange;
+
+
 -(void)processingSample:(soundtouch::SAMPLETYPE *)inSamples
                  length:(NSUInteger)nSamples;
--(void)getProcessedSampleDataLength:(int)data_length
-                     completedBlock:(void (^)(soundtouch::SAMPLETYPE * data,uint rev_sampLen))block;
+-(void)fillSamples:(soundtouch::SAMPLETYPE *)sample reveivedSamplesLength:(NSInteger *)nSamplesPerChannel maxSampleLength:(NSInteger)maxSampleLength;
 
--(void)save;
+
+
+-(void)pullLastSampleFromPipe;
+
 @end

@@ -5,18 +5,23 @@
 //  Created by vedon on 27/2/14.
 //  Copyright (c) 2014 com.vedon. All rights reserved.
 //
+#define IsUserSoundMakeToPlayAudio 1
+
 
 #import "AudioFloatPointReader.h"
 #import "SoundMaker.h"
 #import  <AudioToolbox/AudioToolbox.h>
-
+#import "TPCircularBuffer.h"
+using namespace soundtouch;
 @interface AudioFloatPointReader()
 {
     NSURL * curentPlayFileURL;
     SoundMaker * soundMaker;
-    CFURLRef  _destinationFileURL;
-    ExtAudioFileRef   _destinationFile;
-    NSMutableData * audioData;
+    CFURLRef            _destinationFileURL;
+    ExtAudioFileRef     _destinationFile;
+    
+    TPCircularBuffer  circularBuffer;
+    int circularBufferLength;
 }
 @end
 @implementation AudioFloatPointReader
@@ -61,7 +66,8 @@
         [EZOutput sharedOutput].outputDataSource = nil;
         [[EZOutput sharedOutput] stopPlayback];
     }
-    audioData = [[NSMutableData alloc]init];
+    circularBufferLength = 1024 ;
+    TPCircularBufferInit(&circularBuffer, circularBufferLength);
 #if IsUserSoundMakeToPlayAudio
     if (!soundMaker) {
         soundMaker = [[SoundMaker alloc]init];
@@ -69,11 +75,30 @@
         [soundMaker setAudio_des:self.audioFile.clientFormat];
         
     }
-    [self getExtAudioFileWriterDefaultSettiong];
+    
+    
+    AudioBufferList *bufferList = [EZAudio audioBufferList];
+    BOOL eof;
+    UInt32 frames = 1024;
+    UInt32 bufferSize = 0;
+    do {
+        [self.audioFile readFrames:frames
+                   audioBufferList:bufferList
+                        bufferSize:&bufferSize
+                               eof:&eof];
+        self.eof = eof;
+        
+        
+        
+        
+    } while (frames !=0);
+    
+    
+    
 #endif
     
-}
 
+}
 -(void)stopReader
 {
     if ([[EZOutput sharedOutput] isPlaying]) {
@@ -81,10 +106,6 @@
         [[EZOutput sharedOutput] stopPlayback];
 
     }
-#if IsUserSoundMakeToPlayAudio
-    [AudioFloatPointReader checkResult:ExtAudioFileDispose(_destinationFile)
-                             operation:"Failed to dispose extended audio file in recorder"];
-#endif
 }
 
 -(BOOL)isEof
@@ -185,9 +206,55 @@ withNumberOfChannels:(UInt32)numberOfChannels {
 }
 
 #pragma mark - EZOutputDataSource
--(AudioBufferList *)output:(EZOutput *)output
- needsBufferListWithFrames:(UInt32)frames
-            withBufferSize:(UInt32 *)bufferSize {
+//-(AudioBufferList *)output:(EZOutput *)output
+// needsBufferListWithFrames:(UInt32)frames
+//            withBufferSize:(UInt32 *)bufferSize {
+//    if( self.audioFile ){
+//        
+//        // Reached the end of the file
+//        if( self.eof ){
+//            // Here's what you do to loop the file
+//            if (_isShouldPlayPlaylist) {
+//                [self playNextSong];
+//            }else
+//            {
+//                [self.audioFile seekToFrame:0];
+//            }
+//            self.eof = NO;
+//        }
+//        
+//        // Allocate a buffer list to hold the file's data
+//        AudioBufferList *bufferList = [EZAudio audioBufferList];
+//        BOOL eof;
+//        [self.audioFile readFrames:frames
+//                   audioBufferList:bufferList
+//                        bufferSize:bufferSize
+//                               eof:&eof];
+//        self.eof = eof;
+//        // Reached the end of the file on the last read
+//        if( eof ){
+//            [EZAudio freeBufferList:bufferList];
+//            return nil;
+//        }
+//        
+//        
+//        
+//        return bufferList;
+//        
+//    }
+//    return nil;
+//}
+
+-(AudioStreamBasicDescription)outputHasAudioStreamBasicDescription:(EZOutput *)output
+{
+    return self.audioFile.clientFormat;
+    
+}
+
+-(TPCircularBuffer *)outputShouldUseCircularBuffer:(EZOutput *)output
+{
+    int frames = 1024;
+    UInt32 bufferSize = 0;
     if( self.audioFile ){
         
         // Reached the end of the file
@@ -207,42 +274,35 @@ withNumberOfChannels:(UInt32)numberOfChannels {
         BOOL eof;
         [self.audioFile readFrames:frames
                    audioBufferList:bufferList
-                        bufferSize:bufferSize
+                        bufferSize:&bufferSize
                                eof:&eof];
+        
         self.eof = eof;
-
 #if IsUserSoundMakeToPlayAudio
-
-        int length = bufferList->mBuffers->mDataByteSize/bufferList->mBuffers->mNumberChannels;
-        [soundMaker processingSample:(soundtouch::SAMPLETYPE  *)bufferList->mBuffers->mData length:length];
+        int outputDataSize = bufferList->mBuffers->mDataByteSize;
+        SAMPLETYPE * audioData = (SAMPLETYPE *)malloc(2*outputDataSize);
         
-        [soundMaker getProcessedSampleDataLength:length
-                                  completedBlock:^(soundtouch::SAMPLETYPE * data,uint rev_sampLen) {
-            memcpy(bufferList->mBuffers[0].mData, data, rev_sampLen);
+        memcpy(audioData, bufferList->mBuffers->mData, outputDataSize);
         
-//            [AudioFloatPointReader checkResult:ExtAudioFileWriteAsync(_destinationFile,frames, bufferList)
-//                       operation:"Failed to write audio data to file"];
-        }];
+        [soundMaker processingSample:(SAMPLETYPE *)audioData length:outputDataSize/2];
+        int nSamples = 0;
+        do {
+            [soundMaker fillSamples:audioData reveivedSamplesLength:&nSamples maxSampleLength:outputDataSize];
+            if (nSamples!=0) {
+                TPCircularBufferProduceBytes(&circularBuffer, audioData,nSamples*2);
+            }
+        } while (nSamples!=0);
+        free(audioData);
+#else
+        TPCircularBufferProduceBytes(&circularBuffer, bufferList->mBuffers->mData,bufferList->mBuffers->mDataByteSize);
 #endif
         
-        // Reached the end of the file on the last read
-        if( eof ){
-            [EZAudio freeBufferList:bufferList];
-            return nil;
-        }
-        return bufferList;
-        
+        [EZAudio freeBufferList:bufferList];
+        return &circularBuffer;
     }
-    return nil;
+    return NULL;
 }
 
--(AudioStreamBasicDescription)outputHasAudioStreamBasicDescription:(EZOutput *)output {
-    
-    
-   
-    return self.audioFile.clientFormat;
-    
-}
 +(void)checkResult:(OSStatus)result
          operation:(const char *)operation {
 	if (result == noErr) return;

@@ -6,145 +6,259 @@
 //  Copyright (c) 2014 com.vedon. All rights reserved.
 //
 #define DebugLog 1
+#define FramesSize 1024*3
 
 #import "SoundMaker.h"
 #import "STTypes.h"
 #import "FIFOSampleBuffer.h"
-#import "WaveHeader.h"
+#include <sys/timeb.h>
+
+using namespace soundtouch;
 @interface SoundMaker()
 {
+    ExtAudioFileRef   _audioFile;
+    CFURLRef          _sourceURL;
+    
     CFURLRef  _destinationFileURL;
     ExtAudioFileRef   _destinationFile;
+    
+    AudioStreamBasicDescription _clientFormat;
+    AudioStreamBasicDescription _fileFormat;
+    NSMutableData *soundTouchDatas;
+    
+    int audioBufferSize;
+    timeb ts1,ts2;
+    int timeOffset;
 }
 @end
+
 @implementation SoundMaker
 {
     soundtouch::SoundTouch mSoundTouch;
-    NSMutableData *soundTouchDatas;
+    
 }
 
+#pragma mark - Public
 -(void)initalizationSoundTouchWithSampleRate:(NSUInteger)sampleRate
                                     Channels:(NSUInteger)channel
                                  TempoChange:(CGFloat)tempoChange
                               PitchSemiTones:(NSInteger)semiTones
-                                  RateChange:(CGFloat)rateChange    
+                                  RateChange:(CGFloat)rateChange
+                         processingAudioFile:(NSString *)filePath
+                                    destPath:(NSString *)destPath
 {
     mSoundTouch.setSampleRate(sampleRate);
     mSoundTouch.setChannels(channel);
     mSoundTouch.setTempoChange(tempoChange);
     mSoundTouch.setPitchSemiTones(semiTones);
     mSoundTouch.setRateChange(rateChange);
-//    mSoundTouch.setSetting(SETTING_USE_AA_FILTER, YES);
     mSoundTouch.setSetting(SETTING_SEQUENCE_MS, 40);
     mSoundTouch.setSetting(SETTING_SEEKWINDOW_MS, 16);
     mSoundTouch.setSetting(SETTING_OVERLAP_MS, 8);
     
-    soundTouchDatas = [[NSMutableData alloc] init];
+    [self convertAudioFileWithPath:filePath destinationPath:destPath];
 }
+
+-(void)initalizationSoundTouchWithSampleRate:(NSUInteger)sampleRate
+                                    Channels:(NSUInteger)channel
+                                 TempoChange:(CGFloat)tempoChange
+                              PitchSemiTones:(NSInteger)semiTones
+                                  RateChange:(CGFloat)rateChange
+{
+    mSoundTouch.setSampleRate(sampleRate);
+    mSoundTouch.setChannels(channel);
+    mSoundTouch.setTempoChange(tempoChange);
+    mSoundTouch.setPitchSemiTones(semiTones);
+    mSoundTouch.setRateChange(rateChange);
+    mSoundTouch.setSetting(SETTING_SEQUENCE_MS, 40);
+    mSoundTouch.setSetting(SETTING_SEEKWINDOW_MS, 16);
+    mSoundTouch.setSetting(SETTING_OVERLAP_MS, 8);
+}
+
 
 -(void)processingSample:(soundtouch::SAMPLETYPE *)inSamples
                  length:(NSUInteger)nSamples
 {
-    mSoundTouch.putSamples(inSamples, nSamples/2);
+    audioBufferSize = nSamples;
+    mSoundTouch.putSamples(inSamples, nSamples);
 }
 
-
--(void)getProcessedSampleDataLength:(int)data_length
-                     completedBlock:(void (^)(soundtouch::SAMPLETYPE * data,uint rev_sampLen))block
+-(void)fillSamples:(soundtouch::SAMPLETYPE *)sample reveivedSamplesLength:(NSInteger *)nSamplesPerChannel maxSampleLength:(NSInteger)maxSampleLength
 {
-    int bufferSize = data_length * sizeof(soundtouch::SAMPLETYPE);
-    
-    soundtouch::SAMPLETYPE *samples = (soundtouch::SAMPLETYPE *)malloc(bufferSize);
-    soundtouch::SAMPLETYPE *sampleContainer = (soundtouch::SAMPLETYPE *)malloc(bufferSize);
-    memset(sampleContainer, 0, bufferSize);
-    soundtouch::SAMPLETYPE * pointer = sampleContainer;
-#if DebugLog
-    printf("***********************************\n");
-    printf("TotalSampleSize: %d\n",data_length);
-#endif
-    int numSamples = 0;
-    do {
-        memset(samples, 0, bufferSize);
-        numSamples = mSoundTouch.receiveSamples(samples, data_length);
-#if DebugLog
-        printf("ReceiveSamples: %d \n",numSamples);
-#endif
-        if (numSamples <= 0) {
-            break;
-        }else
-        {
-            memcpy(pointer, samples,numSamples);
-            pointer +=numSamples;
-        }
-    } while (numSamples != 0);
-    if (block) {
-        block(sampleContainer,data_length);
+    *nSamplesPerChannel = mSoundTouch.receiveSamples(sample, maxSampleLength);
+}
+
+-(void)pullLastSampleFromPipe;
+{
+    mSoundTouch.flush();
+}
+
+#pragma mark - Private
+-(void)convertAudioFileWithPath:(NSString *)path destinationPath:(NSString *)desPath
+{
+    if ([[NSFileManager defaultManager]fileExistsAtPath:path]) {
+        [self writeSoundTouchDataTo:desPath dataFormat:[self configureAudioFile:[NSURL fileURLWithPath:path]]];
+        [self processingBuffer];
     }
-    
-#if DebugLog
-    printf("***********************************\n");
-    printf("\n");
-    printf("\n");
-#endif
-    free (samples);
-    free (sampleContainer);
 }
 
--(void)save
+-(AudioStreamBasicDescription)configureAudioFile:(NSURL *)url
 {
-    NSMutableData *wavDatas = [[NSMutableData alloc] init];
+    _sourceURL = (__bridge CFURLRef)url;
     
-    int fileLength = soundTouchDatas.length;
-    void *header = createWaveHeader(fileLength, 1, 16000, 16);
-//    [wavDatas appendBytes:header length:44];
-    [wavDatas appendData:soundTouchDatas];
+    // Try to open the file for reading
+    [SoundMaker checkResult:ExtAudioFileOpenURL(_sourceURL,&_audioFile)
+                  operation:"Failed to open audio file for reading"];
     
-    NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *filePath = [path stringByAppendingPathComponent:@"soundtouch.wav"];
-    [wavDatas writeToFile:filePath atomically:YES];
+    // Try pulling the stream description
+    UInt32 size = sizeof(_fileFormat);
+    [SoundMaker checkResult:ExtAudioFileGetProperty(_audioFile,kExtAudioFileProperty_FileDataFormat, &size, &_fileFormat)
+                  operation:"Failed to get audio stream basic description of input file"];
+    [SoundMaker printASBD:_fileFormat];
     
-    wavDatas = nil;
-    soundTouchDatas = nil;
+    // Set the client format on the stream
+    _clientFormat.mBitsPerChannel   = 8 * sizeof(AudioSampleType);
+    _clientFormat.mBytesPerFrame    = sizeof(AudioSampleType);
+    _clientFormat.mBytesPerPacket   = sizeof(AudioSampleType);
+    _clientFormat.mChannelsPerFrame = 1;
+    _clientFormat.mFormatFlags      = kAudioFormatFlagsCanonical | kAudioFormatFlagIsNonInterleaved;
+    _clientFormat.mFormatID         = kAudioFormatLinearPCM;
+    _clientFormat.mFramesPerPacket  = 1;
+    _clientFormat.mSampleRate       = 20000;
+    
+    [SoundMaker checkResult:ExtAudioFileSetProperty(_audioFile,
+                                                    kExtAudioFileProperty_ClientDataFormat,
+                                                    sizeof (AudioStreamBasicDescription),
+                                                    &_clientFormat)
+                  operation:"Couldn't set client data format on input ext file"];
+    
+    return  _clientFormat;
 }
 
--(void)getExtAudioFileWriterDefaultSettiong
+
+-(void)processingBuffer
+{
+    soundTouchDatas = [[NSMutableData alloc] init];
+    UInt32 frames = FramesSize;
+    UInt32 outputBufferSize = _clientFormat.mBytesPerFrame * FramesSize ;
+    AudioBufferList * audioBufferList = (AudioBufferList *)malloc(sizeof(AudioBufferList));
+    audioBufferList->mNumberBuffers = 1;
+    audioBufferList->mBuffers->mNumberChannels = _clientFormat.mChannelsPerFrame;
+    audioBufferList->mBuffers->mDataByteSize = outputBufferSize;
+    audioBufferList->mBuffers->mData =(SAMPLETYPE *) malloc(outputBufferSize);
+    
+    
+    AudioBufferList * localBufferList = (AudioBufferList *)malloc(sizeof(AudioBufferList));
+    localBufferList->mNumberBuffers = 1;
+    localBufferList->mBuffers->mNumberChannels = _clientFormat.mChannelsPerFrame;
+    localBufferList->mBuffers->mData =(SAMPLETYPE *) malloc(outputBufferSize);
+    
+    SAMPLETYPE * audioData = (SAMPLETYPE *)malloc(2*outputBufferSize);
+    ftime(&ts1);
+    do {
+        memset(audioBufferList->mBuffers->mData, 0, outputBufferSize);
+        [SoundMaker checkResult:ExtAudioFileRead(_audioFile,
+                                                 &frames,
+                                                 audioBufferList)
+                      operation:"Failed to read audio data from audio file"];
+        [self processingSample:(SAMPLETYPE *)audioBufferList->mBuffers->mData length:outputBufferSize/2];
+        
+        int nSamples = 0;
+        do {
+            [self fillSamples:audioData reveivedSamplesLength:&nSamples maxSampleLength:outputBufferSize];
+            if (nSamples!=0) {
+                int bufferSize = nSamples*2;
+                localBufferList->mBuffers->mDataByteSize = nSamples;
+                memcpy(localBufferList->mBuffers->mData, audioData, bufferSize);
+                
+                [SoundMaker checkResult:ExtAudioFileWriteAsync(_destinationFile,bufferSize/_clientFormat.mBytesPerFrame, localBufferList)
+                              operation:"Failed to write audio data to file"];
+                
+            }
+        } while (nSamples!=0);
+        
+        
+        //        [self fillSamples:audioData maxSampleLength:outputBufferSize completedBlock:^(int bufferSize, AudioBufferList *audioBufferList) {
+        //            [SoundMaker checkResult:ExtAudioFileWrite(_destinationFile,bufferSize/_clientFormat.mBytesPerFrame, audioBufferList)
+        //                          operation:"Failed to write audio data to file"];
+        //        }];
+    } while (frames!= 0 );
+    
+    ftime(&ts2);
+    timeOffset = (ts2.time - ts1.time) + (ts2.millitm - ts1.millitm)/1000;
+    NSLog(@"%d",timeOffset);
+    
+    [SoundMaker checkResult:ExtAudioFileDispose(_destinationFile)
+                  operation:"Failed to dispose extended audio file in recorder"];
+    free(localBufferList ->mBuffers->mData);
+    free(localBufferList);
+    
+    free(audioData);
+    free(audioBufferList->mBuffers->mData);
+    free(audioBufferList);
+}
+
+-(void)fillSamples:(soundtouch::SAMPLETYPE *)audioData maxSampleLength:(NSInteger)maxSampleLength completedBlock:(CompletedBufferBlock )block
+{
+    int nSamples = 0;
+    do {
+        [self fillSamples:audioData reveivedSamplesLength:&nSamples maxSampleLength:audioBufferSize];
+        
+        if (nSamples!=0) {
+            int bufferSize = nSamples*2;
+            AudioBufferList * localBufferList = (AudioBufferList *)malloc(sizeof(AudioBufferList));
+            localBufferList->mNumberBuffers = 1;
+            localBufferList->mBuffers->mNumberChannels = _clientFormat.mChannelsPerFrame;
+            localBufferList->mBuffers->mDataByteSize = bufferSize/2;
+            localBufferList->mBuffers->mData = malloc(bufferSize);
+            memcpy(localBufferList->mBuffers->mData, audioData, bufferSize);
+            
+            if (block) {
+                block(bufferSize,localBufferList);
+            }
+            free(localBufferList ->mBuffers->mData);
+            free(localBufferList);
+        }
+    } while (nSamples!=0);
+}
+
+
+-(void)writeSoundTouchDataTo:(NSString *)souchTouchFilePath dataFormat:(AudioStreamBasicDescription)format
 {
     AudioStreamBasicDescription destinationFormat;
     destinationFormat.mFormatID = kAudioFormatLinearPCM;
-    destinationFormat.mChannelsPerFrame = 1;
-    destinationFormat.mBitsPerChannel = sizeof(AudioUnitSampleType) * 8;
-    destinationFormat.mBytesPerPacket = destinationFormat.mBytesPerFrame =sizeof(AudioUnitSampleType);
+    destinationFormat.mBitsPerChannel = sizeof(AudioSampleType) * 8;
+    destinationFormat.mBytesPerPacket = destinationFormat.mBytesPerFrame =sizeof(AudioSampleType);
     destinationFormat.mFramesPerPacket = 1;
+    destinationFormat.mChannelsPerFrame = 1;
     destinationFormat.mFormatFlags = kAudioFormatFlagsCanonical | kAudioFormatFlagIsNonInterleaved;
-    destinationFormat.mSampleRate = 44100.0;
+    destinationFormat.mSampleRate = format.mSampleRate;
     
-    // Create the extended audio file
-    NSArray *dirs = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,YES);
-    NSString *documentsDirectoryPath = [dirs objectAtIndex:0];
-    NSURL * url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@",documentsDirectoryPath,@"Test.caf"]];
+    NSURL * url = [NSURL URLWithString:souchTouchFilePath];
     
-    _destinationFileURL = _destinationFileURL = (__bridge CFURLRef)url;
+    _destinationFileURL = (__bridge CFURLRef)url;
     [SoundMaker checkResult:ExtAudioFileCreateWithURL(_destinationFileURL,
-                                                                 kAudioFileCAFType,
-                                                                 &destinationFormat,
-                                                                 NULL,
-                                                                 kAudioFileFlags_EraseFile,
-                                                                 &_destinationFile)
-                             operation:"Failed to create ExtendedAudioFile reference"];
+                                                      kAudioFileCAFType,
+                                                      &destinationFormat,
+                                                      NULL,
+                                                      kAudioFileFlags_EraseFile,
+                                                      &_destinationFile)
+                  operation:"Failed to create ExtendedAudioFile reference"];
     // Set the client format
     AudioStreamBasicDescription clientFormat = destinationFormat;
     UInt32 propertySize = sizeof(clientFormat);
     [SoundMaker checkResult:ExtAudioFileSetProperty(_destinationFile,
-                                                 kExtAudioFileProperty_ClientDataFormat,
-                                                 propertySize,
-                                                 &destinationFormat)
-               operation:"Failed to set client data format on destination file"];
+                                                    kExtAudioFileProperty_ClientDataFormat,
+                                                    propertySize,
+                                                    &destinationFormat)
+                  operation:"Failed to set client data format on destination file"];
     
     // Instantiate the writer
     [SoundMaker checkResult:ExtAudioFileWriteAsync(_destinationFile, 0, NULL)
-               operation:"Failed to initialize with ExtAudioFileWriteAsync"];
+                  operation:"Failed to initialize with ExtAudioFileWriteAsync"];
 }
 
+#pragma mark - OSStatus Utility
 +(void)checkResult:(OSStatus)result
          operation:(const char *)operation {
 	if (result == noErr) return;
@@ -159,5 +273,20 @@
 		sprintf(errorString, "%d", (int)result);
 	fprintf(stderr, "Error: %s (%s)\n", operation, errorString);
 	exit(1);
+}
+
++(void)printASBD:(AudioStreamBasicDescription)asbd {
+    char formatIDString[5];
+    UInt32 formatID = CFSwapInt32HostToBig(asbd.mFormatID);
+    bcopy (&formatID, formatIDString, 4);
+    formatIDString[4] = '\0';
+    NSLog (@"  Sample Rate:         %10.0f",  asbd.mSampleRate);
+    NSLog (@"  Format ID:           %10s",    formatIDString);
+    NSLog (@"  Format Flags:        %10X",    (unsigned int)asbd.mFormatFlags);
+    NSLog (@"  Bytes per Packet:    %10d",    (unsigned int)asbd.mBytesPerPacket);
+    NSLog (@"  Frames per Packet:   %10d",    (unsigned int)asbd.mFramesPerPacket);
+    NSLog (@"  Bytes per Frame:     %10d",    (unsigned int)asbd.mBytesPerFrame);
+    NSLog (@"  Channels per Frame:  %10d",    (unsigned int)asbd.mChannelsPerFrame);
+    NSLog (@"  Bits per Channel:    %10d",    (unsigned int)asbd.mBitsPerChannel);
 }
 @end

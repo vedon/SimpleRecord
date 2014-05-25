@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E10EBF71931A890002D4D02 /* TPCircularBuffer+AudioBufferList.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E10EBF31931A890002D4D02 /* TPCircularBuffer+AudioBufferList.c */; };
 		4E37256118C0467700AAB235 /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E37256018C0467700AAB235 /* spinner.png */; };
 		4E7753AB18BE3830000BCA95 /* AsynEncodeAudioRecord.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4E7753A718BE3830000BCA95 /* AsynEncodeAudioRecord.mm */; };
 		4E7753AC18BE3830000BCA95 /* libmp3lame.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E7753AA18BE3830000BCA95 /* libmp3lame.a */; };
@@ -176,6 +177,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4E10EBF31931A890002D4D02 /* TPCircularBuffer+AudioBufferList.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "TPCircularBuffer+AudioBufferList.c"; sourceTree = "<group>"; };
+		4E10EBF41931A890002D4D02 /* TPCircularBuffer+AudioBufferList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TPCircularBuffer+AudioBufferList.h"; sourceTree = "<group>"; };
 		4E11D5211921033A0017B5AF /* SimpleRecord_macro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleRecord_macro.h; sourceTree = "<group>"; };
 		4E37255F18C0339400AAB235 /* Marco.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Marco.h; sourceTree = "<group>"; };
 		4E37256018C0467700AAB235 /* spinner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spinner.png; sourceTree = "<group>"; };
@@ -468,6 +471,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4E10EBF21931A890002D4D02 /* RingBuffer */ = {
+			isa = PBXGroup;
+			children = (
+				4E10EBF31931A890002D4D02 /* TPCircularBuffer+AudioBufferList.c */,
+				4E10EBF41931A890002D4D02 /* TPCircularBuffer+AudioBufferList.h */,
+			);
+			name = RingBuffer;
+			path = Classes/RingBuffer;
+			sourceTree = "<group>";
+		};
 		4E7753A818BE3830000BCA95 /* lame */ = {
 			isa = PBXGroup;
 			children = (
@@ -660,6 +673,7 @@
 		4EACB68E18B7877D001545AC /* SimpleRecord */ = {
 			isa = PBXGroup;
 			children = (
+				4E10EBF21931A890002D4D02 /* RingBuffer */,
 				4EACB6FC18B78FDA001545AC /* Classes */,
 				4EACE97018B8AA8C004383AD /* Category */,
 				4EACE91518B83911004383AD /* Models */,
@@ -1191,6 +1205,7 @@
 				4E77540D18BE3869000BCA95 /* DispatchQueueLogFormatter.m in Sources */,
 				4EAF84D518C225D70054E588 /* sse_optimized.cpp in Sources */,
 				4EACB6DE18B78898001545AC /* AEFloatConverter.m in Sources */,
+				4E10EBF71931A890002D4D02 /* TPCircularBuffer+AudioBufferList.c in Sources */,
 				4EAF84CF18C225D70054E588 /* PeakFinder.cpp in Sources */,
 				4EACB73C18B79821001545AC /* RingBuffer.mm in Sources */,
 				4EACB70418B7941D001545AC /* LocalFileBroserViewController.mm in Sources */,
