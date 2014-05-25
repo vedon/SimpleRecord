@@ -76,7 +76,17 @@ using namespace soundtouch;
         
     }
     
+//   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//       [self generateSoundMakerBuffer];
+//   });
     
+    [self generateSoundMakerBuffer];
+    
+#endif
+}
+
+-(void)generateSoundMakerBuffer
+{
     AudioBufferList *bufferList = [EZAudio audioBufferList];
     BOOL eof;
     UInt32 frames = 1024;
@@ -87,18 +97,11 @@ using namespace soundtouch;
                         bufferSize:&bufferSize
                                eof:&eof];
         self.eof = eof;
-        
-        
-        
-        
+        TPCircularBufferProduceBytes(&circularBuffer, bufferList->mBuffers->mData,bufferList->mBuffers->mDataByteSize);
     } while (frames !=0);
-    
-    
-    
-#endif
-    
-
 }
+
+
 -(void)stopReader
 {
     if ([[EZOutput sharedOutput] isPlaying]) {
@@ -253,8 +256,6 @@ withNumberOfChannels:(UInt32)numberOfChannels {
 
 -(TPCircularBuffer *)outputShouldUseCircularBuffer:(EZOutput *)output
 {
-    int frames = 1024;
-    UInt32 bufferSize = 0;
     if( self.audioFile ){
         
         // Reached the end of the file
@@ -269,35 +270,6 @@ withNumberOfChannels:(UInt32)numberOfChannels {
             self.eof = NO;
         }
         
-        // Allocate a buffer list to hold the file's data
-        AudioBufferList *bufferList = [EZAudio audioBufferList];
-        BOOL eof;
-        [self.audioFile readFrames:frames
-                   audioBufferList:bufferList
-                        bufferSize:&bufferSize
-                               eof:&eof];
-        
-        self.eof = eof;
-#if IsUserSoundMakeToPlayAudio
-        int outputDataSize = bufferList->mBuffers->mDataByteSize;
-        SAMPLETYPE * audioData = (SAMPLETYPE *)malloc(2*outputDataSize);
-        
-        memcpy(audioData, bufferList->mBuffers->mData, outputDataSize);
-        
-        [soundMaker processingSample:(SAMPLETYPE *)audioData length:outputDataSize/2];
-        int nSamples = 0;
-        do {
-            [soundMaker fillSamples:audioData reveivedSamplesLength:&nSamples maxSampleLength:outputDataSize];
-            if (nSamples!=0) {
-                TPCircularBufferProduceBytes(&circularBuffer, audioData,nSamples*2);
-            }
-        } while (nSamples!=0);
-        free(audioData);
-#else
-        TPCircularBufferProduceBytes(&circularBuffer, bufferList->mBuffers->mData,bufferList->mBuffers->mDataByteSize);
-#endif
-        
-        [EZAudio freeBufferList:bufferList];
         return &circularBuffer;
     }
     return NULL;
