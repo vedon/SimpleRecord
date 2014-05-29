@@ -38,6 +38,7 @@
     AppDelegate * myDelegate;
     
     BOOL isRecording;
+    BOOL isUseInflexion;
     NSString * formatType;
 }
 @property (weak, nonatomic) IBOutlet UILabel *clocker;
@@ -316,7 +317,6 @@
     if (isRecording) {
         [self saveRecordFile];
     }
-    
 }
 
 
@@ -346,6 +346,15 @@
     formatType = @"mp3";
     [[NSUserDefaults standardUserDefaults]setObject:formatType forKey:@"musicFormat"];
     [[NSUserDefaults standardUserDefaults]synchronize];
+    
+}
+
+
+- (IBAction)inflexionAction:(id)sender {
+    UIButton * btn = (UIButton *)sender;
+    [btn setSelected:!btn.selected];
+    isUseInflexion = btn.selected;
+    
     
 }
 

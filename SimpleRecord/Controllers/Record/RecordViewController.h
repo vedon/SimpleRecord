@@ -15,11 +15,15 @@
 - (IBAction)cancelRecordAction:(id)sender;
 - (IBAction)wavFormatAction:(id)sender;
 - (IBAction)mp3FormatAction:(id)sender;
+- (IBAction)inflexionAction:(id)sender;
+
+
 @property (weak, nonatomic) IBOutlet UIButton *mp3Btn;
 @property (weak, nonatomic) IBOutlet UIButton *wavBtn;
 @property (weak, nonatomic) IBOutlet UIButton *recordControlBtn;
 @property (weak, nonatomic) IBOutlet UIButton *finishBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *gradientView;
+@property (weak, nonatomic) IBOutlet UIButton *inflexionBtn;
 
 
 @end

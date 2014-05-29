@@ -76,12 +76,6 @@ using namespace soundtouch;
         
     }
     
-//   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//       [self generateSoundMakerBuffer];
-//   });
-    
-//    [self generateSoundMakerBuffer];
-    
 #endif
 }
 
@@ -99,7 +93,19 @@ using namespace soundtouch;
           self.eof = eof;
           TPCircularBufferProduceBytes(&circularBuffer, bufferList->mBuffers->mData,bufferList->mBuffers->mDataByteSize);
 
-          
+//          int outputDataSize = bufferList->mBuffers->mDataByteSize;
+//          SAMPLETYPE * audioData = (SAMPLETYPE *)malloc(2*outputDataSize);
+//          
+//          memcpy(audioData, bufferList->mBuffers->mData, outputDataSize);
+//          [soundMaker processingSample:(SAMPLETYPE *)audioData length:outputDataSize/2];
+//          int nSamples = 0;
+//          do {
+//              [soundMaker fillSamples:audioData reveivedSamplesLength:&nSamples maxSampleLength:outputDataSize];
+//              if (nSamples!=0) {
+//                  TPCircularBufferProduceBytes(&circularBuffer, audioData,nSamples*2);
+//              }
+//          } while (nSamples!=0);
+//          free(audioData);
           [EZAudio freeBufferList:bufferList];
        });
     

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="4514" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
@@ -10,6 +10,7 @@
                 <outlet property="clocker" destination="Vum-aZ-Z5d" id="0TF-dR-9Br"/>
                 <outlet property="finishBtn" destination="VAW-eR-aU3" id="i1l-b7-Gjj"/>
                 <outlet property="gradientView" destination="s7w-e0-u6z" id="gNO-Kw-qgS"/>
+                <outlet property="inflexionBtn" destination="wQw-sX-Qqd" id="QuN-hK-SNL"/>
                 <outlet property="mp3Btn" destination="gPk-o4-Ou0" id="YH0-O9-kG6"/>
                 <outlet property="recordControlBtn" destination="Gpp-W1-Lyb" id="bBJ-Qb-IRf"/>
                 <outlet property="view" destination="1" id="3"/>
@@ -33,7 +34,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="VAW-eR-aU3">
-                    <rect key="frame" x="32" y="337" width="122" height="43"/>
+                    <rect key="frame" x="32" y="353" width="122" height="43"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                     <state key="normal" title="完成" backgroundImage="Record_Btn_Done.png">
@@ -45,7 +46,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="JsV-r0-1Mr">
-                    <rect key="frame" x="167" y="337" width="122" height="43"/>
+                    <rect key="frame" x="167" y="353" width="122" height="43"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                     <state key="normal" title="取消录音" backgroundImage="Record_Btn_Done.png">
@@ -78,6 +79,19 @@
                     <state key="selected" image="Record_Choose_Btn2.png"/>
                     <connections>
                         <action selector="wavFormatAction:" destination="-1" eventType="touchUpInside" id="o97-5F-Jnz"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="wQw-sX-Qqd">
+                    <rect key="frame" x="64" y="315" width="120" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <state key="normal" title="Inflexion" image="Record_Choose_Btn1.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <state key="selected" image="Record_Choose_Btn2.png"/>
+                    <connections>
+                        <action selector="inflexionAction:" destination="-1" eventType="touchUpInside" id="0Zw-vn-eVl"/>
+                        <action selector="wavFormatAction:" destination="-1" eventType="touchUpInside" id="mr7-cw-dsR"/>
                     </connections>
                 </button>
                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Home_Icon_Music.png" id="s7w-e0-u6z">
