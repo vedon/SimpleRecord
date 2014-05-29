@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E0660511936F3B300A4F191 /* SoundMakerView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4E06604F1936F3B300A4F191 /* SoundMakerView.mm */; };
+		4E0660521936F3B300A4F191 /* SoundMakerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4E0660501936F3B300A4F191 /* SoundMakerView.xib */; };
 		4E10EBF71931A890002D4D02 /* TPCircularBuffer+AudioBufferList.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E10EBF31931A890002D4D02 /* TPCircularBuffer+AudioBufferList.c */; };
 		4E37256118C0467700AAB235 /* spinner.png in Resources */ = {isa = PBXBuildFile; fileRef = 4E37256018C0467700AAB235 /* spinner.png */; };
 		4E7753AB18BE3830000BCA95 /* AsynEncodeAudioRecord.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4E7753A718BE3830000BCA95 /* AsynEncodeAudioRecord.mm */; };
@@ -177,6 +179,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4E06604E1936F3B300A4F191 /* SoundMakerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundMakerView.h; sourceTree = "<group>"; };
+		4E06604F1936F3B300A4F191 /* SoundMakerView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SoundMakerView.mm; sourceTree = "<group>"; };
+		4E0660501936F3B300A4F191 /* SoundMakerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SoundMakerView.xib; sourceTree = "<group>"; };
 		4E10EBF31931A890002D4D02 /* TPCircularBuffer+AudioBufferList.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "TPCircularBuffer+AudioBufferList.c"; sourceTree = "<group>"; };
 		4E10EBF41931A890002D4D02 /* TPCircularBuffer+AudioBufferList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TPCircularBuffer+AudioBufferList.h"; sourceTree = "<group>"; };
 		4E11D5211921033A0017B5AF /* SimpleRecord_macro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleRecord_macro.h; sourceTree = "<group>"; };
@@ -866,6 +871,9 @@
 		4EACB74418B79B1C001545AC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4E06604E1936F3B300A4F191 /* SoundMakerView.h */,
+				4E06604F1936F3B300A4F191 /* SoundMakerView.mm */,
+				4E0660501936F3B300A4F191 /* SoundMakerView.xib */,
 				4EACE92818B84540004383AD /* RecordItemInfo.h */,
 				4EACE92918B84540004383AD /* RecordItemInfo.m */,
 				4EACE92A18B84541004383AD /* RecordItemInfo.xib */,
@@ -1097,6 +1105,7 @@
 				4EACB6F618B78AE9001545AC /* RecordViewController.xib in Resources */,
 				4EACE96A18B88171004383AD /* Home_Icon_Nte@2x.png in Resources */,
 				4EACE95C18B8725F004383AD /* List_Line@2x.png in Resources */,
+				4E0660521936F3B300A4F191 /* SoundMakerView.xib in Resources */,
 				4EACB6E918B78898001545AC /* CHANGELOG in Resources */,
 				4E77540E18BE3869000BCA95 /* README.txt in Resources */,
 				4EACE95D18B8725F004383AD /* List_Settings_Bg@2x.png in Resources */,
@@ -1251,6 +1260,7 @@
 				4EACB72B18B79762001545AC /* UIImage+Util.m in Sources */,
 				4E77540918BE3869000BCA95 /* DDFileLogger.m in Sources */,
 				4E77540B18BE3869000BCA95 /* DDTTYLogger.m in Sources */,
+				4E0660511936F3B300A4F191 /* SoundMakerView.mm in Sources */,
 				4EC3BC2D18C3225F00047448 /* SoundMaker.mm in Sources */,
 				4EACB6E618B78898001545AC /* EZPlot.m in Sources */,
 				4E7753F618BE3869000BCA95 /* HTTPConnection.m in Sources */,

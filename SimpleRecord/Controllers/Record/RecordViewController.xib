@@ -91,7 +91,6 @@
                     <state key="selected" image="Record_Choose_Btn2.png"/>
                     <connections>
                         <action selector="inflexionAction:" destination="-1" eventType="touchUpInside" id="0Zw-vn-eVl"/>
-                        <action selector="wavFormatAction:" destination="-1" eventType="touchUpInside" id="mr7-cw-dsR"/>
                     </connections>
                 </button>
                 <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Home_Icon_Music.png" id="s7w-e0-u6z">

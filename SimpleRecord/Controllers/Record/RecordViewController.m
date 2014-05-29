@@ -21,6 +21,7 @@
 #import "PersistentStore.h"
 
 #import "AsynEncodeAudioRecord.h"
+#import "SoundMakerView.h"
 
 @interface RecordViewController ()<UIAlertViewDelegate>
 {
@@ -260,11 +261,32 @@
 
     [self resetStatus];
     [asynEncodeRecorder saveSoundMakerFile];
+    
+    if (isUseInflexion) {
+        SoundMakerView * makerView = [[[NSBundle mainBundle]loadNibNamed:@"SoundMakerView" owner:self options:nil]objectAtIndex:0];
+        makerView.audioFilePath = [recordFileURL absoluteString];
+        CompletedProcessingBlock  tempBlocl = ^( NSString * filePath,BOOL isProcess,BOOL error)
+        {
+            if (isProcess) {
+                
+            }
+        };
+        [makerView setProcessingBlock:tempBlocl];
+        makerView.alpha = 0.0;
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            makerView.alpha = 1.0;
+            [self.view addSubview:makerView];
+        }];
+    }
+    
+    
 }
 
 -(void)saveSuccessfully
 {
-    [GobalMethod showAlertViewWithMsg:@"保存成功" title:nil];
+    [GobalMethod showAlertViewWithMsg
+     :@"保存成功" title:nil];
 }
 #pragma mark - Outlet Action
 - (IBAction)startRecordAction:(id)sender {

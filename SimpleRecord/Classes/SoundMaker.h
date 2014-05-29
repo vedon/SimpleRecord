@@ -11,6 +11,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 
 typedef void(^CompletedBufferBlock) (int bufferSize,AudioBufferList * audioBufferList);
+typedef void(^CompletedBlock) (BOOL isSuccess,NSError * error);
 @interface SoundMaker : NSObject
 @property (assign ,nonatomic) AudioStreamBasicDescription audio_des;
 
@@ -21,7 +22,8 @@ typedef void(^CompletedBufferBlock) (int bufferSize,AudioBufferList * audioBuffe
                               PitchSemiTones:(NSInteger)semiTones
                                   RateChange:(CGFloat)rateChange
                          processingAudioFile:(NSString *)filePath
-                                    destPath:(NSString *)destPath;
+                                    destPath:(NSString *)destPath
+                              completedBlock:(CompletedBlock)block;
 
 -(void)initalizationSoundTouchWithSampleRate:(NSUInteger)sampleRate
                                     Channels:(NSUInteger)channel

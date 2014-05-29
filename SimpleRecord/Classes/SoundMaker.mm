@@ -29,6 +29,8 @@ using namespace soundtouch;
     int audioBufferSize;
     timeb ts1,ts2;
     int timeOffset;
+    
+    CompletedBlock completedBlock;
 }
 @end
 
@@ -46,6 +48,7 @@ using namespace soundtouch;
                                   RateChange:(CGFloat)rateChange
                          processingAudioFile:(NSString *)filePath
                                     destPath:(NSString *)destPath
+                              completedBlock:(CompletedBlock)block
 {
     mSoundTouch.setSampleRate(sampleRate);
     mSoundTouch.setChannels(channel);
@@ -55,8 +58,11 @@ using namespace soundtouch;
     mSoundTouch.setSetting(SETTING_SEQUENCE_MS, 40);
     mSoundTouch.setSetting(SETTING_SEEKWINDOW_MS, 16);
     mSoundTouch.setSetting(SETTING_OVERLAP_MS, 8);
-    
+    if (block) {
+        completedBlock = [block copy];
+    }
     [self convertAudioFileWithPath:filePath destinationPath:destPath];
+    
 }
 
 -(void)initalizationSoundTouchWithSampleRate:(NSUInteger)sampleRate
@@ -187,7 +193,6 @@ using namespace soundtouch;
     ftime(&ts2);
     timeOffset = (ts2.time - ts1.time) + (ts2.millitm - ts1.millitm)/1000;
     NSLog(@"%d",timeOffset);
-    
     [SoundMaker checkResult:ExtAudioFileDispose(_destinationFile)
                   operation:"Failed to dispose extended audio file in recorder"];
     free(localBufferList ->mBuffers->mData);
@@ -196,6 +201,11 @@ using namespace soundtouch;
     free(audioData);
     free(audioBufferList->mBuffers->mData);
     free(audioBufferList);
+    
+    if (completedBlock) {
+        completedBlock(YES,nil);
+    }
+    
 }
 
 -(void)fillSamples:(soundtouch::SAMPLETYPE *)audioData maxSampleLength:(NSInteger)maxSampleLength completedBlock:(CompletedBufferBlock )block
@@ -234,7 +244,7 @@ using namespace soundtouch;
     destinationFormat.mFormatFlags = kAudioFormatFlagsCanonical | kAudioFormatFlagIsNonInterleaved;
     destinationFormat.mSampleRate = format.mSampleRate;
     
-    NSURL * url = [NSURL URLWithString:souchTouchFilePath];
+    NSURL * url = [NSURL fileURLWithPath:souchTouchFilePath];
     
     _destinationFileURL = (__bridge CFURLRef)url;
     [SoundMaker checkResult:ExtAudioFileCreateWithURL(_destinationFileURL,
