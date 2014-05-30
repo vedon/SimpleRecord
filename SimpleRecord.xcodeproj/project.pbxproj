@@ -148,6 +148,8 @@
 		4EACE97818B8D41A004383AD /* ModifyItemAttributeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EACE97718B8D41A004383AD /* ModifyItemAttributeView.xib */; };
 		4EACE97B18B8D60F004383AD /* ModifyCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EACE97A18B8D60F004383AD /* ModifyCellView.m */; };
 		4EACE97D18B8D618004383AD /* ModifyCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4EACE97C18B8D618004383AD /* ModifyCellView.xib */; };
+		4EAE89FE1938707300DED1C8 /* Icon_57.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EAE89FC1938707300DED1C8 /* Icon_57.png */; };
+		4EAE89FF1938707300DED1C8 /* Icon_114.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EAE89FD1938707300DED1C8 /* Icon_114.png */; };
 		4EAF84C618C225D70054E588 /* AAFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84A418C225D70054E588 /* AAFilter.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4EAF84C718C225D70054E588 /* BPMDetect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84A618C225D70054E588 /* BPMDetect.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		4EAF84C818C225D70054E588 /* cpu_detect_x86.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4EAF84A818C225D70054E588 /* cpu_detect_x86.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -253,7 +255,7 @@
 		4EAA7FB518BF97BF0031F407 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		4EAC0AEE18C8A877001697A1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4EAC4F6D18C0DE6D00B1F6C6 /* musicIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = musicIcon.png; sourceTree = "<group>"; };
-		4EACB68518B7877D001545AC /* SimpleRecord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleRecord.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4EACB68518B7877D001545AC /* RecordFun.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecordFun.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EACB68818B7877D001545AC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4EACB68A18B7877D001545AC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		4EACB68C18B7877D001545AC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -402,6 +404,8 @@
 		4EACE97918B8D60F004383AD /* ModifyCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyCellView.h; sourceTree = "<group>"; };
 		4EACE97A18B8D60F004383AD /* ModifyCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyCellView.m; sourceTree = "<group>"; };
 		4EACE97C18B8D618004383AD /* ModifyCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModifyCellView.xib; sourceTree = "<group>"; };
+		4EAE89FC1938707300DED1C8 /* Icon_57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon_57.png; sourceTree = "<group>"; };
+		4EAE89FD1938707300DED1C8 /* Icon_114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon_114.png; sourceTree = "<group>"; };
 		4EAF84A418C225D70054E588 /* AAFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AAFilter.cpp; path = SoundTouch/AAFilter.cpp; sourceTree = "<group>"; };
 		4EAF84A518C225D70054E588 /* AAFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AAFilter.h; path = SoundTouch/AAFilter.h; sourceTree = "<group>"; };
 		4EAF84A618C225D70054E588 /* BPMDetect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BPMDetect.cpp; path = SoundTouch/BPMDetect.cpp; sourceTree = "<group>"; };
@@ -648,7 +652,7 @@
 		4EACB68618B7877D001545AC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4EACB68518B7877D001545AC /* SimpleRecord.app */,
+				4EACB68518B7877D001545AC /* RecordFun.app */,
 				4EACB6A618B7877E001545AC /* SimpleRecordTests.xctest */,
 			);
 			name = Products;
@@ -926,6 +930,8 @@
 		4EACE92E18B8725E004383AD /* Img */ = {
 			isa = PBXGroup;
 			children = (
+				4EAE89FC1938707300DED1C8 /* Icon_57.png */,
+				4EAE89FD1938707300DED1C8 /* Icon_114.png */,
 				4EAC4F6D18C0DE6D00B1F6C6 /* musicIcon.png */,
 				4E37256018C0467700AAB235 /* spinner.png */,
 				4EACE96918B88171004383AD /* Home_Icon_Nte@2x.png */,
@@ -1027,7 +1033,7 @@
 			);
 			name = SimpleRecord;
 			productName = SimpleRecord;
-			productReference = 4EACB68518B7877D001545AC /* SimpleRecord.app */;
+			productReference = 4EACB68518B7877D001545AC /* RecordFun.app */;
 			productType = "com.apple.product-type.application";
 		};
 		4EACB6A518B7877E001545AC /* SimpleRecordTests */ = {
@@ -1103,6 +1109,7 @@
 				4EACE95F18B8725F004383AD /* Record_Btn_Back@2x.png in Resources */,
 				4EACE95E18B8725F004383AD /* Record_Bar_Top@2x.png in Resources */,
 				4EACB6F618B78AE9001545AC /* RecordViewController.xib in Resources */,
+				4EAE89FF1938707300DED1C8 /* Icon_114.png in Resources */,
 				4EACE96A18B88171004383AD /* Home_Icon_Nte@2x.png in Resources */,
 				4EACE95C18B8725F004383AD /* List_Line@2x.png in Resources */,
 				4E0660521936F3B300A4F191 /* SoundMakerView.xib in Resources */,
@@ -1125,6 +1132,7 @@
 				4EACE96818B875D1004383AD /* adImage.png in Resources */,
 				4EACE94B18B8725E004383AD /* Bar_Bottom@2x.png in Resources */,
 				4EACE96218B8725F004383AD /* Record_Btn_Pause@2x.png in Resources */,
+				4EAE89FE1938707300DED1C8 /* Icon_57.png in Resources */,
 				4EACE95918B8725F004383AD /* List_Btn_Settings@2x.png in Resources */,
 				4EACE95218B8725E004383AD /* Home_Icon_Record@2x.png in Resources */,
 				4EACE95518B8725E004383AD /* Home_Slide_Track_Fill@2x.png in Resources */,
@@ -1411,7 +1419,7 @@
 					/Users/vedon/Documents/GitHub/SimpleRecord/SimpleRecord/Classes/lame,
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = RecordFun;
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
@@ -1439,7 +1447,7 @@
 					/Users/vedon/Documents/GitHub/SimpleRecord/SimpleRecord/Classes/lame,
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = RecordFun;
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;

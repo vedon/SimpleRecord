@@ -44,6 +44,9 @@
     //通知用来更新slider 位置
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateProcessingLocation:) name:CurrentPlayFilePostionInfo object:nil];
     
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(endPlayFile) name:@"reachTheEndOfFile" object:nil];
+    
+    
     [self.progressSlider addTarget:self action:@selector(updateCurrentPlayMusicPosition:) forControlEvents:UIControlEventTouchUpInside];
     self.progressSlider.continuous = NO;
     
@@ -101,9 +104,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             _progressSlider.value = [noti.object floatValue];
         });
-        
     }
-   
 }
 -(void)updateCurrentPlayMusicPosition:(id)sender
 {
@@ -112,6 +113,15 @@
 
 }
 
+-(void)endPlayFile
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_controllBtn setSelected:NO];
+        [myDelegate pause];
+    });
+    
+
+}
 #pragma mark - Outlet Method
 - (IBAction)gotoRecordViewController:(id)sender {
     RecordViewController * viewController = [[RecordViewController alloc]initWithNibName:@"RecordViewController" bundle:nil];
@@ -136,20 +146,10 @@
     UIButton * btn = (UIButton *)sender;
     [btn setSelected:!btn.selected];
     if (btn.selected) {
-//        if ([myDelegate isPlaying]) {
-//            [myDelegate play];
-//            return;
-//        }else
-//        {
-//            if ([previousPlayItemInfo count]) {
-//                [myDelegate playCurrentSongWithInfo:previousPlayItemInfo];
-//                self.progressSlider.maximumValue = myDelegate.audioTotalFrame;
-//                return;
-//            }
-//            
-//        }
-        if ([previousPlayItemInfo count]) {
-            [myDelegate playCurrentSongWithInfo:previousPlayItemInfo];
+        if (previousPlayItemInfo) {
+            [myDelegate playCurrentSongWithInfo:previousPlayItemInfo completedBlock:^(BOOL isReachTheEnd) {
+               
+            }];
             self.progressSlider.maximumValue = myDelegate.audioTotalFrame;
             return;
         }

@@ -19,7 +19,11 @@
 
 #import "AudioFloatPointReader.h"
 #import "NSTimer+Addition.h"
+
 @interface AppDelegate()<AudioReaderDelegate>
+{
+    PlayFileInfoBlock playItemInfoBlock;
+}
 @end
 
 @implementation AppDelegate
@@ -43,11 +47,12 @@
     
     _spinnerImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"spinner.png"]];
     [_spinnerImage setFrame:CGRectMake(270, 30, 25, 25)];
-//    [_spinnerImage setHidden:YES];
     [self.window addSubview:_spinnerImage];
     _spinnerImageTimer =
-    [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(rotateSpinnerview) userInfo:nil repeats:YES];
+    [NSTimer scheduledTimerWithTimeInterval:1/100 target:self selector:@selector(rotateSpinnerview) userInfo:nil repeats:YES];
     [_spinnerImageTimer pauseTimer];
+    
+    
     // Override point for customization after application launch.
     return YES;
 }
@@ -152,15 +157,13 @@
 
 -(void)rotateSpinnerview
 {
-    _spinnerImage.layer.transform = CATransform3DRotate(_spinnerImage.layer.transform, 0.2, 0, 0, 1);
+    _spinnerImage.layer.transform = CATransform3DRotate(_spinnerImage.layer.transform, 0.002, 0, 0, 1);
 }
 
 
 #pragma mark - Audio Stuff
 -(void)palyItemWithURL:(NSURL *)inputFileURL withMusicInfo:(NSDictionary *)info withPlaylist:(NSArray *)list
 {
-    
-    
     _floatReader = [AudioFloatPointReader shareAudioFloatPointReader];
     [_floatReader playAudioFile:inputFileURL];
     if ([list count]) {
@@ -169,20 +172,24 @@
     
     self.currentPlayMusicLength = _floatReader.audioDuration;
     self.audioTotalFrame   = _floatReader.totalFrame;
-    self.currentPlayMusicInfo = info;
     self.audioMng = [AudioManager shareAudioManager];
     
-    NSMutableDictionary * tempInfo = [NSMutableDictionary dictionaryWithDictionary:info];
-    [tempInfo setValue:inputFileURL.path forKey:@"FileURL"];
-    [tempInfo setObject:[NSNumber numberWithFloat:0] forKey:@"CurrentPosition"];
-    [tempInfo setObject:[NSNumber numberWithFloat:_floatReader.totalFrame] forKey:@"TotalFrame"];
-    [GobalMethod saveDidPlayItemInfo:tempInfo];
-    tempInfo = nil;
+    if (info) {
+        self.currentPlayMusicInfo = info;
+        //保存当前播放音频信息
+        NSMutableDictionary * tempInfo = [NSMutableDictionary dictionaryWithDictionary:info];
+        [tempInfo setValue:inputFileURL.path forKey:@"FileURL"];
+        [tempInfo setObject:[NSNumber numberWithFloat:0] forKey:@"CurrentPosition"];
+        [tempInfo setObject:[NSNumber numberWithFloat:_floatReader.totalFrame] forKey:@"TotalFrame"];
+        [GobalMethod saveDidPlayItemInfo:tempInfo];
+        tempInfo = nil;
+    }
+    
     
     [self play];
 }
 
--(void)playCurrentSongWithInfo:(NSDictionary *)info
+-(void)playCurrentSongWithInfo:(NSDictionary *)info completedBlock:(PlayFileInfoBlock) block
 {
     _floatReader = [AudioFloatPointReader shareAudioFloatPointReader];
     [_floatReader playAudioFile:[NSURL fileURLWithPath:[info valueForKey:@"FileURL"]]];
@@ -202,10 +209,11 @@
     [self play];
 }
 
+
+
 -(void)play
 {
     [_spinnerImageTimer resumeTimer];
-    
     [_floatReader startReader];
     [self.audioMng setForceOutputToSpeaker:YES];
 }

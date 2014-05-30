@@ -11,6 +11,8 @@
 #import "AppDelegate.h"
 #import "GobalMethod.h"
 #import "MBProgressHUD.h"
+#import "AppDelegate.h"
+#import "GobalMethod.h"
 
 @interface SoundMakerView()
 {
@@ -20,6 +22,7 @@
     
     NSString * desPath;
     BOOL isAlreadyProcess;
+    AppDelegate * myDelegate;
 }
 @end
 @implementation SoundMakerView
@@ -59,6 +62,7 @@
         rect.size.height+=88;
         _maskView.frame = rect;
     }
+    myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
 }
 
 
@@ -68,23 +72,39 @@
     desPath = [fileName stringByAppendingString:@"_temp.caf"];
     if (_audioFilePath&&!isAlreadyProcess) {
 
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD showHUDAddedTo:self animated:YES];
             SoundMaker * maker = [[SoundMaker alloc]init];
             __weak __typeof(self) weakSelf = self;
-            [maker initalizationSoundTouchWithSampleRate:44100 Channels:1 TempoChange:tempoValue PitchSemiTones:pitchValue RateChange:rateValue processingAudioFile:_audioFilePath destPath:desPath completedBlock:^(BOOL isSuccess, NSError *error) {
+            [maker initalizationSoundTouchWithSampleRate:RecordSampleRate Channels:1 TempoChange:tempoValue PitchSemiTones:pitchValue RateChange:rateValue processingAudioFile:_audioFilePath destPath:desPath completedBlock:^(BOOL isSuccess, NSError *error) {
                 if (isSuccess) {
-                  
                     isAlreadyProcess = YES;
+                    if (_processingBlock) {
+                        _processingBlock(desPath,YES,YES);
+                    }
                 }else
                 {
+                    isAlreadyProcess = NO;
                     [self showAlertViewWithMessage:@"不支持格式"];
                 }
+                
                 [MBProgressHUD hideHUDForView:weakSelf animated:YES];
             }];
         });
         
     }
+    
+    if (isAlreadyProcess) {
+        if (_processingBlock) {
+            _processingBlock(desPath,YES,YES);
+        }
+    }
+    
+}
+
+-(void)playInflexionFile:(NSString *)path
+{
     
 }
 
@@ -92,11 +112,10 @@
     
     
     [[NSFileManager defaultManager]removeItemAtPath:_audioFilePath error:nil];
-
    [self removeFromSuperview];
     
     if (_processingBlock) {
-        _processingBlock(desPath,YES,nil);
+        _processingBlock(desPath,YES,YES);
     }
 }
 
@@ -121,12 +140,10 @@
 }
 
 - (IBAction)cancelAction:(id)sender {
-    [self removeSoundMakerView];
-}
-
--(void)removeSoundMakerView
-{
-    [self removeFromSuperview];
+    self.alpha = 0.0;
+    [UIView animateWithDuration:0.3 animations:^{
+        [self removeFromSuperview];
+    }];
     if (_processingBlock) {
         _processingBlock(nil,NO,nil);
     }

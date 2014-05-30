@@ -130,7 +130,7 @@ using namespace soundtouch;
     _clientFormat.mFormatFlags      = kAudioFormatFlagsCanonical | kAudioFormatFlagIsNonInterleaved;
     _clientFormat.mFormatID         = kAudioFormatLinearPCM;
     _clientFormat.mFramesPerPacket  = 1;
-    _clientFormat.mSampleRate       = 20000;
+    _clientFormat.mSampleRate       = RecordSampleRate;
     
     [SoundMaker checkResult:ExtAudioFileSetProperty(_audioFile,
                                                     kExtAudioFileProperty_ClientDataFormat,

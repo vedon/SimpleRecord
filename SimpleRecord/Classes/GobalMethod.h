@@ -100,5 +100,7 @@
  *
  */
 +(UIImage *)newImageWithRect:(CGRect)rect;
+
++(NSString *)convertSecondToMinute:(CGFloat)time;
 @end
 

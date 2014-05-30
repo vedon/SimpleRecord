@@ -22,6 +22,8 @@ using namespace soundtouch;
     
     TPCircularBuffer  circularBuffer;
     int circularBufferLength;
+    
+    BOOL isReachTheEndOfFile;
 }
 @end
 @implementation AudioFloatPointReader
@@ -44,6 +46,7 @@ using namespace soundtouch;
     self.audioFile         = [EZAudioFile audioFileWithURL:filePath];
     _audioDuration         = (float)_audioFile.totalDuration;
     _totalFrame            = (float)_audioFile.totalFrames;
+    isReachTheEndOfFile = NO;
     self.audioFile.audioFileDelegate = self;
 }
 
@@ -58,6 +61,8 @@ using namespace soundtouch;
     if( ![[EZOutput sharedOutput] isPlaying] ){
         if( self.eof ){
             [self.audioFile seekToFrame:0];
+            self.eof = NO;
+            isReachTheEndOfFile = NO;
         }
         [EZOutput sharedOutput].outputDataSource = self;
         [[EZOutput sharedOutput] startPlayback];
@@ -71,7 +76,7 @@ using namespace soundtouch;
 #if IsUserSoundMakeToPlayAudio
     if (!soundMaker) {
         soundMaker = [[SoundMaker alloc]init];
-        [soundMaker initalizationSoundTouchWithSampleRate:441000 Channels:2 TempoChange:50 PitchSemiTones:12 RateChange:12];
+        [soundMaker initalizationSoundTouchWithSampleRate:RecordSampleRate Channels:2 TempoChange:50 PitchSemiTones:12 RateChange:12];
         [soundMaker setAudio_des:self.audioFile.clientFormat];
         
     }
@@ -277,9 +282,22 @@ withNumberOfChannels:(UInt32)numberOfChannels {
             {
                 [self.audioFile seekToFrame:0];
             }
-            self.eof = NO;
+            if (IsAutoReplay&&self.eof) {
+                self.eof = NO;
+            }else
+            {
+                if (!isReachTheEndOfFile) {
+                    [[NSNotificationCenter defaultCenter]postNotificationName:@"reachTheEndOfFile" object:nil];
+                    [self audioFile:_audioFile updatedPosition:0];
+                    isReachTheEndOfFile = YES;
+                }
+                
+            }
+        }else
+        {
+            [self generateSoundMakerBuffer];
         }
-        [self generateSoundMakerBuffer];
+
         
         return &circularBuffer;
     }

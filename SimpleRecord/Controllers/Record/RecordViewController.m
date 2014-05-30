@@ -253,7 +253,7 @@
     recordFile.length   = [NSString stringWithFormat:@"%0.2f",[GobalMethod getMusicLength:recordFileURL]];
     recordFile.makeTime = recordMakeTime;
     recordFile.localPath= destinationFileName;
-    [PersistentStore save];
+    
     
     //3）删除录音文件
     [[NSFileManager defaultManager]removeItemAtPath:recordFilePath error:nil];
@@ -264,20 +264,26 @@
     
     if (isUseInflexion) {
         SoundMakerView * makerView = [[[NSBundle mainBundle]loadNibNamed:@"SoundMakerView" owner:self options:nil]objectAtIndex:0];
-        makerView.audioFilePath = [recordFileURL absoluteString];
-        CompletedProcessingBlock  tempBlocl = ^( NSString * filePath,BOOL isProcess,BOOL error)
+        __weak AppDelegate * weakDelegate = myDelegate;
+        makerView.audioFilePath = destinationFileName;
+        CompletedProcessingBlock  tempBlocl = ^(NSString * filePath,BOOL isProcess,BOOL isSuccess)
         {
-            if (isProcess) {
-                
+            if (isSuccess)
+            {
+                [weakDelegate palyItemWithURL:[NSURL URLWithString:filePath] withMusicInfo:@{@"Length":recordFile.length,@"Title":@"变音文件"} withPlaylist:nil];
+                recordFile.localPath = filePath;
+                [PersistentStore save];
             }
         };
         [makerView setProcessingBlock:tempBlocl];
         makerView.alpha = 0.0;
-        
         [UIView animateWithDuration:0.3 animations:^{
             makerView.alpha = 1.0;
             [self.view addSubview:makerView];
         }];
+    }else
+    {
+        [PersistentStore save];
     }
     
     

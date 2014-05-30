@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+typedef void (^PlayFileInfoBlock)(BOOL isReachTheEnd);
 @class AudioReader;
 @class AudioManager;
 @class HTTPServer;
 @class AudioFloatPointReader;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 {
     HTTPServer *httpServer;
@@ -29,7 +31,7 @@
 -(void)palyItemWithURL:(NSURL *)inputFileURL withMusicInfo:(NSDictionary *)info withPlaylist:(NSArray *)list;
 
 -(void)seekToPostion:(CGFloat)postion;
--(void)playCurrentSongWithInfo:(NSDictionary *)info;
+-(void)playCurrentSongWithInfo:(NSDictionary *)info completedBlock:(PlayFileInfoBlock) block;
 -(BOOL)isPlaying;
 -(void)pause;
 -(void)play;

@@ -97,7 +97,7 @@ typedef struct {
   destinationFormat.mBytesPerPacket = destinationFormat.mBytesPerFrame = 2 * destinationFormat.mChannelsPerFrame;
   destinationFormat.mFramesPerPacket = 1;
   destinationFormat.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger; // little-endian
-  destinationFormat.mSampleRate = 44100.0;
+  destinationFormat.mSampleRate = RecordSampleRate;
   return destinationFormat;
 }
 

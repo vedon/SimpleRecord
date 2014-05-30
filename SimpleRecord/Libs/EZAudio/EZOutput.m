@@ -197,7 +197,7 @@ static OSStatus OutputRenderCallback(void                        *inRefCon,
              operation:"Failed to enable output unit"];
   
   // Get the hardware sample rate
-  Float64 hardwareSampleRate = 44100;
+  Float64 hardwareSampleRate = RecordSampleRate;
 #if !(TARGET_IPHONE_SIMULATOR)
   UInt32 propSize = sizeof(hardwareSampleRate);
   [EZAudio checkResult:AudioSessionGetProperty(kAudioSessionProperty_CurrentHardwareSampleRate,

@@ -190,8 +190,8 @@ static AudioManager * audioManager = nil;
                                      &size ),
                "Couldn't get the hardware output stream format");
     
-    _inputFormat.mSampleRate = 44100.0;
-    _outputFormat.mSampleRate = 44100.0;
+    _inputFormat.mSampleRate = RecordSampleRate;
+    _outputFormat.mSampleRate = RecordSampleRate;
     self.samplingRate = _inputFormat.mSampleRate;
     self.numBytesPerSample = _inputFormat.mBitsPerChannel / 8;
     

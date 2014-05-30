@@ -128,6 +128,31 @@
     return exportPath;
 }
 
+
++(NSString *)convertSecondToMinute:(CGFloat)time
+{
+    NSInteger roundDownSecond = floor(time);
+    int   h = roundDownSecond / (60 * 60);
+    int   m = floor((time - h * 60) / 60);
+    int   s = (time - h * 60*60 - m * 60);
+    
+    NSString * str = nil;
+    if (h ==0) {
+        if (m == 0 && h == 0) {
+            str = [NSString stringWithFormat:@"00:%02d",s];
+        }else
+        {
+            str = [NSString stringWithFormat:@"%02d:%02d",m,s];
+        }
+        
+    }else
+    {
+        str = [NSString stringWithFormat:@"%02d:%02d:%02d",h,m,s];
+    }
+    
+    
+    return str;
+}
 #pragma mark - OSStatus Utility
 +(void)checkResult:(OSStatus)result
          operation:(const char *)operation {
