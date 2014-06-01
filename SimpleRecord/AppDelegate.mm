@@ -50,6 +50,7 @@
     [self.window addSubview:_spinnerImage];
     _spinnerImageTimer =
     [NSTimer scheduledTimerWithTimeInterval:1/100 target:self selector:@selector(rotateSpinnerview) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop]addTimer:_spinnerImageTimer forMode:NSRunLoopCommonModes];
     [_spinnerImageTimer pauseTimer];
     
     
@@ -157,7 +158,7 @@
 
 -(void)rotateSpinnerview
 {
-    _spinnerImage.layer.transform = CATransform3DRotate(_spinnerImage.layer.transform, 0.002, 0, 0, 1);
+    _spinnerImage.layer.transform = CATransform3DRotate(_spinnerImage.layer.transform, 0.001, 0, 0, 1);
 }
 
 

@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *musicTitle;
 @property (weak, nonatomic) IBOutlet UIButton *shareBtn;
 @property (weak, nonatomic) IBOutlet UIButton *uploadBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *bgImageView;
 
 -(void)resetContentAlpha:(CGFloat)alpha;
 @end

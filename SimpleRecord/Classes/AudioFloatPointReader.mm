@@ -224,58 +224,13 @@ withNumberOfChannels:(UInt32)numberOfChannels {
 }
 
 #pragma mark - EZOutputDataSource
-//-(AudioBufferList *)output:(EZOutput *)output
-// needsBufferListWithFrames:(UInt32)frames
-//            withBufferSize:(UInt32 *)bufferSize {
-//    if( self.audioFile ){
-//        
-//        // Reached the end of the file
-//        if( self.eof ){
-//            // Here's what you do to loop the file
-//            if (_isShouldPlayPlaylist) {
-//                [self playNextSong];
-//            }else
-//            {
-//                [self.audioFile seekToFrame:0];
-//            }
-//            self.eof = NO;
-//        }
-//        
-//        // Allocate a buffer list to hold the file's data
-//        AudioBufferList *bufferList = [EZAudio audioBufferList];
-//        BOOL eof;
-//        [self.audioFile readFrames:frames
-//                   audioBufferList:bufferList
-//                        bufferSize:bufferSize
-//                               eof:&eof];
-//        self.eof = eof;
-//        // Reached the end of the file on the last read
-//        if( eof ){
-//            [EZAudio freeBufferList:bufferList];
-//            return nil;
-//        }
-//        
-//        
-//        
-//        return bufferList;
-//        
-//    }
-//    return nil;
-//}
-
--(AudioStreamBasicDescription)outputHasAudioStreamBasicDescription:(EZOutput *)output
-{
-    return self.audioFile.clientFormat;
-    
-}
-
--(TPCircularBuffer *)outputShouldUseCircularBuffer:(EZOutput *)output
-{
+-(AudioBufferList *)output:(EZOutput *)output
+ needsBufferListWithFrames:(UInt32)frames
+            withBufferSize:(UInt32 *)bufferSize {
     if( self.audioFile ){
         
         // Reached the end of the file
         if( self.eof ){
-            // Here's what you do to loop the file
             if (_isShouldPlayPlaylist) {
                 [self playNextSong];
             }else
@@ -293,16 +248,72 @@ withNumberOfChannels:(UInt32)numberOfChannels {
                 }
                 
             }
-        }else
-        {
-            [self generateSoundMakerBuffer];
-        }
 
+        }
         
-        return &circularBuffer;
+        // Allocate a buffer list to hold the file's data
+        AudioBufferList *bufferList = [EZAudio audioBufferList];
+        BOOL eof;
+        [self.audioFile readFrames:frames
+                   audioBufferList:bufferList
+                        bufferSize:bufferSize
+                               eof:&eof];
+        self.eof = eof;
+        // Reached the end of the file on the last read
+        if( eof ){
+            [EZAudio freeBufferList:bufferList];
+            return nil;
+        }
+        
+        
+        
+        return bufferList;
+        
     }
-    return NULL;
+ 
+    return nil;
 }
+
+-(AudioStreamBasicDescription)outputHasAudioStreamBasicDescription:(EZOutput *)output
+{
+    return self.audioFile.clientFormat;
+    
+}
+
+//-(TPCircularBuffer *)outputShouldUseCircularBuffer:(EZOutput *)output
+//{
+//    if( self.audioFile ){
+//        
+//        // Reached the end of the file
+//        if( self.eof ){
+//            // Here's what you do to loop the file
+//            if (_isShouldPlayPlaylist) {
+//                [self playNextSong];
+//            }else
+//            {
+//                [self.audioFile seekToFrame:0];
+//            }
+//            if (IsAutoReplay&&self.eof) {
+//                self.eof = NO;
+//            }else
+//            {
+//                if (!isReachTheEndOfFile) {
+//                    [[NSNotificationCenter defaultCenter]postNotificationName:@"reachTheEndOfFile" object:nil];
+//                    [self audioFile:_audioFile updatedPosition:0];
+//                    isReachTheEndOfFile = YES;
+//                }
+//                
+//            }
+//        }else
+//        {
+//            [self generateSoundMakerBuffer];
+//        }
+//
+//        
+//        return &circularBuffer;
+//    }
+//    return NULL;
+//}
 
 +(void)checkResult:(OSStatus)result
          operation:(const char *)operation {

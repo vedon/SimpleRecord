@@ -44,6 +44,10 @@
 		4E77540E18BE3869000BCA95 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4E7753EE18BE3869000BCA95 /* README.txt */; };
 		4E77540F18BE3869000BCA95 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 4E7753F018BE3869000BCA95 /* index.html */; };
 		4E77541018BE3869000BCA95 /* upload.html in Resources */ = {isa = PBXBuildFile; fileRef = 4E7753F118BE3869000BCA95 /* upload.html */; };
+		4EA9611D193AC04C00A1E067 /* CustomButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EA9611A193AC04C00A1E067 /* CustomButton.m */; };
+		4EA9611E193AC04C00A1E067 /* EmitterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EA9611C193AC04C00A1E067 /* EmitterView.m */; };
+		4EA96120193AC1CB00A1E067 /* snow1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EA9611F193AC1CB00A1E067 /* snow1.png */; };
+		4EA96122193AD50C00A1E067 /* Home_Picture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EA96121193AD50C00A1E067 /* Home_Picture@2x.png */; };
 		4EAA7FB618BF97BF0031F407 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EAA7FB518BF97BF0031F407 /* SystemConfiguration.framework */; };
 		4EAC0AEF18C8A877001697A1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EAC0AEE18C8A877001697A1 /* QuartzCore.framework */; };
 		4EAC4F6E18C0DE6D00B1F6C6 /* musicIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4EAC4F6D18C0DE6D00B1F6C6 /* musicIcon.png */; };
@@ -252,6 +256,12 @@
 		4E7753EE18BE3869000BCA95 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		4E7753F018BE3869000BCA95 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		4E7753F118BE3869000BCA95 /* upload.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = upload.html; sourceTree = "<group>"; };
+		4EA96119193AC04C00A1E067 /* CustomButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomButton.h; sourceTree = "<group>"; };
+		4EA9611A193AC04C00A1E067 /* CustomButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomButton.m; sourceTree = "<group>"; };
+		4EA9611B193AC04C00A1E067 /* EmitterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmitterView.h; sourceTree = "<group>"; };
+		4EA9611C193AC04C00A1E067 /* EmitterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmitterView.m; sourceTree = "<group>"; };
+		4EA9611F193AC1CB00A1E067 /* snow1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = snow1.png; sourceTree = "<group>"; };
+		4EA96121193AD50C00A1E067 /* Home_Picture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Home_Picture@2x.png"; sourceTree = "<group>"; };
 		4EAA7FB518BF97BF0031F407 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		4EAC0AEE18C8A877001697A1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4EAC4F6D18C0DE6D00B1F6C6 /* musicIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = musicIcon.png; sourceTree = "<group>"; };
@@ -803,6 +813,10 @@
 		4EACB6FC18B78FDA001545AC /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				4EA96119193AC04C00A1E067 /* CustomButton.h */,
+				4EA9611A193AC04C00A1E067 /* CustomButton.m */,
+				4EA9611B193AC04C00A1E067 /* EmitterView.h */,
+				4EA9611C193AC04C00A1E067 /* EmitterView.m */,
 				4E7753A618BE3830000BCA95 /* AsynEncodeAudioRecord.h */,
 				4E7753A718BE3830000BCA95 /* AsynEncodeAudioRecord.mm */,
 				4EBFC19418BEDF36003FEEA1 /* AudioFloatPointReader.h */,
@@ -930,6 +944,8 @@
 		4EACE92E18B8725E004383AD /* Img */ = {
 			isa = PBXGroup;
 			children = (
+				4EA96121193AD50C00A1E067 /* Home_Picture@2x.png */,
+				4EA9611F193AC1CB00A1E067 /* snow1.png */,
 				4EAE89FC1938707300DED1C8 /* Icon_57.png */,
 				4EAE89FD1938707300DED1C8 /* Icon_114.png */,
 				4EAC4F6D18C0DE6D00B1F6C6 /* musicIcon.png */,
@@ -1116,6 +1132,7 @@
 				4EACB6E918B78898001545AC /* CHANGELOG in Resources */,
 				4E77540E18BE3869000BCA95 /* README.txt in Resources */,
 				4EACE95D18B8725F004383AD /* List_Settings_Bg@2x.png in Resources */,
+				4EA96120193AC1CB00A1E067 /* snow1.png in Resources */,
 				4EACE97818B8D41A004383AD /* ModifyItemAttributeView.xib in Resources */,
 				4E77541018BE3869000BCA95 /* upload.html in Resources */,
 				4EACB69318B7877D001545AC /* InfoPlist.strings in Resources */,
@@ -1127,6 +1144,7 @@
 				4EACE96618B8725F004383AD /* Record_Choose_Btn2@2x.png in Resources */,
 				4EACE95818B8725F004383AD /* List_Btn_Confirm@2x.png in Resources */,
 				4EACE95618B8725E004383AD /* List_Bg@2x.png in Resources */,
+				4EA96122193AD50C00A1E067 /* Home_Picture@2x.png in Resources */,
 				4EACE96018B8725F004383AD /* Record_Btn_Choose@2x.png in Resources */,
 				4EACB6EA18B78898001545AC /* VERSION in Resources */,
 				4EACE96818B875D1004383AD /* adImage.png in Resources */,
@@ -1219,6 +1237,7 @@
 				4EACB72418B79762001545AC /* HWConnect.m in Sources */,
 				4EACB6E318B78898001545AC /* EZAudioPlotGLKViewController.m in Sources */,
 				4EACB72818B79762001545AC /* NSString+Utils.m in Sources */,
+				4EA9611D193AC04C00A1E067 /* CustomButton.m in Sources */,
 				4E77540D18BE3869000BCA95 /* DispatchQueueLogFormatter.m in Sources */,
 				4EAF84D518C225D70054E588 /* sse_optimized.cpp in Sources */,
 				4EACB6DE18B78898001545AC /* AEFloatConverter.m in Sources */,
@@ -1255,6 +1274,7 @@
 				4E7753FA18BE3869000BCA95 /* MultipartMessageHeader.m in Sources */,
 				4E77540C18BE3869000BCA95 /* ContextFilterLogFormatter.m in Sources */,
 				4EACB6E218B78898001545AC /* EZAudioPlotGL.m in Sources */,
+				4EA9611E193AC04C00A1E067 /* EmitterView.m in Sources */,
 				4EACB74718B79B2E001545AC /* MusicInfoCell.m in Sources */,
 				4E7753F818BE3869000BCA95 /* HTTPServer.m in Sources */,
 				4EACB69518B7877D001545AC /* main.m in Sources */,

@@ -75,7 +75,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
 #endif
     self.contentTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.contentTable setBackgroundView:nil];
-    [self.contentTable setBackgroundColor:[UIColor clearColor]];
+    [self.contentTable setBackgroundColor:[UIColor colorWithRed:15/255.0 green:18/255.0 blue:25/255.0 alpha:1.0]];
     
 }
 
@@ -86,7 +86,7 @@ static NSString * cellIdentifier = @"cellIdentifier";
         
         for (int i =0 ;i < [cells count];i++) {
             RecordItemInfo * cell = [cells objectAtIndex:i];
-            [cell resetContentAlpha:((count -i)/count)];
+            [cell resetContentAlpha:((count -i)/count)+0.2];
         }
     }
     
@@ -231,6 +231,47 @@ static NSString * cellIdentifier = @"cellIdentifier";
 {
     cells = [tableView visibleCells];
     [self resetTheCellAlphaWhenScrolling];
+//    [(RecordItemInfo *)cell resetContentAlpha:((dataSource.count -indexPath.row)/dataSource.count)];
+
+    CGFloat animationTimeOffset = indexPath.row * 0.18;
+    if (animationTimeOffset > 1.2) {
+        animationTimeOffset = 1.2;
+    }
+//    RecordItemInfo * tempCell = (RecordItemInfo *)cell;
+//    tempCell.bgImageView.layer.borderWidth = 0.1;
+//     tempCell.bgImageView.layer.borderColor =[UIColor whiteColor].CGColor;
+    CATransform3D rotation;
+    rotation = CATransform3DMakeRotation( M_PI/6, 1, 0.0, 0.0);
+    rotation.m34 = 1.0/ -600;
+    cell.layer.shadowColor = [[UIColor blackColor]CGColor];
+    cell.layer.shadowOffset = CGSizeMake(10, 10);
+    cell.layer.transform = rotation;
+
+    [UIView animateWithDuration:animationTimeOffset/5 animations:^{
+        cell.layer.transform = CATransform3DIdentity;
+        cell.layer.shadowOffset = CGSizeMake(0, 0);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:animationTimeOffset/3 animations:^{
+            
+            CATransform3D rotation;
+            rotation = CATransform3DMakeRotation( M_PI/4, 1, 0.0, 0.0);
+            rotation.m34 = 1.0/ -600;
+            cell.layer.shadowColor = [[UIColor blackColor]CGColor];
+            cell.layer.shadowOffset = CGSizeMake(10, 10);
+            cell.layer.transform = rotation;
+            
+        } completion:^(BOOL finished) {
+            [UIView beginAnimations:@"rotation" context:NULL];
+            [UIView setAnimationDuration:animationTimeOffset/6];
+            cell.layer.transform = CATransform3DIdentity;
+            cell.alpha = 1;
+            cell.layer.shadowOffset = CGSizeMake(0, 0);
+            cell.layer.repeatCount = 3;
+            [UIView commitAnimations];
+//            tempCell.bgImageView.layer.borderWidth = 0.0;
+        }];
+    }];
+    
 }
 - (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView
            editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4EACB68418B7877D001545AC"
-               BuildableName = "SimpleRecord.app"
+               BuildableName = "RecordFun.app"
                BlueprintName = "SimpleRecord"
                ReferencedContainer = "container:SimpleRecord.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4EACB68418B7877D001545AC"
-            BuildableName = "SimpleRecord.app"
+            BuildableName = "RecordFun.app"
             BlueprintName = "SimpleRecord"
             ReferencedContainer = "container:SimpleRecord.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4EACB68418B7877D001545AC"
-            BuildableName = "SimpleRecord.app"
+            BuildableName = "RecordFun.app"
             BlueprintName = "SimpleRecord"
             ReferencedContainer = "container:SimpleRecord.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4EACB68418B7877D001545AC"
-            BuildableName = "SimpleRecord.app"
+            BuildableName = "RecordFun.app"
             BlueprintName = "SimpleRecord"
             ReferencedContainer = "container:SimpleRecord.xcodeproj">
          </BuildableReference>

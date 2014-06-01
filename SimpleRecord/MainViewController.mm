@@ -62,7 +62,7 @@
     
     if ([OSHelper iPhone5]) {
         CGRect rect = _controlBtnContainerView.frame;
-        rect.origin.y += 35;
+        rect.origin.y += 70;
         _controlBtnContainerView.frame = rect;
     }
     isBeginTouchSlider = NO;

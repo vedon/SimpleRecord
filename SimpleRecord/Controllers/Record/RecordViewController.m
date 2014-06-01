@@ -22,7 +22,7 @@
 
 #import "AsynEncodeAudioRecord.h"
 #import "SoundMakerView.h"
-
+#import "CustomButton.h"
 @interface RecordViewController ()<UIAlertViewDelegate>
 {
     AudioRecorder * recorder;
@@ -41,6 +41,8 @@
     BOOL isRecording;
     BOOL isUseInflexion;
     NSString * formatType;
+    
+    CustomButton *particalBtn;
 }
 @property (weak, nonatomic) IBOutlet UILabel *clocker;
 @end
@@ -124,7 +126,17 @@
     myDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     isRecording = NO;
     _finishBtn.userInteractionEnabled = NO;
-    
+    CGRect particalBtnRect = _recordControlBtn.frame;
+    particalBtnRect.origin.x = 0;
+    particalBtnRect.origin.y = 0;
+    particalBtn= [[CustomButton alloc] initWithFrame:particalBtnRect];
+    particalBtn.layer.cornerRadius = particalBtnRect.size.width/2;
+    [particalBtn setBackgroundColor:[UIColor clearColor]];
+    particalBtn.clipsToBounds = YES;
+    particalBtn.userInteractionEnabled = NO;
+    [_recordControlBtn addSubview:particalBtn];
+    [particalBtn setHidden:YES];
+//    [_recordControlBtn sendSubviewToBack:button];
     
 }
 -(void)backAction
@@ -323,17 +335,19 @@
             [asynEncodeRecorder playFile:recordFilePath];
             [asynEncodeRecorder startPlayer];
             
-            
+            [particalBtn setHidden:NO];
             [self resetClocker];
             [self timerStart];
         }else
         {
             [self timerStart];
+            [particalBtn setHidden:NO];
             [asynEncodeRecorder stopPlayer];
         }
     }else
     {
         [self timerStop];
+        [particalBtn setHidden:YES];
         [asynEncodeRecorder stopPlayer];
     }
     
